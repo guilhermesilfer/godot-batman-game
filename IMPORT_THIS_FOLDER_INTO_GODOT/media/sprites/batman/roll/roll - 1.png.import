@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://8kowisw2fig"
-path="res://.godot/imported/roll - 5.png-0c7b69d9c68d87c6d99a9f9e72869b51.ctex"
+uid="uid://dwjgjrjuhxeto"
+path="res://.godot/imported/roll - 1.png-d4febe8f98965bcc5314465c2d8cdbef.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://media/sprites/batman/rolling/roll - 5.png"
-dest_files=["res://.godot/imported/roll - 5.png-0c7b69d9c68d87c6d99a9f9e72869b51.ctex"]
+source_file="res://media/sprites/batman/roll/roll - 1.png"
+dest_files=["res://.godot/imported/roll - 1.png-d4febe8f98965bcc5314465c2d8cdbef.ctex"]
 
 [params]
 

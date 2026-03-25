@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://bpoqx83b8lgca"
-path="res://.godot/imported/right punch - 1.png-3fef1bf63751d4af66133492fc097efd.ctex"
+path="res://.godot/imported/right punch - 1.png-86acde4caed81f0d82147603423b7d67.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://media/sprites/batman/punching/right punch - 1.png"
-dest_files=["res://.godot/imported/right punch - 1.png-3fef1bf63751d4af66133492fc097efd.ctex"]
+source_file="res://media/sprites/batman/punch/right punch - 1.png"
+dest_files=["res://.godot/imported/right punch - 1.png-86acde4caed81f0d82147603423b7d67.ctex"]
 
 [params]
 

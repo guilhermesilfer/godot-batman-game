@@ -93,7 +93,8 @@ radius = 14.0
 height = 28.0
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_6bykx"]
-radius = 5.0
+radius = 6.341751
+height = 29.591583
 
 [node name="main" type="Node2D" unique_id=2028955159]
 
@@ -146,11 +147,9 @@ shape = SubResource("CapsuleShape2D_77n5y")
 disabled = true
 debug_color = Color(5.246252e-06, 0.6370109, 0.4016348, 0.41960785)
 
-[node name="CollisionCrouch2" type="CollisionShape2D" parent="Player" unique_id=1966187144]
-position = Vector2(18, 9)
+[node name="CollisionCrouch2" type="CollisionShape2D" parent="Player" unique_id=1142224023]
+position = Vector2(14, 7)
+rotation = 0.81332344
 shape = SubResource("CapsuleShape2D_6bykx")
 disabled = true
-debug_color = Color(5.246252e-06, 0.6370109, 0.4016348, 0.41960785)
-
-[node name="pivot" type="Marker2D" parent="Player" unique_id=169327012]
-visible = false
+debug_color = Color(0, 0.63529414, 0.4, 0.41960785)

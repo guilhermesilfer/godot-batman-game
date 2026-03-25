@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bfcnvqdrf1dvj"
-path="res://.godot/imported/standing - 2.png-ed95323d75154b9556e1c22a736f19ad.ctex"
+uid="uid://cvp5yp5gpkjjc"
+path="res://.godot/imported/left punch - 1.png-d5dcd398b6461a1a4ec561b00947e884.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://media/sprites/batman/idle/standing - 2.png"
-dest_files=["res://.godot/imported/standing - 2.png-ed95323d75154b9556e1c22a736f19ad.ctex"]
+source_file="res://media/sprites/batman/punch/left punch - 1.png"
+dest_files=["res://.godot/imported/left punch - 1.png-d5dcd398b6461a1a4ec561b00947e884.ctex"]
 
 [params]
 

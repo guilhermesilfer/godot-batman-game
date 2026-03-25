@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dfkex63oe0mq4"
-path="res://.godot/imported/standing - 1.png-c449fd85b988083d2d14eee071065193.ctex"
+uid="uid://dctv32gdue0ql"
+path="res://.godot/imported/roll - 4.png-425c9fd5d3aeada08f59203c10fe348f.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://media/sprites/batman/idle/standing - 1.png"
-dest_files=["res://.godot/imported/standing - 1.png-c449fd85b988083d2d14eee071065193.ctex"]
+source_file="res://media/sprites/batman/roll/roll - 4.png"
+dest_files=["res://.godot/imported/roll - 4.png-425c9fd5d3aeada08f59203c10fe348f.ctex"]
 
 [params]
 
