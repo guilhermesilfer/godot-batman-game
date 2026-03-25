@@ -39,6 +39,9 @@ animations = [{
 "speed": 16.0
 }]
 
+[sub_resource type="CircleShape2D" id="CircleShape2D_hw0ou"]
+radius = 5.0
+
 [node name="Projectile" type="CharacterBody2D" unique_id=889569816]
 script = ExtResource("1_hw0ou")
 
@@ -47,4 +50,5 @@ texture_filter = 1
 scale = Vector2(0.75, 0.75)
 sprite_frames = SubResource("SpriteFrames_sxmqc")
 
-[node name="Area2D" type="Area2D" parent="." unique_id=598215501]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=297052123]
+shape = SubResource("CircleShape2D_hw0ou")

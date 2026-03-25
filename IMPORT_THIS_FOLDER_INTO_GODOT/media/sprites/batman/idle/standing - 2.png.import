@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bskey24ravv62"
-path="res://.godot/imported/droop - 2.png-d8eff58f0d2549aaa039bca200c4d6ff.ctex"
+uid="uid://bfcnvqdrf1dvj"
+path="res://.godot/imported/standing - 2.png-ed95323d75154b9556e1c22a736f19ad.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://media/sprites/batman/droop/droop - 2.png"
-dest_files=["res://.godot/imported/droop - 2.png-d8eff58f0d2549aaa039bca200c4d6ff.ctex"]
+source_file="res://media/sprites/batman/idle/standing - 2.png"
+dest_files=["res://.godot/imported/standing - 2.png-ed95323d75154b9556e1c22a736f19ad.ctex"]
 
 [params]
 

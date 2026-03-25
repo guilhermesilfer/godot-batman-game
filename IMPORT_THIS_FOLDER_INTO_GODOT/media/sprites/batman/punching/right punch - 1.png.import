@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bqc7316glhl31"
-path="res://.godot/imported/droop - 3.png-83499817db954f4d77abff55fa4435c4.ctex"
+uid="uid://bpoqx83b8lgca"
+path="res://.godot/imported/right punch - 1.png-3fef1bf63751d4af66133492fc097efd.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://media/sprites/batman/droop/droop - 3.png"
-dest_files=["res://.godot/imported/droop - 3.png-83499817db954f4d77abff55fa4435c4.ctex"]
+source_file="res://media/sprites/batman/punching/right punch - 1.png"
+dest_files=["res://.godot/imported/right punch - 1.png-3fef1bf63751d4af66133492fc097efd.ctex"]
 
 [params]
 

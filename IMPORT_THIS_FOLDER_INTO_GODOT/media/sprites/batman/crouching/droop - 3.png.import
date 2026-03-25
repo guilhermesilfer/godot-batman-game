@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bfcnvqdrf1dvj"
-path="res://.godot/imported/standing - 2.png-12e7125e59b069d294508ae84dc10e49.ctex"
+uid="uid://bqc7316glhl31"
+path="res://.godot/imported/droop - 3.png-8baacb606c193d2d36347c3f3c78776f.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://media/sprites/batman/standing/standing - 2.png"
-dest_files=["res://.godot/imported/standing - 2.png-12e7125e59b069d294508ae84dc10e49.ctex"]
+source_file="res://media/sprites/batman/crouching/droop - 3.png"
+dest_files=["res://.godot/imported/droop - 3.png-8baacb606c193d2d36347c3f3c78776f.ctex"]
 
 [params]
 

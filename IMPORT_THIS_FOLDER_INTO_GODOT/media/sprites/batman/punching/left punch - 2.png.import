@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://ninlkmh2vauv"
-path="res://.godot/imported/right punch - 3.png-bc773c8a0912fd9a16bc885021e64a5d.ctex"
+uid="uid://drcnnmjpietgj"
+path="res://.godot/imported/left punch - 2.png-539a2d234fa31a613a6dd9f06929cff6.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://media/sprites/batman/punch/right punch - 3.png"
-dest_files=["res://.godot/imported/right punch - 3.png-bc773c8a0912fd9a16bc885021e64a5d.ctex"]
+source_file="res://media/sprites/batman/punching/left punch - 2.png"
+dest_files=["res://.godot/imported/left punch - 2.png-539a2d234fa31a613a6dd9f06929cff6.ctex"]
 
 [params]
 
