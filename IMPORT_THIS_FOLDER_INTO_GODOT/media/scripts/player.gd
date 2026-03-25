@@ -73,6 +73,11 @@ func _process(_delta):
 		_animated_sprite.position.y = 0.0
 		_animated_sprite.flip_h = false
 		_animated_sprite.play("run")
+			
+	# Rool implementation
+	elif Input.is_key_pressed(KEY_SPACE) and is_on_floor():
+		_animated_sprite.play("roll")
+
 	else:
 		_animated_sprite.position.y = 0.0
 		_animated_sprite.play("idle")
