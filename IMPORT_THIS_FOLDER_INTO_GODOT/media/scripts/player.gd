@@ -1,87 +1,115 @@
 extends CharacterBody2D
 
+var Bullet = preload("res://media/scenes/projectile.tscn")
+
+@onready var _bullet_spawn = $BulletSpawn
 @onready var _animated_sprite = $AnimatedSprite2D
-# Pegamos referências aos nossos novos nós de colisão renomeados
 @onready var _collision_standing = $CollisionStanding
 @onready var _collision_crouching1 = $CollisionCrouch1
 @onready var _collision_crouching2 = $CollisionCrouch2
+
+var is_crouching: bool
+var is_rolling := false
+var roll_speed := 300.0
+var roll_time := 0.4
+var facing := 1
 
 const SPEED = 180.0
 const JUMP_VELOCITY = -370.0
 
 func _physics_process(delta: float) -> void:
-	# Add the gravity.
+	if is_rolling:
+		velocity.x = facing * roll_speed
+		move_and_slide()
+		return
+	
+	# gravity
 	if not is_on_floor():
 		velocity += get_gravity() * delta
 
-	if Input.is_action_pressed("crouch") and is_on_floor():
-		velocity.x = move_toward(velocity.x, 0, SPEED)
-		
-		# --- NOVO: Lógica de Hitbox Agachada ---
-		# Desativar colisão em pé, ativar colisão agachado
-		_collision_standing.disabled = true
-		_collision_crouching1.disabled = false
-		_collision_crouching2.disabled = false
-		# ---
-	else:
-		# --- NOVO: Lógica de Hitbox Levantada (Padrão) ---
-		# Reverter colisões
-		_collision_standing.disabled = false
-		_collision_crouching1.disabled = true
-		_collision_crouching2.disabled = true
-		# ---
+	# input
+	var direction := Input.get_axis("left", "right")
+	is_crouching = Input.is_action_pressed("crouch") and is_on_floor()
 
-		# Handle jump.
-		if Input.is_action_just_pressed("jump") and is_on_floor():
-			velocity.y = JUMP_VELOCITY
-		
-		# Get the input direction and handle the movement/deceleration.
-		# As good practice, you should replace UI actions with custom gameplay actions.
-		var direction := Input.get_axis("left", "right")
+	if direction != 0:
+		set_direction(direction)
+
+	# horizontal movement
+	if is_crouching:
+		velocity.x = move_toward(velocity.x, 0, SPEED)
+	else:
 		if direction:
 			velocity.x = direction * SPEED
 		else:
 			velocity.x = move_toward(velocity.x, 0, SPEED)
+	
+	if Input.is_action_just_pressed("roll") and is_on_floor() and not is_rolling:
+		start_roll()
+
+	# vertical movement
+	if Input.is_action_just_pressed("jump") and is_on_floor() and not is_crouching:
+		velocity.y = JUMP_VELOCITY
+
+	# collisions
+	_collision_standing.disabled = is_crouching
+	_collision_crouching1.disabled = not is_crouching
+	_collision_crouching2.disabled = not is_crouching
 
 	move_and_slide()
 
-func _process(_delta):
-	# batman movement logic
-	if Input.is_action_pressed("crouch") and is_on_floor():
-		if _animated_sprite.frame >= 0: _animated_sprite.position.y = 2
-		if _animated_sprite.frame >= 1: _animated_sprite.position.y = 8
-		if _animated_sprite.frame >= 2: _animated_sprite.position.y = 7
-		if _animated_sprite.frame >= 3: _animated_sprite.position.y = 11
-		if _animated_sprite.frame >= 4: _animated_sprite.position.y = 11
-		if _animated_sprite.animation != "crouch":
-			_animated_sprite.play("crouch")
-			
-	elif Input.is_action_pressed("left") and Input.is_action_pressed("right"):
-		_animated_sprite.position.y = 0.0
-		_animated_sprite.play("idle")
-	elif Input.is_action_pressed("left"):
-		_collision_crouching1.position.x = -abs(_collision_crouching1.position.x)
-		_collision_crouching2.position.x = -abs(_collision_crouching2.position.x)
-		_collision_standing.position.x = -abs(_collision_standing.position.x)
-		_animated_sprite.position.y = 0.0
-		_animated_sprite.flip_h = true
-		_animated_sprite.play("run")
-	elif Input.is_action_pressed("right"):
-		_collision_crouching1.position.x = abs(_collision_crouching1.position.x)
-		_collision_crouching2.position.x = abs(_collision_crouching2.position.x)
-		_collision_standing.position.x = abs(_collision_standing.position.x)
-		_animated_sprite.position.y = 0.0
-		_animated_sprite.flip_h = false
-		_animated_sprite.play("run")
-			
-	# Rool implementation
-	elif Input.is_key_pressed(KEY_SPACE) and is_on_floor():
-		_animated_sprite.play("roll")
 
+func _process(_delta):
+	if is_rolling:
+		return
+	elif is_crouching:
+		play_anim("crouch")
+	elif Input.is_action_pressed("roll") and is_on_floor():
+		play_anim("roll")
+	elif not is_on_floor():
+		play_anim("jump") # se não tiver, pode remover
+	elif velocity.x != 0:
+		play_anim("run")
 	else:
-		_animated_sprite.position.y = 0.0
-		_animated_sprite.play("idle")
-		
-		# --- NOVO: Resetar a posição da sprite ao levantar ---
-		_animated_sprite.position.y = 0.0
-		# ---
+		play_anim("halt")
+
+	# Tiro
+	if Input.is_action_just_pressed("fire"):
+		fire()
+
+
+func play_anim(name):
+	if _animated_sprite.animation != name:
+		_animated_sprite.play(name)
+
+
+func set_direction(dir):
+	if facing == dir:
+		return
+	
+	facing = dir
+	
+	_collision_crouching1.position.x *= -1
+	_collision_crouching2.position.x *= -1
+	_collision_standing.position.x *= -1
+	_bullet_spawn.position.x *= -1
+	
+	_animated_sprite.flip_h = (dir == -1)
+
+func start_roll():
+	is_rolling = true
+	
+	# toca animação 1 vez
+	_animated_sprite.play("roll")
+	
+	# espera o tempo do roll
+	await get_tree().create_timer(roll_time).timeout
+	
+	is_rolling = false
+
+func fire():
+	var bullet = Bullet.instantiate()
+	
+	bullet.global_position = _bullet_spawn.global_position
+	bullet.speed = abs(bullet.speed) * facing
+	
+	get_tree().current_scene.add_child(bullet)

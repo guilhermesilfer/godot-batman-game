@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://dmwf1dq3fv12r"]
 
-[ext_resource type="Script" uid="uid://d18xwbpv5wqt6" path="res://media/scripts/projectile.gd" id="1_hw0ou"]
+[ext_resource type="Script" uid="uid://chxbiods7oukd" path="res://media/scenes/projectile.gd" id="1_hw0ou"]
 [ext_resource type="Texture2D" uid="uid://dxp835csv5y0b" path="res://media/sprites/spritesheets/bullets.png" id="2_gri8r"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_ka7b5"]
@@ -39,12 +39,21 @@ animations = [{
 "speed": 16.0
 }]
 
-[node name="Projectile" type="CharacterBody2D" unique_id=889569816]
+[sub_resource type="CircleShape2D" id="CircleShape2D_gri8r"]
+radius = 5.0
+
+[node name="Projectile" type="Area2D" unique_id=1941071635]
 script = ExtResource("1_hw0ou")
 
-[node name="Bullet" type="AnimatedSprite2D" parent="." unique_id=692526195]
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=2065428542]
 texture_filter = 1
 scale = Vector2(0.75, 0.75)
 sprite_frames = SubResource("SpriteFrames_sxmqc")
 
-[node name="Area2D" type="Area2D" parent="." unique_id=598215501]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=212682799]
+shape = SubResource("CircleShape2D_gri8r")
+
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="." unique_id=1690731074]
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="screen_exited" from="VisibleOnScreenNotifier2D" to="." method="_on_visible_on_screen_notifier_2d_screen_exited"]

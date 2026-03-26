@@ -2,32 +2,32 @@
 
 [ext_resource type="Texture2D" uid="uid://b2we87sx8adts" path="res://media/sprites/cenario.jpg" id="1_qflo1"]
 [ext_resource type="Script" uid="uid://bhbio7pqti0mm" path="res://media/scripts/player.gd" id="2_a473q"]
-[ext_resource type="Texture2D" uid="uid://4ywdr86xr12r" path="res://media/sprites/batman/crouch/crouch - 1.png" id="3_77n5y"]
-[ext_resource type="Texture2D" uid="uid://dfkex63oe0mq4" path="res://media/sprites/batman/standing/standing - 1.png" id="3_qflo1"]
-[ext_resource type="Texture2D" uid="uid://bskey24ravv62" path="res://media/sprites/batman/crouch/crouch - 2.png" id="4_6bykx"]
-[ext_resource type="Texture2D" uid="uid://bfcnvqdrf1dvj" path="res://media/sprites/batman/standing/standing - 2.png" id="4_a473q"]
-[ext_resource type="Texture2D" uid="uid://c6ycbgmhjpdee" path="res://media/sprites/batman/running/running - 1.png" id="5_b6uod"]
-[ext_resource type="Texture2D" uid="uid://bqc7316glhl31" path="res://media/sprites/batman/crouch/crouch - 3.png" id="5_sgp4k"]
-[ext_resource type="Texture2D" uid="uid://cpg1m52dcoqxh" path="res://media/sprites/batman/running/running - 2.png" id="6_715c1"]
-[ext_resource type="Texture2D" uid="uid://b3ecq2rw8dbit" path="res://media/sprites/batman/crouch/crouch - 4.png" id="6_lil4i"]
-[ext_resource type="Texture2D" uid="uid://c34erbcdbygoo" path="res://media/sprites/batman/crouch/crouch - 5.png" id="7_tnld5"]
-[ext_resource type="Texture2D" uid="uid://d3me62nf5uhbw" path="res://media/sprites/batman/running/running - 3.png" id="7_x62d4"]
-[ext_resource type="Texture2D" uid="uid://jryqaghqi47a" path="res://media/sprites/batman/running/running - 4.png" id="8_77n5y"]
-[ext_resource type="Texture2D" uid="uid://dahk00tje4cdw" path="res://media/sprites/batman/running/running - 5.png" id="9_6bykx"]
-[ext_resource type="Texture2D" uid="uid://dwjgjrjuhxeto" path="res://media/sprites/batman/roll/roll - 1.png" id="10_7lklp"]
-[ext_resource type="Texture2D" uid="uid://b33h1pcoovmfa" path="res://media/sprites/batman/running/running - 6.png" id="10_sgp4k"]
-[ext_resource type="Texture2D" uid="uid://swqcyaa2osi7" path="res://media/sprites/batman/running/running - 7.png" id="11_lil4i"]
-[ext_resource type="Texture2D" uid="uid://cl28nfjstsb5i" path="res://media/sprites/batman/roll/roll - 2.png" id="11_q0k2t"]
-[ext_resource type="Texture2D" uid="uid://dp6ju5b8660bl" path="res://media/sprites/batman/roll/roll - 3.png" id="12_pqfkb"]
-[ext_resource type="Texture2D" uid="uid://3whp4q7h2p6c" path="res://media/sprites/batman/running/running - 8.png" id="12_tnld5"]
-[ext_resource type="Texture2D" uid="uid://dctv32gdue0ql" path="res://media/sprites/batman/roll/roll - 4.png" id="13_85mxs"]
-[ext_resource type="Texture2D" uid="uid://8kowisw2fig" path="res://media/sprites/batman/roll/roll - 5.png" id="14_g0urq"]
-[ext_resource type="Texture2D" uid="uid://btr5yuwapxetq" path="res://media/sprites/batman/roll/roll - 6.png" id="15_vdcwq"]
-[ext_resource type="Texture2D" uid="uid://crxv48cxx3xqj" path="res://media/sprites/batman/roll/roll - 7.png" id="16_i73gc"]
-[ext_resource type="Texture2D" uid="uid://siehlqesd8p" path="res://media/sprites/batman/roll/roll - 8.png" id="17_qcsow"]
-[ext_resource type="Texture2D" uid="uid://dqns7wu5uwbom" path="res://media/sprites/batman/roll/roll - 9.png" id="18_uuvjs"]
-[ext_resource type="Texture2D" uid="uid://bvt0qwe3myqpv" path="res://media/sprites/batman/roll/roll - 10.png" id="19_jn5iu"]
-[ext_resource type="Texture2D" uid="uid://cm3uxye1mhhjv" path="res://media/sprites/batman/roll/roll - 11.png" id="20_hh5vg"]
+[ext_resource type="Texture2D" uid="uid://cgyqf83pd51ge" path="res://media/sprites/batman/all/crouch - 1.png" id="3_7lklp"]
+[ext_resource type="Texture2D" uid="uid://0pcqelsgb6g1" path="res://media/sprites/batman/all/crouch - 2.png" id="4_q0k2t"]
+[ext_resource type="Texture2D" uid="uid://dq7r8y2ow446v" path="res://media/sprites/batman/all/crouch - 3.png" id="5_pqfkb"]
+[ext_resource type="Texture2D" uid="uid://dxgewvt2ghhi" path="res://media/sprites/batman/all/crouch - 4.png" id="6_85mxs"]
+[ext_resource type="Texture2D" uid="uid://c0csai04yl4in" path="res://media/sprites/batman/all/crouch - 5.png" id="7_g0urq"]
+[ext_resource type="Texture2D" uid="uid://c5doq55gfhdhs" path="res://media/sprites/batman/all/standing - 1.png" id="8_vdcwq"]
+[ext_resource type="Texture2D" uid="uid://drpsakwsnmatn" path="res://media/sprites/batman/all/standing - 2.png" id="9_i73gc"]
+[ext_resource type="Texture2D" uid="uid://cx5asrc1hrety" path="res://media/sprites/batman/all/roll - 1.png" id="10_qcsow"]
+[ext_resource type="Texture2D" uid="uid://2t335mgu2sgr" path="res://media/sprites/batman/all/roll - 2.png" id="11_uuvjs"]
+[ext_resource type="Texture2D" uid="uid://r67l43km6ivd" path="res://media/sprites/batman/all/roll - 3.png" id="12_jn5iu"]
+[ext_resource type="Texture2D" uid="uid://biojuythibiqw" path="res://media/sprites/batman/all/roll - 4.png" id="13_hh5vg"]
+[ext_resource type="Texture2D" uid="uid://dwjibl25r50bg" path="res://media/sprites/batman/all/roll - 5.png" id="14_bqcun"]
+[ext_resource type="Texture2D" uid="uid://c8a1k22uwbhgd" path="res://media/sprites/batman/all/roll - 6.png" id="15_svmkb"]
+[ext_resource type="Texture2D" uid="uid://bxii3dstl43fp" path="res://media/sprites/batman/all/roll - 7.png" id="16_g7qxf"]
+[ext_resource type="Texture2D" uid="uid://bn08getnev34k" path="res://media/sprites/batman/all/roll - 8.png" id="17_wr7d5"]
+[ext_resource type="Texture2D" uid="uid://dpfyww46sbira" path="res://media/sprites/batman/all/roll - 9.png" id="18_unc2d"]
+[ext_resource type="Texture2D" uid="uid://bp26kijgh64vu" path="res://media/sprites/batman/all/roll - 10.png" id="19_sq7ly"]
+[ext_resource type="Texture2D" uid="uid://lgd42rwcrvv" path="res://media/sprites/batman/all/roll - 11.png" id="20_6wbx8"]
+[ext_resource type="Texture2D" uid="uid://de2ggx4uoglon" path="res://media/sprites/batman/all/running - 1.png" id="21_v7553"]
+[ext_resource type="Texture2D" uid="uid://c52vy7ocolrt6" path="res://media/sprites/batman/all/running - 2.png" id="22_2i8va"]
+[ext_resource type="Texture2D" uid="uid://b7l143f0uqhwb" path="res://media/sprites/batman/all/running - 3.png" id="23_c6usc"]
+[ext_resource type="Texture2D" uid="uid://c3621ubfa7bln" path="res://media/sprites/batman/all/running - 4.png" id="24_g0ie8"]
+[ext_resource type="Texture2D" uid="uid://csaqg10r1kb3h" path="res://media/sprites/batman/all/running - 5.png" id="25_juoj6"]
+[ext_resource type="Texture2D" uid="uid://1r5fgvmntirf" path="res://media/sprites/batman/all/running - 6.png" id="26_vtnh6"]
+[ext_resource type="Texture2D" uid="uid://bhmxwsj5nr3fu" path="res://media/sprites/batman/all/running - 7.png" id="27_w1y55"]
+[ext_resource type="Texture2D" uid="uid://be748m4mxxrsk" path="res://media/sprites/batman/all/running - 8.png" id="28_30lf3"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_uu8kp"]
 size = Vector2(320, 61)
@@ -35,98 +35,98 @@ size = Vector2(320, 61)
 [sub_resource type="SpriteFrames" id="SpriteFrames_h1cvd"]
 animations = [{
 "frames": [{
-"duration": 0.3,
-"texture": ExtResource("3_77n5y")
+"duration": 1.0,
+"texture": ExtResource("3_7lklp")
 }, {
-"duration": 0.3,
-"texture": ExtResource("4_6bykx")
+"duration": 1.0,
+"texture": ExtResource("4_q0k2t")
 }, {
-"duration": 0.3,
-"texture": ExtResource("5_sgp4k")
+"duration": 1.0,
+"texture": ExtResource("5_pqfkb")
 }, {
-"duration": 0.3,
-"texture": ExtResource("6_lil4i")
+"duration": 1.0,
+"texture": ExtResource("6_85mxs")
 }, {
-"duration": 0.3,
-"texture": ExtResource("7_tnld5")
+"duration": 1.0,
+"texture": ExtResource("7_g0urq")
 }],
 "loop": false,
 "name": &"crouch",
-"speed": 4.0
+"speed": 12.0
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("3_qflo1")
+"texture": ExtResource("8_vdcwq")
 }, {
 "duration": 1.0,
-"texture": ExtResource("4_a473q")
+"texture": ExtResource("9_i73gc")
 }],
 "loop": true,
-"name": &"idle",
+"name": &"halt",
 "speed": 2.0
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("10_7lklp")
+"texture": ExtResource("10_qcsow")
 }, {
 "duration": 1.0,
-"texture": ExtResource("11_q0k2t")
+"texture": ExtResource("11_uuvjs")
 }, {
 "duration": 1.0,
-"texture": ExtResource("12_pqfkb")
+"texture": ExtResource("12_jn5iu")
 }, {
 "duration": 1.0,
-"texture": ExtResource("13_85mxs")
+"texture": ExtResource("13_hh5vg")
 }, {
 "duration": 1.0,
-"texture": ExtResource("14_g0urq")
+"texture": ExtResource("14_bqcun")
 }, {
 "duration": 1.0,
-"texture": ExtResource("15_vdcwq")
+"texture": ExtResource("15_svmkb")
 }, {
 "duration": 1.0,
-"texture": ExtResource("16_i73gc")
+"texture": ExtResource("16_g7qxf")
 }, {
 "duration": 1.0,
-"texture": ExtResource("17_qcsow")
+"texture": ExtResource("17_wr7d5")
 }, {
 "duration": 1.0,
-"texture": ExtResource("18_uuvjs")
+"texture": ExtResource("18_unc2d")
 }, {
 "duration": 1.0,
-"texture": ExtResource("19_jn5iu")
+"texture": ExtResource("19_sq7ly")
 }, {
 "duration": 1.0,
-"texture": ExtResource("20_hh5vg")
+"texture": ExtResource("20_6wbx8")
 }],
 "loop": true,
 "name": &"roll",
-"speed": 5.0
+"speed": 16.0
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("5_b6uod")
+"texture": ExtResource("21_v7553")
 }, {
 "duration": 1.0,
-"texture": ExtResource("6_715c1")
+"texture": ExtResource("22_2i8va")
 }, {
 "duration": 1.0,
-"texture": ExtResource("7_x62d4")
+"texture": ExtResource("23_c6usc")
 }, {
 "duration": 1.0,
-"texture": ExtResource("8_77n5y")
+"texture": ExtResource("24_g0ie8")
 }, {
 "duration": 1.0,
-"texture": ExtResource("9_6bykx")
+"texture": ExtResource("25_juoj6")
 }, {
 "duration": 1.0,
-"texture": ExtResource("10_sgp4k")
+"texture": ExtResource("26_vtnh6")
 }, {
 "duration": 1.0,
-"texture": ExtResource("11_lil4i")
+"texture": ExtResource("27_w1y55")
 }, {
 "duration": 1.0,
-"texture": ExtResource("12_tnld5")
+"texture": ExtResource("28_30lf3")
 }],
 "loop": true,
 "name": &"run",
@@ -158,35 +158,35 @@ position = Vector2(160, 90)
 scale = Vector2(0.24883361, 0.22058822)
 texture = ExtResource("1_qflo1")
 
-[node name="ground e walls" type="StaticBody2D" parent="." unique_id=777401166]
+[node name="Boundaries" type="StaticBody2D" parent="." unique_id=777401166]
 position = Vector2(171, 206)
 
-[node name="wall2" type="CollisionShape2D" parent="ground e walls" unique_id=1235372301]
-position = Vector2(-199, -129)
-rotation = -1.5707964
+[node name="Ground" type="CollisionShape2D" parent="Boundaries" unique_id=665554039]
+position = Vector2(-11, 0)
 shape = SubResource("RectangleShape2D_uu8kp")
 
-[node name="wall1" type="CollisionShape2D" parent="ground e walls" unique_id=1330132740]
+[node name="Wall1" type="CollisionShape2D" parent="Boundaries" unique_id=1330132740]
 position = Vector2(177, -129)
 rotation = -1.5707964
 shape = SubResource("RectangleShape2D_uu8kp")
 
-[node name="ground" type="CollisionShape2D" parent="ground e walls" unique_id=665554039]
-position = Vector2(-11, 0)
+[node name="Wall2" type="CollisionShape2D" parent="Boundaries" unique_id=1235372301]
+position = Vector2(-199.00003, -129)
+rotation = -1.5707964
 shape = SubResource("RectangleShape2D_uu8kp")
 
-[node name="Player" type="CharacterBody2D" parent="." unique_id=1737467562]
+[node name="Player" type="CharacterBody2D" parent="." unique_id=1737467562 groups=["characters"]]
 position = Vector2(46, 147)
 script = ExtResource("2_a473q")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Player" unique_id=424553248]
 texture_filter = 1
 sprite_frames = SubResource("SpriteFrames_h1cvd")
-animation = &"roll"
-frame = 10
+animation = &"crouch"
+offset = Vector2(0, -7)
 
 [node name="CollisionStanding" type="CollisionShape2D" parent="Player" unique_id=755224452]
-position = Vector2(3, 0)
+position = Vector2(1.6, 0)
 shape = SubResource("CapsuleShape2D_f2d0h")
 disabled = true
 
@@ -204,3 +204,6 @@ debug_color = Color(5.246252e-06, 0.6370109, 0.4016348, 0.41960785)
 
 [node name="pivot" type="Marker2D" parent="Player" unique_id=169327012]
 visible = false
+
+[node name="BulletSpawn" type="Node2D" parent="Player" unique_id=1695952918]
+position = Vector2(30, 0)
