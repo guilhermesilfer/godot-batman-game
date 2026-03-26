@@ -10,6 +10,7 @@ var Bullet = preload("res://media/scenes/projectile.tscn")
 
 var is_crouching: bool
 var is_rolling := false
+var is_invulnerable := false
 var roll_speed := 300.0
 var roll_time := 0.4
 var facing := 1
@@ -97,6 +98,7 @@ func set_direction(dir):
 
 func start_roll():
 	is_rolling = true
+	is_invulnerable = true
 	
 	# toca animação 1 vez
 	_animated_sprite.play("roll")
@@ -105,6 +107,7 @@ func start_roll():
 	await get_tree().create_timer(roll_time).timeout
 	
 	is_rolling = false
+	is_invulnerable = false
 
 func fire():
 	var bullet = Bullet.instantiate()
@@ -113,3 +116,7 @@ func fire():
 	bullet.speed = abs(bullet.speed) * facing
 	
 	get_tree().current_scene.add_child(bullet)
+
+func take_damage():
+	if is_invulnerable:
+		return
