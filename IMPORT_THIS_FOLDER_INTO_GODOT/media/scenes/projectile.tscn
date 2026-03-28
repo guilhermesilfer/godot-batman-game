@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://dmwf1dq3fv12r"]
 
-[ext_resource type="Script" uid="uid://chxbiods7oukd" path="res://media/scenes/projectile.gd" id="1_hw0ou"]
+[ext_resource type="Script" uid="uid://chxbiods7oukd" path="res://media/scripts/projectile.gd" id="1_hw0ou"]
 [ext_resource type="Texture2D" uid="uid://dxp835csv5y0b" path="res://media/sprites/spritesheets/bullets.png" id="2_gri8r"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_ka7b5"]
@@ -43,6 +43,8 @@ animations = [{
 radius = 5.0
 
 [node name="Projectile" type="Area2D" unique_id=1941071635]
+collision_layer = 8
+collision_mask = 2
 script = ExtResource("1_hw0ou")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=2065428542]

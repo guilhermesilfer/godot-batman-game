@@ -18,12 +18,13 @@ config/features=PackedStringArray("4.6", "Forward Plus")
 
 window/size/viewport_width=320
 window/size/viewport_height=180
+window/size/mode=2
 window/size/initial_position_type=3
 window/stretch/mode="canvas_items"
 
 [global_group]
 
-characters="all characters of the game. e.g, batman, bosses..."
+player="all characters of the game. e.g, batman, bosses..."
 
 [input]
 

@@ -1,0 +1,83 @@
+[gd_scene format=3 uid="uid://c12vrkrq6cmbi"]
+
+[ext_resource type="Script" uid="uid://dg8jusomoingw" path="res://media/scripts/twoface.gd" id="1_ix7rc"]
+[ext_resource type="Texture2D" uid="uid://c88fjc5pf4x8q" path="res://media/sprites/twoface/harvey_correndo_1.png" id="2_1g6uw"]
+[ext_resource type="Texture2D" uid="uid://cevbre3pgvejl" path="res://media/sprites/twoface/harvey_atirando_direita_1.png" id="2_13250"]
+[ext_resource type="Texture2D" uid="uid://d3q6o5kuvnqop" path="res://media/sprites/twoface/harvey_correndo_2.png" id="3_13250"]
+[ext_resource type="Texture2D" uid="uid://dkpgv6pcfc28s" path="res://media/sprites/twoface/harvey_atirando_direita_2.png" id="3_o0q0r"]
+[ext_resource type="Texture2D" uid="uid://br7x5fxf4hh17" path="res://media/sprites/twoface/harvey_correndo_3.png" id="4_o0q0r"]
+[ext_resource type="Texture2D" uid="uid://68jqvt3ov12i" path="res://media/sprites/twoface/harvey_correndo_4.png" id="5_7r812"]
+[ext_resource type="Texture2D" uid="uid://36atet64f7fy" path="res://media/sprites/twoface/harvey_correndo_5.png" id="6_vw15v"]
+[ext_resource type="Texture2D" uid="uid://cvk047rqicyia" path="res://media/sprites/twoface/harvey_correndo_6.png" id="7_d6t87"]
+[ext_resource type="Texture2D" uid="uid://biwnske7ujv8e" path="res://media/sprites/twoface/harvey_correndo_7.png" id="8_0q8eo"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_mqv4u"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_13250")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_o0q0r")
+}],
+"loop": true,
+"name": &"halt",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_1g6uw")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_13250")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_o0q0r")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_7r812")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_vw15v")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_d6t87")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_0q8eo")
+}],
+"loop": true,
+"name": &"run",
+"speed": 12.0
+}]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_xw344"]
+radius = 15.0
+height = 58.0
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_13250"]
+height = 46.0
+
+[node name="TwoFace" type="CharacterBody2D" unique_id=1842283694]
+collision_layer = 4
+script = ExtResource("1_ix7rc")
+
+[node name="TFAnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=369500310]
+texture_filter = 1
+sprite_frames = SubResource("SpriteFrames_mqv4u")
+animation = &"halt"
+
+[node name="TFCollision" type="CollisionShape2D" parent="." unique_id=599574454]
+shape = SubResource("CapsuleShape2D_xw344")
+
+[node name="TFChargeCollision" type="Area2D" parent="." unique_id=1571193731]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="TFChargeCollision" unique_id=2067417183]
+position = Vector2(21, 0)
+shape = SubResource("CapsuleShape2D_13250")
+debug_color = Color(1, 0.22999796, 0.16976267, 0.41960785)
+
+[node name="TFBulletSpawn" type="Marker2D" parent="." unique_id=621639348]
+position = Vector2(19.85, -8.5)
+
+[node name="TFStuckTimer" type="Timer" parent="." unique_id=921566481]

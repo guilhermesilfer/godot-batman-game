@@ -1,22 +1,25 @@
 extends CharacterBody2D
 
-var Bullet = preload("res://media/scenes/projectile.tscn")
-
-@onready var _bullet_spawn = $BulletSpawn
-@onready var _animated_sprite = $AnimatedSprite2D
+@onready var _animated_sprite = $BatmanAnimatedSprite2D
 @onready var _collision_standing = $CollisionStanding
 @onready var _collision_crouching1 = $CollisionCrouch1
 @onready var _collision_crouching2 = $CollisionCrouch2
 
+const SPEED = 180.0
+const JUMP_VELOCITY = -370.0
+const MAX_HEALTH = 100
+
+var health = MAX_HEALTH
 var is_crouching: bool
 var is_rolling := false
 var is_invulnerable := false
-var roll_speed := 300.0
-var roll_time := 0.4
+var roll_speed := 250.0
+var roll_time := 0.7
 var facing := 1
 
-const SPEED = 180.0
-const JUMP_VELOCITY = -370.0
+func _ready() -> void:
+	health = 100
+	add_to_group("player")
 
 func _physics_process(delta: float) -> void:
 	if is_rolling:
@@ -58,30 +61,32 @@ func _physics_process(delta: float) -> void:
 
 	move_and_slide()
 
-
 func _process(_delta):
+	if Input.is_action_just_pressed("ui_accept"):
+		var player = get_tree().get_first_node_in_group("player")
+		print("player encontrado:", player)
+		player.take_damage(10)
+	
 	if is_rolling:
 		return
 	elif is_crouching:
 		play_anim("crouch")
-	elif Input.is_action_pressed("roll") and is_on_floor():
+	elif Input.is_action_just_pressed("roll") and is_on_floor():
 		play_anim("roll")
-	elif not is_on_floor():
-		play_anim("jump") # se não tiver, pode remover
+	# elif not is_on_floor():
+	# 	play_anim("jump")
 	elif velocity.x != 0:
 		play_anim("run")
 	else:
 		play_anim("halt")
 
-	# Tiro
-	if Input.is_action_just_pressed("fire"):
-		fire()
-
+	# tiro
+	if Input.is_action_just_pressed("punch"):
+		pass
 
 func play_anim(name):
 	if _animated_sprite.animation != name:
 		_animated_sprite.play(name)
-
 
 func set_direction(dir):
 	if facing == dir:
@@ -92,7 +97,6 @@ func set_direction(dir):
 	_collision_crouching1.position.x *= -1
 	_collision_crouching2.position.x *= -1
 	_collision_standing.position.x *= -1
-	_bullet_spawn.position.x *= -1
 	
 	_animated_sprite.flip_h = (dir == -1)
 
@@ -100,23 +104,24 @@ func start_roll():
 	is_rolling = true
 	is_invulnerable = true
 	
-	# toca animação 1 vez
+	# was set not to loop, in BatmanAnimatedSprite2D -> SpriteFrames -> roll
 	_animated_sprite.play("roll")
 	
-	# espera o tempo do roll
+	# roll timer
 	await get_tree().create_timer(roll_time).timeout
 	
 	is_rolling = false
 	is_invulnerable = false
 
-func fire():
-	var bullet = Bullet.instantiate()
-	
-	bullet.global_position = _bullet_spawn.global_position
-	bullet.speed = abs(bullet.speed) * facing
-	
-	get_tree().current_scene.add_child(bullet)
 
-func take_damage():
+# signal to reflect player's health into health bar in UI scene
+signal health_changed(new_health)
+
+func take_damage(damage = 1): # default value is 1, if not passed
 	if is_invulnerable:
 		return
+	
+	health -= damage
+	health = max(health, 0)
+	
+	emit_signal("health_changed", health)
