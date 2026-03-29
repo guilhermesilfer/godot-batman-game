@@ -2,10 +2,12 @@
 
 [ext_resource type="Script" uid="uid://dg8jusomoingw" path="res://media/scripts/twoface.gd" id="1_ix7rc"]
 [ext_resource type="Texture2D" uid="uid://c88fjc5pf4x8q" path="res://media/sprites/twoface/harvey_correndo_1.png" id="2_1g6uw"]
+[ext_resource type="Texture2D" uid="uid://c4dfyngnrudur" path="res://media/sprites/twoface/harvey_atirando_esquerda_1.png" id="2_7r812"]
 [ext_resource type="Texture2D" uid="uid://cevbre3pgvejl" path="res://media/sprites/twoface/harvey_atirando_direita_1.png" id="2_13250"]
 [ext_resource type="Texture2D" uid="uid://d3q6o5kuvnqop" path="res://media/sprites/twoface/harvey_correndo_2.png" id="3_13250"]
 [ext_resource type="Texture2D" uid="uid://dkpgv6pcfc28s" path="res://media/sprites/twoface/harvey_atirando_direita_2.png" id="3_o0q0r"]
 [ext_resource type="Texture2D" uid="uid://br7x5fxf4hh17" path="res://media/sprites/twoface/harvey_correndo_3.png" id="4_o0q0r"]
+[ext_resource type="Texture2D" uid="uid://cyfg8rhxu12s" path="res://media/sprites/twoface/harvey_atirando_esquerda_2.png" id="4_vw15v"]
 [ext_resource type="Texture2D" uid="uid://68jqvt3ov12i" path="res://media/sprites/twoface/harvey_correndo_4.png" id="5_7r812"]
 [ext_resource type="Texture2D" uid="uid://36atet64f7fy" path="res://media/sprites/twoface/harvey_correndo_5.png" id="6_vw15v"]
 [ext_resource type="Texture2D" uid="uid://cvk047rqicyia" path="res://media/sprites/twoface/harvey_correndo_6.png" id="7_d6t87"]
@@ -13,6 +15,23 @@
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_mqv4u"]
 animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_7r812")
+}, {
+"duration": 1.0,
+"texture": ExtResource("2_13250")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_vw15v")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_o0q0r")
+}],
+"loop": true,
+"name": &"death",
+"speed": 5.0
+}, {
 "frames": [{
 "duration": 1.0,
 "texture": ExtResource("2_13250")
@@ -69,19 +88,24 @@ height = 58.0
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_13250"]
 height = 46.0
 
-[node name="TwoFace" type="CharacterBody2D" unique_id=1842283694]
+[node name="TwoFace" type="CharacterBody2D" unique_id=1842283694 groups=["enemies"]]
 collision_layer = 4
 script = ExtResource("1_ix7rc")
 
 [node name="TFAnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=369500310]
 texture_filter = 1
 sprite_frames = SubResource("SpriteFrames_mqv4u")
-animation = &"shoot"
+animation = &"death"
+frame_progress = 0.4208963
 
 [node name="TFCollision" type="CollisionShape2D" parent="." unique_id=599574454]
 shape = SubResource("CapsuleShape2D_xw344")
 
 [node name="TFChargeCollision" type="Area2D" parent="." unique_id=1571193731]
+collision_layer = 0
+collision_mask = 2
+monitoring = false
+monitorable = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="TFChargeCollision" unique_id=2067417183]
 position = Vector2(21, 0)
@@ -94,7 +118,7 @@ position = Vector2(19.85, -8.5)
 [node name="TFStuckTimer" type="Timer" parent="." unique_id=921566481]
 
 [node name="TFFireRate" type="Timer" parent="." unique_id=1080136132]
-wait_time = 1.4929999999999999
+wait_time = 1.0999999999999999
 autostart = true
 
 [connection signal="body_entered" from="TFChargeCollision" to="." method="_on_tf_charge_collision_body_entered"]

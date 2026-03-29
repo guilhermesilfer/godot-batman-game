@@ -1,0 +1,106 @@
+[gd_scene format=3 uid="uid://47hi61ssv27q"]
+
+[ext_resource type="Texture2D" uid="uid://c4dfyngnrudur" path="res://media/sprites/twoface/harvey_atirando_esquerda_1.png" id="1_x3pcc"]
+[ext_resource type="Script" uid="uid://dqlfyebs01ck5" path="res://media/scenes/ivy.gd" id="1_yv1tv"]
+[ext_resource type="Texture2D" uid="uid://cevbre3pgvejl" path="res://media/sprites/twoface/harvey_atirando_direita_1.png" id="2_yv1tv"]
+[ext_resource type="Texture2D" uid="uid://cyfg8rhxu12s" path="res://media/sprites/twoface/harvey_atirando_esquerda_2.png" id="3_r4bh8"]
+[ext_resource type="Texture2D" uid="uid://dkpgv6pcfc28s" path="res://media/sprites/twoface/harvey_atirando_direita_2.png" id="4_4c4hf"]
+[ext_resource type="Texture2D" uid="uid://c88fjc5pf4x8q" path="res://media/sprites/twoface/harvey_correndo_1.png" id="5_5nihj"]
+[ext_resource type="Texture2D" uid="uid://d3q6o5kuvnqop" path="res://media/sprites/twoface/harvey_correndo_2.png" id="6_06n64"]
+[ext_resource type="Texture2D" uid="uid://br7x5fxf4hh17" path="res://media/sprites/twoface/harvey_correndo_3.png" id="7_2wda2"]
+[ext_resource type="Texture2D" uid="uid://68jqvt3ov12i" path="res://media/sprites/twoface/harvey_correndo_4.png" id="8_pb5q7"]
+[ext_resource type="Texture2D" uid="uid://36atet64f7fy" path="res://media/sprites/twoface/harvey_correndo_5.png" id="9_ujmyr"]
+[ext_resource type="Texture2D" uid="uid://cvk047rqicyia" path="res://media/sprites/twoface/harvey_correndo_6.png" id="10_hu2ed"]
+[ext_resource type="Texture2D" uid="uid://biwnske7ujv8e" path="res://media/sprites/twoface/harvey_correndo_7.png" id="11_vidje"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_ynsss"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_x3pcc")
+}, {
+"duration": 1.0,
+"texture": ExtResource("2_yv1tv")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_r4bh8")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_4c4hf")
+}],
+"loop": true,
+"name": &"death",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_yv1tv")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_4c4hf")
+}],
+"loop": true,
+"name": &"halt",
+"speed": 2.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("5_5nihj")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_06n64")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_2wda2")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_pb5q7")
+}, {
+"duration": 1.0,
+"texture": ExtResource("9_ujmyr")
+}, {
+"duration": 1.0,
+"texture": ExtResource("10_hu2ed")
+}, {
+"duration": 1.0,
+"texture": ExtResource("11_vidje")
+}],
+"loop": true,
+"name": &"run",
+"speed": 12.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_yv1tv")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_4c4hf")
+}],
+"loop": true,
+"name": &"shoot",
+"speed": 6.0
+}]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_xewe3"]
+radius = 15.0
+height = 58.0
+
+[node name="Ivy" type="CharacterBody2D" unique_id=124517878]
+script = ExtResource("1_yv1tv")
+
+[node name="TFAnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=936956355]
+texture_filter = 1
+sprite_frames = SubResource("SpriteFrames_ynsss")
+animation = &"death"
+
+[node name="TFCollision" type="CollisionShape2D" parent="." unique_id=381826413]
+shape = SubResource("CapsuleShape2D_xewe3")
+
+[node name="TFBulletSpawn" type="Marker2D" parent="." unique_id=1945107560]
+position = Vector2(19.85, -8.5)
+
+[node name="TFStuckTimer" type="Timer" parent="." unique_id=713850190]
+
+[node name="TFFireRate" type="Timer" parent="." unique_id=661127186]
+wait_time = 1.0999999999999999
+autostart = true

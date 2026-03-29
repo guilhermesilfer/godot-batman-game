@@ -12,13 +12,18 @@
 [ext_resource type="Texture2D" uid="uid://cx5asrc1hrety" path="res://media/sprites/batman/roll - 1.png" id="9_hlm2d"]
 [ext_resource type="Texture2D" uid="uid://b3nkg24heg8bj" path="res://media/sprites/batman/left punch - 2.png" id="10_e7k4x"]
 [ext_resource type="Texture2D" uid="uid://2t335mgu2sgr" path="res://media/sprites/batman/roll - 2.png" id="10_pa0ap"]
+[ext_resource type="Texture2D" uid="uid://cfxec6irl1120" path="res://media/sprites/batman/dead - 2.png" id="10_viutp"]
 [ext_resource type="Texture2D" uid="uid://r67l43km6ivd" path="res://media/sprites/batman/roll - 3.png" id="11_bmahy"]
 [ext_resource type="Texture2D" uid="uid://dxlge3andh8lm" path="res://media/sprites/batman/left punch - 3.png" id="11_hlm2d"]
+[ext_resource type="Texture2D" uid="uid://dig75y2rutpnw" path="res://media/sprites/batman/dead - 3.png" id="11_nxmgs"]
 [ext_resource type="Texture2D" uid="uid://biojuythibiqw" path="res://media/sprites/batman/roll - 4.png" id="12_6uu7d"]
+[ext_resource type="Texture2D" uid="uid://b4dr2x5wwwxgc" path="res://media/sprites/batman/dead - 4.png" id="12_hv4fi"]
 [ext_resource type="Texture2D" uid="uid://emka277fs8qd" path="res://media/sprites/batman/right punch - 1.png" id="12_pa0ap"]
 [ext_resource type="Texture2D" uid="uid://fw8com530nb6" path="res://media/sprites/batman/right punch - 2.png" id="13_bmahy"]
+[ext_resource type="Texture2D" uid="uid://bs8jylhjl8j6l" path="res://media/sprites/batman/dead - 5.png" id="13_rtr0x"]
 [ext_resource type="Texture2D" uid="uid://dwjibl25r50bg" path="res://media/sprites/batman/roll - 5.png" id="13_viutp"]
 [ext_resource type="Texture2D" uid="uid://djlus44ok1sm4" path="res://media/sprites/batman/right punch - 3.png" id="14_6uu7d"]
+[ext_resource type="Texture2D" uid="uid://dutli6xs3fahv" path="res://media/sprites/batman/dead - 6.png" id="14_8ny4c"]
 [ext_resource type="Texture2D" uid="uid://c8a1k22uwbhgd" path="res://media/sprites/batman/roll - 6.png" id="14_nxmgs"]
 [ext_resource type="Texture2D" uid="uid://bxii3dstl43fp" path="res://media/sprites/batman/roll - 7.png" id="15_hv4fi"]
 [ext_resource type="Texture2D" uid="uid://bn08getnev34k" path="res://media/sprites/batman/roll - 8.png" id="16_rtr0x"]
@@ -33,6 +38,7 @@
 [ext_resource type="Texture2D" uid="uid://1r5fgvmntirf" path="res://media/sprites/batman/running - 6.png" id="25_7je84"]
 [ext_resource type="Texture2D" uid="uid://bhmxwsj5nr3fu" path="res://media/sprites/batman/running - 7.png" id="26_he7t8"]
 [ext_resource type="Texture2D" uid="uid://be748m4mxxrsk" path="res://media/sprites/batman/running - 8.png" id="27_lei58"]
+[ext_resource type="Texture2D" uid="uid://cnf8hlpraspf5" path="res://media/sprites/batman/dead - 1.png" id="34_e7k4x"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_h1cvd"]
 animations = [{
@@ -66,6 +72,41 @@ animations = [{
 "loop": true,
 "name": &"halt",
 "speed": 2.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("34_e7k4x")
+}, {
+"duration": 1.0,
+"texture": ExtResource("10_viutp")
+}, {
+"duration": 1.0,
+"texture": ExtResource("11_nxmgs")
+}, {
+"duration": 1.0,
+"texture": ExtResource("12_hv4fi")
+}, {
+"duration": 1.0,
+"texture": ExtResource("13_rtr0x")
+}, {
+"duration": 1.0,
+"texture": ExtResource("14_8ny4c")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_n7c1b")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_qms7e")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_i2xbf")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_mubyc")
+}],
+"loop": false,
+"name": &"heavy stun",
+"speed": 5.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -161,6 +202,23 @@ animations = [{
 "loop": true,
 "name": &"run",
 "speed": 10.0
+}, {
+"frames": [{
+"duration": 1.2,
+"texture": ExtResource("34_e7k4x")
+}, {
+"duration": 1.0,
+"texture": ExtResource("2_6r26m")
+}, {
+"duration": 1.4,
+"texture": ExtResource("7_ffxfa")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_e7k4x")
+}],
+"loop": true,
+"name": &"stun",
+"speed": 7.0
 }]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_f2d0h"]
@@ -187,7 +245,9 @@ script = ExtResource("1_jqkwr")
 [node name="BatmanAnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=748966652]
 texture_filter = 1
 sprite_frames = SubResource("SpriteFrames_h1cvd")
-animation = &"left punch"
+animation = &"right punch"
+frame = 1
+frame_progress = 0.99883854
 offset = Vector2(0, -7)
 
 [node name="CollisionStanding" type="CollisionShape2D" parent="." unique_id=850553504]
@@ -208,6 +268,8 @@ disabled = true
 debug_color = Color(5.246252e-06, 0.6370109, 0.4016348, 0.41960785)
 
 [node name="CollisionPunch" type="Area2D" parent="." unique_id=182073348]
+collision_layer = 7
+collision_mask = 7
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="CollisionPunch" unique_id=2025805209]
 position = Vector2(20, -15)
@@ -217,3 +279,5 @@ debug_color = Color(0.993777, 0.07577468, 0, 0.41960785)
 
 [node name="pivot" type="Marker2D" parent="." unique_id=1608809611]
 visible = false
+
+[connection signal="body_entered" from="CollisionPunch" to="." method="_on_collision_punch_body_entered"]
