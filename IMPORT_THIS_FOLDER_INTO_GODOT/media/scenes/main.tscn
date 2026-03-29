@@ -6,6 +6,9 @@
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_uu8kp"]
 size = Vector2(320, 61)
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_01sd2"]
+size = Vector2(20, 78)
+
 [node name="Arena" type="Node2D" unique_id=2028955159]
 script = ExtResource("1_01sd2")
 
@@ -53,3 +56,21 @@ offset_top = 7.0
 offset_right = 132.0
 offset_bottom = 34.0
 step = 1.0
+
+[node name="LimitLeft" type="Area2D" parent="." unique_id=2016148525 groups=["arena_limit"]]
+position = Vector2(37, 136)
+collision_layer = 4
+collision_mask = 4
+metadata/_edit_group_ = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="LimitLeft" unique_id=875257160]
+shape = SubResource("RectangleShape2D_01sd2")
+
+[node name="LimitRight" type="Area2D" parent="." unique_id=2089637483 groups=["arena_limit"]]
+position = Vector2(284, 136)
+collision_layer = 4
+collision_mask = 4
+metadata/_edit_group_ = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="LimitRight" unique_id=828472364]
+shape = SubResource("RectangleShape2D_01sd2")

@@ -22,7 +22,7 @@ animations = [{
 }],
 "loop": true,
 "name": &"halt",
-"speed": 5.0
+"speed": 2.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -49,6 +49,17 @@ animations = [{
 "loop": true,
 "name": &"run",
 "speed": 12.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_13250")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_o0q0r")
+}],
+"loop": true,
+"name": &"shoot",
+"speed": 6.0
 }]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_xw344"]
@@ -65,7 +76,7 @@ script = ExtResource("1_ix7rc")
 [node name="TFAnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=369500310]
 texture_filter = 1
 sprite_frames = SubResource("SpriteFrames_mqv4u")
-animation = &"halt"
+animation = &"shoot"
 
 [node name="TFCollision" type="CollisionShape2D" parent="." unique_id=599574454]
 shape = SubResource("CapsuleShape2D_xw344")
@@ -81,3 +92,10 @@ debug_color = Color(1, 0.22999796, 0.16976267, 0.41960785)
 position = Vector2(19.85, -8.5)
 
 [node name="TFStuckTimer" type="Timer" parent="." unique_id=921566481]
+
+[node name="TFFireRate" type="Timer" parent="." unique_id=1080136132]
+wait_time = 1.4929999999999999
+autostart = true
+
+[connection signal="body_entered" from="TFChargeCollision" to="." method="_on_tf_charge_collision_body_entered"]
+[connection signal="timeout" from="TFFireRate" to="." method="_on_tf_fire_rate_timeout"]

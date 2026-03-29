@@ -25,6 +25,7 @@ window/stretch/mode="canvas_items"
 [global_group]
 
 player="all characters of the game. e.g, batman, bosses..."
+arena_limit=""
 
 [input]
 

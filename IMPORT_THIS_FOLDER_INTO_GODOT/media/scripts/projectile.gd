@@ -10,7 +10,9 @@ func _process(delta: float) -> void:
 	_animated_sprite.play("default")
 
 func _on_body_entered(body: Node2D) -> void:
-	if body.is_in_group("player"):
+	if body.is_invulnerable:
+		return
+	elif body.is_in_group("player"):
 		if body.has_method("take_damage"):
 			body.take_damage()
 	queue_free()
