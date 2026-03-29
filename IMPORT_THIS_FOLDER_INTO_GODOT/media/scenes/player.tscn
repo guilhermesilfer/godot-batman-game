@@ -8,11 +8,17 @@
 [ext_resource type="Texture2D" uid="uid://c0csai04yl4in" path="res://media/sprites/batman/crouch - 5.png" id="6_mubyc"]
 [ext_resource type="Texture2D" uid="uid://c5doq55gfhdhs" path="res://media/sprites/batman/standing - 1.png" id="7_ffxfa"]
 [ext_resource type="Texture2D" uid="uid://drpsakwsnmatn" path="res://media/sprites/batman/standing - 2.png" id="8_e7k4x"]
+[ext_resource type="Texture2D" uid="uid://besqnc56en62j" path="res://media/sprites/batman/left punch - 1.png" id="9_ffxfa"]
 [ext_resource type="Texture2D" uid="uid://cx5asrc1hrety" path="res://media/sprites/batman/roll - 1.png" id="9_hlm2d"]
+[ext_resource type="Texture2D" uid="uid://b3nkg24heg8bj" path="res://media/sprites/batman/left punch - 2.png" id="10_e7k4x"]
 [ext_resource type="Texture2D" uid="uid://2t335mgu2sgr" path="res://media/sprites/batman/roll - 2.png" id="10_pa0ap"]
 [ext_resource type="Texture2D" uid="uid://r67l43km6ivd" path="res://media/sprites/batman/roll - 3.png" id="11_bmahy"]
+[ext_resource type="Texture2D" uid="uid://dxlge3andh8lm" path="res://media/sprites/batman/left punch - 3.png" id="11_hlm2d"]
 [ext_resource type="Texture2D" uid="uid://biojuythibiqw" path="res://media/sprites/batman/roll - 4.png" id="12_6uu7d"]
+[ext_resource type="Texture2D" uid="uid://emka277fs8qd" path="res://media/sprites/batman/right punch - 1.png" id="12_pa0ap"]
+[ext_resource type="Texture2D" uid="uid://fw8com530nb6" path="res://media/sprites/batman/right punch - 2.png" id="13_bmahy"]
 [ext_resource type="Texture2D" uid="uid://dwjibl25r50bg" path="res://media/sprites/batman/roll - 5.png" id="13_viutp"]
+[ext_resource type="Texture2D" uid="uid://djlus44ok1sm4" path="res://media/sprites/batman/right punch - 3.png" id="14_6uu7d"]
 [ext_resource type="Texture2D" uid="uid://c8a1k22uwbhgd" path="res://media/sprites/batman/roll - 6.png" id="14_nxmgs"]
 [ext_resource type="Texture2D" uid="uid://bxii3dstl43fp" path="res://media/sprites/batman/roll - 7.png" id="15_hv4fi"]
 [ext_resource type="Texture2D" uid="uid://bn08getnev34k" path="res://media/sprites/batman/roll - 8.png" id="16_rtr0x"]
@@ -61,10 +67,33 @@ animations = [{
 "name": &"halt",
 "speed": 2.0
 }, {
-"frames": [],
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("9_ffxfa")
+}, {
+"duration": 1.0,
+"texture": ExtResource("10_e7k4x")
+}, {
+"duration": 1.0,
+"texture": ExtResource("11_hlm2d")
+}],
 "loop": true,
-"name": &"punch",
-"speed": 5.0
+"name": &"left punch",
+"speed": 7.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("12_pa0ap")
+}, {
+"duration": 1.0,
+"texture": ExtResource("13_bmahy")
+}, {
+"duration": 1.0,
+"texture": ExtResource("14_6uu7d")
+}],
+"loop": true,
+"name": &"right punch",
+"speed": 7.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -144,6 +173,11 @@ height = 28.0
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_6bykx"]
 radius = 5.0
+height = 26.0
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_ffxfa"]
+radius = 6.0
+height = 34.0
 
 [node name="Player" type="CharacterBody2D" unique_id=1548407116 groups=["player"]]
 collision_layer = 2
@@ -153,7 +187,7 @@ script = ExtResource("1_jqkwr")
 [node name="BatmanAnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=748966652]
 texture_filter = 1
 sprite_frames = SubResource("SpriteFrames_h1cvd")
-animation = &"roll"
+animation = &"left punch"
 offset = Vector2(0, -7)
 
 [node name="CollisionStanding" type="CollisionShape2D" parent="." unique_id=850553504]
@@ -168,10 +202,18 @@ disabled = true
 debug_color = Color(5.246252e-06, 0.6370109, 0.4016348, 0.41960785)
 
 [node name="CollisionCrouch2" type="CollisionShape2D" parent="." unique_id=1379335159]
-position = Vector2(18, 9)
+position = Vector2(20, 9)
 shape = SubResource("CapsuleShape2D_6bykx")
 disabled = true
 debug_color = Color(5.246252e-06, 0.6370109, 0.4016348, 0.41960785)
+
+[node name="CollisionPunch" type="Area2D" parent="." unique_id=182073348]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CollisionPunch" unique_id=2025805209]
+position = Vector2(20, -15)
+rotation = 1.5707964
+shape = SubResource("CapsuleShape2D_ffxfa")
+debug_color = Color(0.993777, 0.07577468, 0, 0.41960785)
 
 [node name="pivot" type="Marker2D" parent="." unique_id=1608809611]
 visible = false
