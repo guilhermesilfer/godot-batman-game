@@ -14,7 +14,9 @@ func _on_body_entered(body: Node2D) -> void:
 		return
 	elif body.is_in_group("player"):
 		if body.has_method("take_damage"):
-			body.take_damage()
+			body.take_damage(5)
+		if body.has_method("stun"):
+			body.stun()
 	queue_free()
 
 # frees the bullet once it gets outside the screen

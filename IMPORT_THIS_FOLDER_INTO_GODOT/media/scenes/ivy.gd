@@ -30,17 +30,13 @@ var _player: Node2D
 
 @onready var _bullet_spawn = $TFBulletSpawn
 @onready var _animated_sprite = $TFAnimatedSprite2D
-@onready var _collision_charge_area = $TFChargeCollision
-@onready var _collision_charge = $TFChargeCollision/CollisionShape2D
 @onready var _fire_timer = $TFFireRate
 
 func _ready():
 	_fire_timer.wait_time = NORMAL_FIRE_RATE
 	health = MAX_HEALTH
 	_bullet_spawn.position.x *= facing
-	_collision_charge.position.x *= facing
 	_animated_sprite.flip_h = (facing == -1)
-	_collision_charge.disabled = true
 	
 	_player = get_tree().get_first_node_in_group("player")
 	
@@ -121,14 +117,9 @@ func start_charge():
 		charge_direction = -1
 	
 	set_direction(charge_direction)
-	_collision_charge.disabled = false
-	_collision_charge_area.monitoring = true
 
 func end_charge():
 	print("END CHARGE")
-	
-	_collision_charge.disabled = true
-	_collision_charge_area.monitoring = false
 
 	charge_count += 1
 	
@@ -154,7 +145,6 @@ func set_direction(dir):
 
 	facing = dir
 	
-	_collision_charge.position.x *= -1
 	_bullet_spawn.position.x *= -1
 	_animated_sprite.flip_h = (dir == -1)
 
@@ -199,9 +189,6 @@ func die():
 	velocity = Vector2.ZERO
 	set_physics_process(false)
 	set_process(false)
-	
-	_collision_charge.disabled = true
-	_collision_charge_area.monitoring = false
 	
 	for child in get_children():
 		if child is CollisionShape2D:

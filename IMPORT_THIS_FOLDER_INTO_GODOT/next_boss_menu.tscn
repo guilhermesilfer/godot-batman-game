@@ -1,0 +1,26 @@
+[gd_scene format=3 uid="uid://cbuyi168lqnh8"]
+
+[ext_resource type="Texture2D" uid="uid://881rdygf76vk" path="res://media/sprites/nextbutton.png" id="1_kpvq3"]
+[ext_resource type="Script" uid="uid://u6mn07vfp10t" path="res://next_boss_menu.gd" id="1_vsbc6"]
+
+[node name="NextBossMenu" type="Node2D" unique_id=137394917]
+script = ExtResource("1_vsbc6")
+
+[node name="ButtonManager" type="Control" parent="." unique_id=1453309849]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="NextButton" type="TextureButton" parent="ButtonManager" unique_id=1125101340]
+layout_mode = 0
+offset_left = 103.0
+offset_top = 41.0
+offset_right = 218.14894
+offset_bottom = 123.0
+pivot_offset = Vector2(45, 27)
+texture_normal = ExtResource("1_kpvq3")
+ignore_texture_size = true
+stretch_mode = 6
+
+[connection signal="pressed" from="ButtonManager/NextButton" to="." method="_on_next_button_pressed"]

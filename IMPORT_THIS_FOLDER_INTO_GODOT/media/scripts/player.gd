@@ -14,6 +14,7 @@ const SPEED = 180.0
 const JUMP_VELOCITY = -370.0
 const MAX_HEALTH = 100
 
+var is_stunned := false
 var health = MAX_HEALTH
 var is_crouching: bool
 var is_punching := false
@@ -24,23 +25,25 @@ var roll_speed := 250.0
 var roll_time := 0.7 
 var facing := 1
 
-signal health_changed(new_health)
-
 func _ready() -> void:
 	health = MAX_HEALTH
 	add_to_group("player") 
 	_animated_sprite.animation_finished.connect(_on_animation_finished)
 
 func _physics_process(delta: float) -> void:
+	if not is_on_floor():
+		velocity += get_gravity() * delta
+	
+	if is_stunned:
+		velocity.x = move_toward(velocity.x, 0, SPEED)
+		move_and_slide()
+		return
+	
 	if is_rolling:
 		velocity.x = facing * roll_speed
 		move_and_slide()
 		return
-	
-	if not is_on_floor():
-		velocity += get_gravity() * delta
 
-	# --- CORREÇÃO: Bloqueia leitura de inputs de movimento e direção durante o soco ---
 	var direction := 0.0
 	if not is_punching and not is_rolling:
 		direction = Input.get_axis("left", "right")
@@ -75,13 +78,9 @@ func _physics_process(delta: float) -> void:
 	move_and_slide()
 
 func _process(_delta):
-	if Input.is_action_just_pressed("ui_accept"):
-		var player = get_tree().get_first_node_in_group("player")
-		print("player encontrado:", player)
-		if player:
-			player.take_damage(10)
-	
-	if is_rolling:
+	if is_stunned:
+		return
+	elif is_rolling:
 		return
 	elif is_punching:
 		pass 
@@ -96,7 +95,7 @@ func _process(_delta):
 		play_anim("run")
 	else:
 		play_anim("halt")
-
+	
 	if Input.is_action_just_pressed("fire") and is_on_floor() and not is_crouching and not is_punching and not is_rolling:
 		punch()
 
@@ -109,14 +108,13 @@ func punch():
 	else:
 		_animated_sprite.position.x = 10 * facing
 		_animated_sprite.play("left punch")
-		
+	
 	right_punch = !right_punch
 	
 	var fallback_timer = get_tree().create_timer(0.4) 
 	fallback_timer.timeout.connect(func():
 		if is_punching:
 			is_punching = false
-			print("Fallback de soco stuck acionado (animação em loop?). Batman liberado.")
 	)
 
 func _on_animation_finished():
@@ -165,6 +163,8 @@ func fire():
 	
 	get_tree().current_scene.add_child(bullet)
 
+signal health_changed(new_health)
+
 func take_damage(damage = 1):
 	if is_invulnerable:
 		return
@@ -173,3 +173,41 @@ func take_damage(damage = 1):
 	health = max(health, 0)
 	
 	emit_signal("health_changed", health)
+
+func stun():
+	if is_invulnerable:
+		return
+	
+	is_stunned = true
+	is_punching = false
+	is_rolling = false
+	
+	velocity = Vector2.ZERO
+	
+	play_anim("stun")
+	
+	await get_tree().create_timer(0.4).timeout
+	
+	is_stunned = false
+
+func heavy_stun():
+	if is_invulnerable:
+		return
+	
+	is_stunned = true
+	is_punching = false
+	is_rolling = false
+	
+	velocity = Vector2.ZERO
+	
+	play_anim("heavy stun")
+	
+	await get_tree().create_timer(2).timeout
+	
+	is_stunned = false
+
+
+func _on_collision_punch_body_entered(body: Node2D) -> void:
+	if body.is_in_group("enemies"):
+		if body.has_method("take_damage"):
+			body.take_damage(5)

@@ -1,0 +1,83 @@
+[gd_scene format=3 uid="uid://cbw7gmvw50i84"]
+
+[ext_resource type="Script" uid="uid://cak2pydpftbrj" path="res://media/scripts/main.gd" id="1_01sd2"]
+[ext_resource type="Texture2D" uid="uid://b2we87sx8adts" path="res://media/sprites/cenario.jpg" id="1_qflo1"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_uu8kp"]
+size = Vector2(320, 61)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_01sd2"]
+size = Vector2(20, 78)
+
+[node name="Arena" type="Node2D" unique_id=2028955159]
+script = ExtResource("1_01sd2")
+
+[node name="Blackground" type="ColorRect" parent="." unique_id=715701564]
+offset_right = 320.0
+offset_bottom = 180.0
+color = Color(0, 0, 0, 1)
+metadata/_edit_use_anchors_ = true
+
+[node name="BackgroundImage" type="Sprite2D" parent="Blackground" unique_id=1071636567]
+texture_filter = 1
+position = Vector2(160, 90)
+scale = Vector2(0.24883361, 0.22058822)
+texture = ExtResource("1_qflo1")
+
+[node name="Boundaries" type="StaticBody2D" parent="." unique_id=777401166]
+position = Vector2(171, 206)
+collision_mask = 0
+
+[node name="Ground" type="CollisionShape2D" parent="Boundaries" unique_id=665554039]
+position = Vector2(-11, 0)
+shape = SubResource("RectangleShape2D_uu8kp")
+
+[node name="Wall1" type="CollisionShape2D" parent="Boundaries" unique_id=1330132740]
+position = Vector2(177, -129)
+rotation = -1.5707964
+shape = SubResource("RectangleShape2D_uu8kp")
+
+[node name="Wall2" type="CollisionShape2D" parent="Boundaries" unique_id=1235372301]
+position = Vector2(-199.00003, -129)
+rotation = -1.5707964
+shape = SubResource("RectangleShape2D_uu8kp")
+
+[node name="PlayerSpawn" type="Marker2D" parent="." unique_id=1056235347]
+unique_name_in_owner = true
+position = Vector2(37, 129)
+
+[node name="EnemySpawn" type="Marker2D" parent="." unique_id=586988708]
+unique_name_in_owner = true
+position = Vector2(261.54, 129)
+
+[node name="HealthBar" type="ProgressBar" parent="." unique_id=1598501290]
+offset_left = 6.0
+offset_top = 7.0
+offset_right = 132.0
+offset_bottom = 34.0
+step = 1.0
+
+[node name="EnemyHealthBar" type="ProgressBar" parent="." unique_id=1451695179]
+offset_left = 187.0
+offset_top = 7.0
+offset_right = 313.0
+offset_bottom = 34.0
+step = 1.0
+
+[node name="LimitLeft" type="Area2D" parent="." unique_id=2016148525 groups=["arena_limit"]]
+position = Vector2(37, 136)
+collision_layer = 4
+collision_mask = 4
+metadata/_edit_group_ = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="LimitLeft" unique_id=875257160]
+shape = SubResource("RectangleShape2D_01sd2")
+
+[node name="LimitRight" type="Area2D" parent="." unique_id=2089637483 groups=["arena_limit"]]
+position = Vector2(284, 136)
+collision_layer = 4
+collision_mask = 4
+metadata/_edit_group_ = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="LimitRight" unique_id=828472364]
+shape = SubResource("RectangleShape2D_01sd2")

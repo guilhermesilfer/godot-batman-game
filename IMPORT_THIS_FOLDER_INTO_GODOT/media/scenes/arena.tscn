@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://cbw7gmvw50i84"]
 
-[ext_resource type="Script" uid="uid://cak2pydpftbrj" path="res://media/scripts/main.gd" id="1_01sd2"]
-[ext_resource type="Texture2D" uid="uid://b2we87sx8adts" path="res://media/sprites/cenario.jpg" id="1_qflo1"]
+[ext_resource type="Script" uid="uid://cak2pydpftbrj" path="res://media/scripts/main.gd" id="1_mqy18"]
+[ext_resource type="Texture2D" uid="uid://b2we87sx8adts" path="res://media/sprites/cenario.jpg" id="2_jdyes"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_uu8kp"]
 size = Vector2(320, 61)
@@ -10,7 +10,7 @@ size = Vector2(320, 61)
 size = Vector2(20, 78)
 
 [node name="Arena" type="Node2D" unique_id=2028955159]
-script = ExtResource("1_01sd2")
+script = ExtResource("1_mqy18")
 
 [node name="Blackground" type="ColorRect" parent="." unique_id=715701564]
 offset_right = 320.0
@@ -22,7 +22,7 @@ metadata/_edit_use_anchors_ = true
 texture_filter = 1
 position = Vector2(160, 90)
 scale = Vector2(0.24883361, 0.22058822)
-texture = ExtResource("1_qflo1")
+texture = ExtResource("2_jdyes")
 
 [node name="Boundaries" type="StaticBody2D" parent="." unique_id=777401166]
 position = Vector2(171, 206)
@@ -56,6 +56,14 @@ offset_top = 7.0
 offset_right = 132.0
 offset_bottom = 34.0
 step = 1.0
+
+[node name="EnemyHealthBar" type="ProgressBar" parent="." unique_id=1451695179]
+offset_left = 187.0
+offset_top = 7.0
+offset_right = 313.0
+offset_bottom = 34.0
+step = 1.0
+value = 100.0
 
 [node name="LimitLeft" type="Area2D" parent="." unique_id=2016148525 groups=["arena_limit"]]
 position = Vector2(37, 136)
