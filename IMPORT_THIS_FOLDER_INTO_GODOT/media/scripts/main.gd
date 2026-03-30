@@ -5,9 +5,8 @@ var Player = preload("res://media/scenes/player.tscn")
 @onready var _enemy_spawn = %EnemySpawn
 
 var bosses = [
-	preload("res://media/scenes/bane.tscn"),
-	preload("res://media/scenes/twoface.tscn"),
-	preload("res://media/scenes/ivy.tscn")
+	preload("res://media/scenes/ivy.tscn"),
+	preload("res://media/scenes/twoface.tscn")
 ]
 
 var current_boss_index := 0
@@ -51,7 +50,7 @@ func _on_boss_died():
 	show_next_menu()
 
 func show_next_menu():
-	var menu = preload("res://next_boss_menu.tscn").instantiate()
+	var menu = preload("res://media/scenes/next_boss_menu.tscn").instantiate()
 	add_child(menu)
 	
 	menu.next_pressed.connect(start_next_boss)

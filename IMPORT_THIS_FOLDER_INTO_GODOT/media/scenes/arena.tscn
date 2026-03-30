@@ -48,7 +48,7 @@ position = Vector2(37, 129)
 
 [node name="EnemySpawn" type="Marker2D" parent="." unique_id=586988708]
 unique_name_in_owner = true
-position = Vector2(261.54, 129)
+position = Vector2(249, 129)
 
 [node name="HealthBar" type="ProgressBar" parent="." unique_id=1598501290]
 offset_left = 6.0

@@ -2,229 +2,215 @@ extends CharacterBody2D
 
 enum State {
 	SHOOT,
-	CHARGE,
-	RECOVER
+	VINES,
+	DESCEND,
+	MOVE,
+	EMERGE,
+	DEAD
 }
 
-const SPEED = 220.0
-const MAX_HEALTH = 1
-const NORMAL_FIRE_RATE = 1.0
-const FAST_FIRE_RATE = 0.4
+const MAX_HEALTH = 100
+const ESCAPE_DISTANCE = 80.0 
+
+const MIN_X = 16
+const MAX_X = 304
+const ESCAPE_DELAY = 0.5
 
 var Bullet = preload("res://media/scenes/projectile.tscn")
+var Vine = preload("res://media/scenes/vines.tscn")
 
-var is_berserk := false
-var charge_count := 0
-var max_charges := 1
-
-var is_phase_two := false
+var _escape_timer := 0.0
 var facing := -1
 var state = State.SHOOT
-var charge_direction = 1
+var health = MAX_HEALTH
 var shots_fired = 0
 var shots_target = 0
-var health = MAX_HEALTH
-var damage_taken_in_shoot := 0
 
 var _player: Node2D
 
-@onready var _bullet_spawn = $TFBulletSpawn
-@onready var _animated_sprite = $TFAnimatedSprite2D
-@onready var _fire_timer = $TFFireRate
+@onready var _animated_sprite = $IvyAnimatedSprite2D
+@onready var _bullet_spawn = $IvyBulletSpawn
+@onready var _collision = $IvyCollision
+
+var _spawn_base_x := 0.0
+
+signal health_changed(new_health)
+signal died
+
+# -------------------------
+# SETUP
+# -------------------------
 
 func _ready():
-	_fire_timer.wait_time = NORMAL_FIRE_RATE
 	health = MAX_HEALTH
-	_bullet_spawn.position.x *= facing
-	_animated_sprite.flip_h = (facing == -1)
-	
+	await get_tree().process_frame
 	_player = get_tree().get_first_node_in_group("player")
-	
-	for area in get_tree().get_nodes_in_group("arena_limit"):
-		area.body_entered.connect(_on_limit_body_entered)
-	
+	_spawn_base_x = _bullet_spawn.position.x
 	start_shoot_cycle()
 
-func _process(delta):
+func _physics_process(delta):
+	if state == State.DEAD: return
+	
+	if state == State.SHOOT or state == State.VINES:
+		await get_tree().create_timer(2.0)
+		if player_is_close():
+			start_descend()
+	
 	if _player == null:
 		_player = get_tree().get_first_node_in_group("player")
+	
+	update_facing()
+	
+	if state == State.MOVE:
+		velocity = Vector2.ZERO
 		return
-
-	if state == State.RECOVER:
-		if _player == null:
-			_player = get_tree().get_first_node_in_group("player")
-			return
-	match state:
-		State.RECOVER:
-			var direction = sign(_player.global_position.x - global_position.x)
-			set_direction(direction)
-			_animated_sprite.play("halt")
-		State.SHOOT:
-			_animated_sprite.play("shoot")
-		State.CHARGE:
-			_animated_sprite.play("run")
-
-func _physics_process(delta):
+	
 	if not is_on_floor():
 		velocity += get_gravity() * delta
-
-	if state == State.CHARGE:
-		velocity.x = charge_direction * SPEED
-	else:
-		velocity.x = move_toward(velocity.x, 0, SPEED)
-
+	
 	move_and_slide()
 
+# -------------------------
+# COMBATE
+# -------------------------
+
 func start_shoot_cycle():
-	shots_fired = 0
-	shots_target = randi_range(3, 6)
+	if state == State.DEAD: return
 	state = State.SHOOT
+	shots_fired = 0
+	shots_target = randi_range(2, 2)
+	play_shoot()
+
+func play_shoot():
+	if state == State.SHOOT:
+		_animated_sprite.play("shoot")
+
+func player_is_close() -> bool:
+	if _player == null: return false
 	
-	damage_taken_in_shoot = 0
+	var is_near = abs(_player.global_position.x - global_position.x) <= ESCAPE_DISTANCE
 	
-	print("VAI ATIRAR:", shots_target)
+	if is_near:
+		_escape_timer += get_physics_process_delta_time()
+		return _escape_timer >= ESCAPE_DELAY
+	else:
+		_escape_timer = 0.0
+		return false
 
 func fire():
-	if state != State.SHOOT:
-		return
-	
-	if shots_fired >= shots_target:
-		return
+	if state != State.SHOOT or _player == null: return
 	
 	var bullet = Bullet.instantiate()
 	bullet.global_position = _bullet_spawn.global_position
-	bullet.speed = abs(bullet.speed) * facing
-	
+	var dir = sign(_player.global_position.x - global_position.x)
+	bullet.scale.x = dir
 	get_tree().current_scene.add_child(bullet)
-	
 	shots_fired += 1
-	print("TIROS:", shots_fired, "/", shots_target)
-	
-	if shots_fired >= shots_target:
-		start_charge()
 
-func start_charge():
-	charge_count = 0
-	
-	await get_tree().create_timer(1).timeout
-	print("START CHARGE")
-	
-	state = State.CHARGE
-	
-	if global_position.x < 200:
-		charge_direction = 1
-	else:
-		charge_direction = -1
-	
-	set_direction(charge_direction)
+func spawn_vine_at_position(pos: Vector2):
+	var vine = Vine.instantiate()
+	vine.global_position = pos
+	get_tree().current_scene.add_child(vine)
 
-func end_charge():
-	print("END CHARGE")
-
-	charge_count += 1
+func attack_vines_player():
+	if _player == null: return
+	state = State.VINES
 	
-	if is_berserk and charge_count < max_charges:
-		print("CHAIN CHARGE")
-		start_charge()
-		return
+	var spawn_pos = Vector2(_player.global_position.x, global_position.y)
+	print(spawn_pos)
 	
-	velocity.x = 0
-	state = State.RECOVER
+	spawn_vine_at_position(spawn_pos)
 	
-	var recover_time = 1.0
-	if is_berserk:
-		recover_time = 0.5
-	
-	await get_tree().create_timer(recover_time).timeout
-	
+	await get_tree().create_timer(1.2).timeout
 	start_shoot_cycle()
 
-func set_direction(dir):
-	if dir == 0 or facing == dir:
-		return
+func spawn_vine_front():
+	var offset = 40 * -facing
+	var spawn_pos = Vector2(global_position.x + offset, global_position.y)
+	print(spawn_pos)
+	spawn_vine_at_position(spawn_pos)
 
-	facing = dir
+# -------------------------
+# BURROW SYSTEM (Toca)
+# -------------------------
+
+func start_descend():
+	if state == State.DEAD: return
 	
-	_bullet_spawn.position.x *= -1
-	_animated_sprite.flip_h = (dir == -1)
+	_escape_timer = 0.0
+	
+	state = State.DESCEND
+	_animated_sprite.play("descend")
+	await _animated_sprite.animation_finished
+	_collision.set_deferred("disabled", true)
+	start_move()
 
-signal health_changed(new_health)
+func start_move():
+	state = State.MOVE
+	var new_x = get_safe_position()
+	global_position.x = new_x # Move apenas no X
+	await get_tree().create_timer(0.4).timeout
+	start_emerge()
+
+func start_emerge():
+	state = State.EMERGE
+	_animated_sprite.play("ascend")
+	_collision.set_deferred("disabled", false)
+	await _animated_sprite.animation_finished
+	spawn_vine_front()
+	start_shoot_cycle()
+
+# -------------------------
+# DIREÇÃO E VIDA
+# -------------------------
+
+func update_facing():
+	if _player == null or state == State.DESCEND or state == State.EMERGE: return
+	var dir = sign(global_position.x - _player.global_position.x)
+	if dir != 0 and dir != facing:
+		facing = dir
+		_animated_sprite.flip_h = (facing == -1)
+		_bullet_spawn.position.x = _spawn_base_x * facing
+
+func get_safe_position() -> float:
+	if _player == null: return randf_range(MIN_X, MAX_X)
+	var player_x = _player.global_position.x
+	var mid = (MIN_X + MAX_X) / 2.0
+	return randf_range(mid + 80, MAX_X) if player_x < mid else randf_range(MIN_X, mid - 80)
+
+func _on_ivy_animated_sprite_2d_frame_changed():
+	if state == State.SHOOT and _animated_sprite.animation == "shoot":
+		if _animated_sprite.frame == 4:
+			fire()
+
+func _on_ivy_animated_sprite_2d_animation_finished():
+	if state != State.SHOOT: return
+	
+	if shots_fired < shots_target:
+		play_shoot()
+		return
+	
+	if player_is_close():
+		await get_tree().create_timer(1.2).timeout
+		start_descend()
+		return
+	var chance = randf()
+	if chance < 0.3:
+		attack_vines_player()
+	else:
+		start_shoot_cycle()
 
 func take_damage(damage = 1):
-	health -= damage
-	health = max(health, 0)
-	
+	if state == State.MOVE or state == State.DESCEND: return
+	health = max(health - damage, 0)
 	emit_signal("health_changed", health)
-	
-	if health <= 0:
-		die()
-		return
-	
-	if health <= 40 and not is_phase_two:
-		is_phase_two = true
-		print("fassssst")
-		_fire_timer.wait_time = FAST_FIRE_RATE
-	
-	if health <= 15 and not is_berserk:
-		is_berserk = true
-		print("BERSERK!!!")
-		
-		max_charges = 3
-	
-	if state == State.SHOOT:
-		damage_taken_in_shoot += damage
-		print("DANO ACUMULADO: ", damage_taken_in_shoot)
-		
-		if damage_taken_in_shoot >= 15:
-			print("CORREEEEE")
-			start_charge()
-
-signal died
+	if health <= 0: die()
 
 func die():
-	print("MORREU")
-
-	state = State.RECOVER
-	
+	state = State.DEAD
+	_collision.set_deferred("disabled", true)
 	velocity = Vector2.ZERO
-	set_physics_process(false)
-	set_process(false)
-	
-	for child in get_children():
-		if child is CollisionShape2D:
-			child.disabled = true
-	
 	_animated_sprite.play("death")
-	
 	await get_tree().create_timer(1.5).timeout
-	
 	emit_signal("died")
-	
-	#Engine.time_scale = 0.2
-	#await get_tree().create_timer(1.0).timeout
-	#Engine.time_scale = 1.0
-	
 	queue_free()
-
-func _on_tf_fire_rate_timeout():
-	if state != State.SHOOT:
-		return
-	
-	fire()
-
-func _on_limit_body_entered(body):
-	if body != self:
-		return
-
-	if state == State.CHARGE:
-		print("BATEU NO LIMITE")
-		end_charge()
-
-func _on_tf_charge_collision_body_entered(body: Node2D) -> void:
-	if body.is_invulnerable:
-		return
-	elif body.is_in_group("player"):
-		if body.has_method("take_damage"):
-			body.take_damage(20)
-		if body.has_method("heavy_stun"):
-			body.heavy_stun()

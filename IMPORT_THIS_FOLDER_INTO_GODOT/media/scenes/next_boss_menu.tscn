@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://cbuyi168lqnh8"]
 
 [ext_resource type="Texture2D" uid="uid://881rdygf76vk" path="res://media/sprites/nextbutton.png" id="1_kpvq3"]
-[ext_resource type="Script" uid="uid://u6mn07vfp10t" path="res://next_boss_menu.gd" id="1_vsbc6"]
+[ext_resource type="Script" uid="uid://u6mn07vfp10t" path="res://media/scripts/next_boss_menu.gd" id="1_vsbc6"]
 
 [node name="NextBossMenu" type="Node2D" unique_id=137394917]
 script = ExtResource("1_vsbc6")
