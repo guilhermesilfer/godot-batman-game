@@ -1,0 +1,171 @@
+[gd_scene format=3 uid="uid://cl6jmkeoy8xjh"]
+
+[ext_resource type="Script" uid="uid://4hk21hjibqiq" path="res://media/scripts/bane.gd" id="1_6o27m"]
+[ext_resource type="Texture2D" uid="uid://xoamgt1f8jfb" path="res://media/sprites/bane/bane_parado - 1.png" id="2_px51p"]
+[ext_resource type="Texture2D" uid="uid://bymf7q71fmtq4" path="res://media/sprites/bane/bane_morte - 1.png" id="2_we7va"]
+[ext_resource type="Texture2D" uid="uid://cqaqiqxojntdw" path="res://media/sprites/bane/bane_parado - 2.png" id="3_2wjmf"]
+[ext_resource type="Texture2D" uid="uid://b84kslq8sq0xy" path="res://media/sprites/bane/bane_morte - 2.png" id="3_pmad3"]
+[ext_resource type="Texture2D" uid="uid://vgtqgxpsf5e5" path="res://media/sprites/bane/bane_morte - 3.png" id="4_vitvr"]
+[ext_resource type="Texture2D" uid="uid://bxk5icipcqwe1" path="res://media/sprites/bane/bane_morte - 4.png" id="5_ymqaj"]
+[ext_resource type="Texture2D" uid="uid://ctjf8pbon855h" path="res://media/sprites/bane/bane_pulando - 1.png" id="8_lihk0"]
+[ext_resource type="Texture2D" uid="uid://c6mtryvm56wdi" path="res://media/sprites/bane/bane_pulando - 2.png" id="9_o32gh"]
+[ext_resource type="Texture2D" uid="uid://do5hyxchl2vm5" path="res://media/sprites/bane/bane_pulando - 3.png" id="10_cujh3"]
+[ext_resource type="Texture2D" uid="uid://bbio7x0hni18u" path="res://media/sprites/bane/bane_correndo - 2.png" id="11_hshdi"]
+[ext_resource type="Texture2D" uid="uid://chrmmuuh3nglo" path="res://media/sprites/bane/bane_correndo - 3.png" id="12_0x1nb"]
+[ext_resource type="Texture2D" uid="uid://cnrxk7ippsxmd" path="res://media/sprites/bane/bane_correndo - 4.png" id="13_xfprw"]
+[ext_resource type="Texture2D" uid="uid://b0bajuqkripi3" path="res://media/sprites/bane/bane_correndo - 5.png" id="14_2jqwi"]
+[ext_resource type="Texture2D" uid="uid://bme215ff6rcv4" path="res://media/sprites/bane/bane_correndo - 6.png" id="15_84gwn"]
+[ext_resource type="Texture2D" uid="uid://cbmptmvh0qv05" path="res://media/sprites/bane/bane_correndo - 7.png" id="16_pitvm"]
+[ext_resource type="Texture2D" uid="uid://8ptbfvjae6jk" path="res://media/sprites/bane/bane_rodando - 1.png" id="17_t32j1"]
+[ext_resource type="Texture2D" uid="uid://ds8x7hf0ondk6" path="res://media/sprites/bane/bane_rodando - 2.png" id="18_fx6ec"]
+[ext_resource type="Texture2D" uid="uid://crnn7xwso6diu" path="res://media/sprites/bane/bane_rodando - 3.png" id="19_6eedc"]
+[ext_resource type="Texture2D" uid="uid://0kowi8e60oou" path="res://media/sprites/bane/bane_rodando - 4.png" id="20_ap3um"]
+[ext_resource type="Texture2D" uid="uid://cfunbrmhfiooh" path="res://media/sprites/bane/bane_rodando - 5.png" id="21_jq76g"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_rbb81"]
+animations = [{
+"frames": [{
+"duration": 2.0,
+"texture": ExtResource("2_we7va")
+}, {
+"duration": 2.0,
+"texture": ExtResource("3_pmad3")
+}, {
+"duration": 2.0,
+"texture": ExtResource("4_vitvr")
+}, {
+"duration": 2.0,
+"texture": ExtResource("5_ymqaj")
+}],
+"loop": true,
+"name": &"death",
+"speed": 8.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_px51p")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_2wjmf")
+}],
+"loop": true,
+"name": &"halt",
+"speed": 2.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("8_lihk0")
+}, {
+"duration": 1.0,
+"texture": ExtResource("9_o32gh")
+}, {
+"duration": 1.0,
+"texture": ExtResource("10_cujh3")
+}],
+"loop": false,
+"name": &"jump",
+"speed": 7.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("11_hshdi")
+}, {
+"duration": 1.0,
+"texture": ExtResource("12_0x1nb")
+}, {
+"duration": 1.0,
+"texture": ExtResource("13_xfprw")
+}, {
+"duration": 1.0,
+"texture": ExtResource("14_2jqwi")
+}, {
+"duration": 1.0,
+"texture": ExtResource("15_84gwn")
+}, {
+"duration": 1.0,
+"texture": ExtResource("16_pitvm")
+}],
+"loop": true,
+"name": &"run",
+"speed": 10.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("17_t32j1")
+}, {
+"duration": 1.0,
+"texture": ExtResource("18_fx6ec")
+}, {
+"duration": 1.0,
+"texture": ExtResource("19_6eedc")
+}, {
+"duration": 1.0,
+"texture": ExtResource("20_ap3um")
+}, {
+"duration": 1.0,
+"texture": ExtResource("21_jq76g")
+}],
+"loop": true,
+"name": &"spin",
+"speed": 10.0
+}]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_sawln"]
+radius = 13.0
+height = 62.0
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_iwdtn"]
+radius = 12.0
+height = 68.860115
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_q5mlm"]
+radius = 26.0
+height = 58.0
+
+[node name="Bane" type="CharacterBody2D" unique_id=1476588449]
+collision_layer = 32
+collision_mask = 9
+script = ExtResource("1_6o27m")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=4711207]
+position = Vector2(4.000004, -4)
+scale = Vector2(0.7541665, 0.7541665)
+sprite_frames = SubResource("SpriteFrames_rbb81")
+animation = &"jump"
+
+[node name="BaneCollision" type="CollisionShape2D" parent="." unique_id=637187812]
+position = Vector2(1, -3)
+shape = SubResource("CapsuleShape2D_sawln")
+
+[node name="SpinArea" type="Area2D" parent="." unique_id=2112896904]
+collision_mask = 3
+monitoring = false
+monitorable = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="SpinArea" unique_id=795491812]
+position = Vector2(4, -17)
+rotation = 1.5707964
+shape = SubResource("CapsuleShape2D_iwdtn")
+debug_color = Color(0.9879064, 0.109111555, 3.85046e-07, 0.41960785)
+
+[node name="ChargeArea" type="Area2D" parent="." unique_id=1408493924]
+collision_mask = 3
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ChargeArea" unique_id=465578906]
+position = Vector2(2, 0)
+shape = SubResource("CapsuleShape2D_q5mlm")
+debug_color = Color(0.8113334, 0.41143358, 1.92523e-07, 0.41960785)
+
+[node name="JumpArea" type="Area2D" parent="." unique_id=977061049]
+collision_mask = 3
+monitoring = false
+monitorable = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="JumpArea" unique_id=467404966]
+position = Vector2(4.000001, 13.000005)
+rotation = 1.2217305
+shape = SubResource("CapsuleShape2D_iwdtn")
+debug_color = Color(9.1448425e-07, 0.6471498, 0.23482141, 0.41960785)
+
+[connection signal="body_entered" from="SpinArea" to="." method="_on_damage_area_body_entered"]
+[connection signal="body_entered" from="ChargeArea" to="." method="_on_damage_area_body_entered"]

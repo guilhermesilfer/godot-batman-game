@@ -95,8 +95,7 @@ script = ExtResource("1_ix7rc")
 [node name="TFAnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=369500310]
 texture_filter = 1
 sprite_frames = SubResource("SpriteFrames_mqv4u")
-animation = &"death"
-frame_progress = 0.4208963
+animation = &"halt"
 
 [node name="TFCollision" type="CollisionShape2D" parent="." unique_id=599574454]
 shape = SubResource("CapsuleShape2D_xw344")
@@ -118,7 +117,7 @@ position = Vector2(19.85, -8.5)
 [node name="TFStuckTimer" type="Timer" parent="." unique_id=921566481]
 
 [node name="TFFireRate" type="Timer" parent="." unique_id=1080136132]
-wait_time = 1.0999999999999999
+wait_time = 1.1
 autostart = true
 
 [connection signal="body_entered" from="TFChargeCollision" to="." method="_on_tf_charge_collision_body_entered"]
