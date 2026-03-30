@@ -1,27 +1,24 @@
 extends CharacterBody2D
 
-enum State {
-	IDLE,
-	THROW,
-	DROP_BOMB,
-	JETPACK_TAKEOFF,
-	JETPACK_CHARGE,
-	JETPACK_LANDING,
-	DAMAGE,
-	DEAD
-}
+enum State { IDLE, THROW, DROP_BOMB, JETPACK_TAKEOFF, JETPACK_CHARGE, JETPACK_LANDING, DAMAGE, DEAD }
 
 const SPEED = 0.0 
-const JETPACK_SPEED = 100.0
+const JETPACK_SPEED = 150.0 
 const MAX_HEALTH = 100
-const JETPACK_HEIGHT = 0.0 # Altura ideal para passar na cabeça do Batman
+const JETPACK_HEIGHT = 0.0 
+const DAMAGE_THRESHOLD_FOR_JETPACK = 15 
+const SCREEN_WIDTH_HALF = 160
+
+# Configuração do Burst de Bombas
+var bombs_per_series = 3
 
 var health = MAX_HEALTH
 var state = State.IDLE
-var facing = -1 # -1 é Esquerda (padrão do seu sprite)
+var facing = -1 
 var start_y = 0.0 
 var charge_direction = -1
 var bomb_spawn_timer = 0.0
+var damage_accumulated = 0 
 
 var BouncingBomb = preload("res://media/scenes/bouncing_bomb.tscn")
 var ParachuteBomb = preload("res://media/scenes/parachute_bomb.tscn")
@@ -42,10 +39,10 @@ func _ready():
 	_jetpack_col.disabled = true
 	_jetpack_hitbox.monitoring = false
 	start_y = global_position.y
-	
 	_player = get_tree().get_first_node_in_group("player")
 	
-	# CONEXÃO COM OS LIMITES DA ARENA
+	_animated_sprite.frame_changed.connect(_on_frame_changed)
+	
 	var limits = get_tree().get_nodes_in_group("arena_limit")
 	for area in limits:
 		if area is Area2D:
@@ -59,41 +56,33 @@ func _ready():
 
 func _physics_process(delta):
 	if state == State.DEAD: return
-		
-	if _player == null:
-		_player = get_tree().get_first_node_in_group("player")
-
-	# Gravidade só funciona se não estiver decolando ou voando
+	if _player == null: _player = get_tree().get_first_node_in_group("player")
+	
+	# Só aplica gravidade se não estiver decolando ou no charge
 	if state != State.JETPACK_TAKEOFF and state != State.JETPACK_CHARGE:
 		if not is_on_floor():
 			velocity += get_gravity() * delta
 	else:
 		velocity.y = 0
-
+	
 	match state:
-		State.IDLE, State.THROW, State.DAMAGE, State.JETPACK_LANDING:
+		State.IDLE, State.THROW, State.JETPACK_LANDING:
 			velocity.x = 0
 			update_facing()
 			
 		State.JETPACK_TAKEOFF:
-			# Sobe suavemente
-			global_position.y = move_toward(global_position.y, start_y + JETPACK_HEIGHT, 5.0)
-			if abs(global_position.y - (start_y + JETPACK_HEIGHT)) < 2:
-				start_jetpack_charge()
+			global_position.y = move_toward(global_position.y, start_y + JETPACK_HEIGHT, 4.0)
 				
 		State.JETPACK_CHARGE:
 			velocity.x = charge_direction * JETPACK_SPEED
-			
-			# Chuva de bombas
 			bomb_spawn_timer += delta
 			if bomb_spawn_timer >= 0.4:
 				spawn_auto_parachute_bomb()
 				bomb_spawn_timer = 0.0
-
 	move_and_slide()
 
 # -------------------------
-# IA E COMPORTAMENTO
+# IA E COMBATE
 # -------------------------
 
 func start_cycle():
@@ -101,128 +90,143 @@ func start_cycle():
 	state = State.IDLE
 	_animated_sprite.play("idle")
 	
-	await get_tree().create_timer(1.2).timeout
+	# REDUZIDO: De 2.0 para 0.5 segundos. Agora ele decide rápido o que fazer.
+	await get_tree().create_timer(0.5).timeout 
 	if state != State.IDLE: return
 	
-	# RARIDADE DOS GOLPES
 	var chance = randf()
-	if chance < 0.15: # 15% Jetpack
+	if chance < 0.15: 
 		start_jetpack_init()
-	elif chance < 0.50: # 35% Bomba Paraquedas
+	elif chance < 0.30: # Chance de bomba de paraquedas
 		start_drop_bomb()
-	else: # 50% Bomba que Quica
-		start_throw()
+	else: 
+		# Agora ele tem 70% de chance de começar a metralhar bombas
+		start_throw_series()
 
-func start_throw():
+func start_throw_series():
 	if state == State.DEAD: return
-	state = State.THROW
-	_animated_sprite.play("throw")
 	
-	await get_tree().create_timer(0.3).timeout
-	if state == State.THROW:
-		var bomb = BouncingBomb.instantiate()
-		bomb.global_position = _throw_spawn.global_position
-		if "facing" in bomb: bomb.facing = facing
-		get_tree().current_scene.add_child(bomb)
+	for i in range(bombs_per_series):
+		if state == State.DEAD or state == State.JETPACK_TAKEOFF: break
+		
+		state = State.THROW
+		_animated_sprite.play("throw")
+		
+		await _animated_sprite.animation_finished
+		
+		if state == State.DEAD or state == State.JETPACK_TAKEOFF: break
+		
+		# REDUZIDO: De 1.0 para 0.4 segundos entre as bombas da mesma série
+		# Isso faz com que ele jogue as 3 bombas muito mais rápido
+		if i < bombs_per_series - 1:
+			state = State.IDLE
+			_animated_sprite.play("idle")
+			await get_tree().create_timer(0.4).timeout
 	
-	await _animated_sprite.animation_finished
-	start_cycle()
+	# Ao terminar a série, ele não espera quase nada para começar o próximo ciclo
+	if state != State.DEAD and state != State.JETPACK_TAKEOFF:
+		state = State.IDLE
+		start_cycle()
 
-func start_drop_bomb():
-	if state == State.DEAD: return
-	state = State.DROP_BOMB
-	_animated_sprite.play("idle") 
-	spawn_auto_parachute_bomb()
-	await get_tree().create_timer(1.0).timeout
-	start_cycle()
+func _on_frame_changed():
+	if state == State.THROW and _animated_sprite.animation == "throw":
+		if _animated_sprite.frame == 8: 
+			spawn_bouncing_bomb()
+
+func spawn_bouncing_bomb():
+	var bomb = BouncingBomb.instantiate()
+	bomb.global_position = _throw_spawn.global_position
+	if "facing" in bomb: bomb.facing = facing
+	get_tree().current_scene.add_child(bomb)
 
 func spawn_auto_parachute_bomb():
 	if _player == null: return
 	var bomb = ParachuteBomb.instantiate()
-	# Cai exatamente onde o Batman está no momento
-	bomb.global_position = Vector2(_player.global_position.x, global_position.y - 250)
+	var spawn_y = global_position.y - 350
+	bomb.global_position = Vector2(_player.global_position.x, spawn_y)
 	get_tree().current_scene.add_child(bomb)
 
+func set_direction(dir):
+	facing = dir
+	_animated_sprite.flip_h = (dir == 1) 
+	_throw_spawn.position.x = abs(_throw_spawn.position.x) * (1 if dir == 1 else -1) 
+
+func update_facing():
+	if _player == null or state == State.DEAD: return
+	if state == State.JETPACK_CHARGE or state == State.JETPACK_TAKEOFF: return
+	var dir = 1 if _player.global_position.x > global_position.x else -1
+	set_direction(dir)
+
+func start_drop_bomb():
+	if state == State.DEAD or state == State.JETPACK_TAKEOFF: return
+	state = State.DROP_BOMB
+	_animated_sprite.play("idle") 
+	spawn_auto_parachute_bomb()
+	await get_tree().create_timer(1.0).timeout
+	if state == State.DROP_BOMB:
+		start_cycle()
+
 # -------------------------
-# JETPACK (Voo e Limites)
+# JETPACK
 # -------------------------
 
 func start_jetpack_init():
+	if state == State.JETPACK_TAKEOFF or state == State.JETPACK_CHARGE: return
 	state = State.JETPACK_TAKEOFF
 	_animated_sprite.play("jetpack_takeoff")
+	damage_accumulated = 0 
+	
+	await get_tree().create_timer(1.0).timeout
+	if state == State.JETPACK_TAKEOFF:
+		start_jetpack_charge()
 
 func start_jetpack_charge():
-	if _player == null:
-		start_landing()
-		return
-		
 	state = State.JETPACK_CHARGE
 	_animated_sprite.play("jetpack_charge")
 	bomb_spawn_timer = 0.0 
 	
-	# Decide a direção para atravessar o player
-	charge_direction = 1 if _player.global_position.x > global_position.x else -1
+	if global_position.x < SCREEN_WIDTH_HALF:
+		charge_direction = 1
+	else:
+		charge_direction = -1
+		
 	set_direction(charge_direction)
-	
 	_jetpack_col.set_deferred("disabled", false)
 	_jetpack_hitbox.set_deferred("monitoring", true)
 
 func _on_limit_body_entered(body):
-	# Se o Joker entrar num LimitLeft ou LimitRight enquanto voa, ele pousa
 	if body == self and state == State.JETPACK_CHARGE:
 		start_landing()
 
 func start_landing():
 	if state == State.JETPACK_LANDING: return
 	state = State.JETPACK_LANDING
-	
 	_jetpack_col.set_deferred("disabled", true)
 	_jetpack_hitbox.set_deferred("monitoring", false)
-	
 	_animated_sprite.play("jetpack_landing")
-	
 	var tween = create_tween()
 	tween.tween_property(self, "global_position:y", start_y, 0.4)
-	
 	await _animated_sprite.animation_finished
-	# Como prometido: ao pousar, ele joga uma bomba de quicar
-	start_throw() 
+	start_cycle()
 
 # -------------------------
-# UTILITÁRIOS E DANOS
+# DANOS E MORTE
 # -------------------------
-
-func set_direction(dir):
-	facing = dir
-	_animated_sprite.flip_h = (dir == 1) # Invertido pois seu sprite olha para esquerda
-	_throw_spawn.position.x = abs(_throw_spawn.position.x) * (1 if dir == 1 else -1)
-
-func update_facing():
-	if _player == null or state == State.DEAD: return
-	if state == State.JETPACK_CHARGE or state == State.JETPACK_TAKEOFF: return
-	
-	var dir = 1 if _player.global_position.x > global_position.x else -1
-	set_direction(dir)
-
-func _on_jetpack_hitbox_body_entered(body):
-	if body.is_in_group("player"):
-		if body.has_method("take_damage"): body.take_damage(20)
-		if body.has_method("heavy_stun"): body.heavy_stun()
 
 func take_damage(damage = 1):
 	if state == State.DEAD: return
+	
 	health = max(health - damage, 0)
+	damage_accumulated += damage 
 	emit_signal("health_changed", health)
 	
 	if health <= 0:
 		die()
-	else:
-		# Se estiver no chão, toca animação de dano
-		if state != State.JETPACK_CHARGE:
-			state = State.DAMAGE
-			_animated_sprite.play("damage")
-			await _animated_sprite.animation_finished
-			start_cycle()
+		return
+
+	# Inicia a fuga se atingir o threshold, sem interromper animações via State.DAMAGE
+	if damage_accumulated >= DAMAGE_THRESHOLD_FOR_JETPACK and state != State.JETPACK_CHARGE and state != State.JETPACK_TAKEOFF:
+		start_jetpack_init()
 
 func die():
 	state = State.DEAD
@@ -231,3 +235,8 @@ func die():
 	await get_tree().create_timer(2.0).timeout
 	emit_signal("died")
 	queue_free()
+
+func _on_jetpack_hitbox_body_entered(body):
+	if body.is_in_group("player"):
+		if body.has_method("take_damage"): body.take_damage(15)
+		if body.has_method("heavy_stun"): body.heavy_stun()
