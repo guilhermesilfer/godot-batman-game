@@ -1,0 +1,198 @@
+[gd_scene format=3 uid="uid://dxer52qts15tb"]
+
+[ext_resource type="Script" uid="uid://d0edueqwvaend" path="res://media/scripts/joker.gd" id="1_44kjc"]
+[ext_resource type="Texture2D" uid="uid://dnk62ihfhpqxu" path="res://media/sprites/joker/morte 1.png" id="2_dku1w"]
+[ext_resource type="Texture2D" uid="uid://mrxr75wk0h5o" path="res://media/sprites/joker/morte 2.png" id="3_i7hp2"]
+[ext_resource type="Texture2D" uid="uid://npoia12pdiik" path="res://media/sprites/joker/morte 3.png" id="4_2p0cq"]
+[ext_resource type="Texture2D" uid="uid://cixpuaquqy3lk" path="res://media/sprites/joker/morte 4.png" id="5_rrmh7"]
+[ext_resource type="Texture2D" uid="uid://dsdjbaq6nc16j" path="res://media/sprites/joker/morte 5.png" id="6_ufnry"]
+[ext_resource type="Texture2D" uid="uid://cbhr52fd6dfoy" path="res://media/sprites/joker/morte 6.png" id="7_gccs4"]
+[ext_resource type="Texture2D" uid="uid://bor5cenn164v2" path="res://media/sprites/joker/morte 7.png" id="8_lvxnd"]
+[ext_resource type="Texture2D" uid="uid://dety70tug48mg" path="res://media/sprites/joker/morte 8.png" id="9_o0ulb"]
+[ext_resource type="Texture2D" uid="uid://bewthexaaa64b" path="res://media/sprites/joker/morte 9.png" id="10_gw8wb"]
+[ext_resource type="Texture2D" uid="uid://b64a1aua6l1u5" path="res://media/sprites/joker/morte 10.png" id="11_6ar1v"]
+[ext_resource type="Texture2D" uid="uid://clmix2id20rut" path="res://media/sprites/joker/morte 11.png" id="12_nil4q"]
+[ext_resource type="Texture2D" uid="uid://dqc5wil5hwsxt" path="res://media/sprites/joker/parado 1.png" id="13_k26et"]
+[ext_resource type="Texture2D" uid="uid://cnmax30rci7xp" path="res://media/sprites/joker/parado 2.png" id="14_mjfoc"]
+[ext_resource type="Texture2D" uid="uid://inn4g3fxgtnx" path="res://media/sprites/joker/voando 1.png" id="15_1lpy7"]
+[ext_resource type="Texture2D" uid="uid://bmcsk516ddnog" path="res://media/sprites/joker/voando 2.png" id="16_eronp"]
+[ext_resource type="Texture2D" uid="uid://fgi46s4p607i" path="res://media/sprites/joker/decolando 3.png" id="17_h7tdf"]
+[ext_resource type="Texture2D" uid="uid://dp53ex4ly6luo" path="res://media/sprites/joker/decolando 1.png" id="18_rlhlr"]
+[ext_resource type="Texture2D" uid="uid://cg74ot6tdvtuf" path="res://media/sprites/joker/jogando 1.png" id="19_gu3bu"]
+[ext_resource type="Texture2D" uid="uid://dvyax7m3td1v6" path="res://media/sprites/joker/jogando 2.png" id="20_dulbg"]
+[ext_resource type="Texture2D" uid="uid://0rqv5hyv4hhf" path="res://media/sprites/joker/jogando 3.png" id="21_xixgb"]
+[ext_resource type="Texture2D" uid="uid://bkkkvpxflnpru" path="res://media/sprites/joker/jogando 4.png" id="22_ce23x"]
+[ext_resource type="Texture2D" uid="uid://dgxydbclyp4p4" path="res://media/sprites/joker/jogando 5.png" id="23_u8dph"]
+[ext_resource type="Texture2D" uid="uid://3lydd6htiq8x" path="res://media/sprites/joker/jogando 6.png" id="24_tb6u3"]
+[ext_resource type="Texture2D" uid="uid://ctessa7i0c4bq" path="res://media/sprites/joker/jogando 7.png" id="25_tjt51"]
+[ext_resource type="Texture2D" uid="uid://gmejya1bs07u" path="res://media/sprites/joker/jogando 8.png" id="26_up473"]
+[ext_resource type="Texture2D" uid="uid://b2txknpwywyae" path="res://media/sprites/joker/jogando 9.png" id="27_0w2fn"]
+[ext_resource type="Texture2D" uid="uid://dc8jar4h3sahm" path="res://media/sprites/joker/jogando 10.png" id="28_s560u"]
+[ext_resource type="Texture2D" uid="uid://3nh7ar6c3ycy" path="res://media/sprites/joker/jogando 11.png" id="29_8o1tx"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_8nbbs"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_dku1w")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_i7hp2")
+}],
+"loop": false,
+"name": &"damage",
+"speed": 4.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_dku1w")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_i7hp2")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_2p0cq")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_rrmh7")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_ufnry")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_gccs4")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_lvxnd")
+}, {
+"duration": 1.0,
+"texture": ExtResource("9_o0ulb")
+}, {
+"duration": 1.0,
+"texture": ExtResource("10_gw8wb")
+}, {
+"duration": 1.0,
+"texture": ExtResource("11_6ar1v")
+}, {
+"duration": 1.0,
+"texture": ExtResource("12_nil4q")
+}],
+"loop": true,
+"name": &"death",
+"speed": 9.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("13_k26et")
+}, {
+"duration": 1.0,
+"texture": ExtResource("14_mjfoc")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("15_1lpy7")
+}, {
+"duration": 1.0,
+"texture": ExtResource("16_eronp")
+}],
+"loop": true,
+"name": &"jetpack_charge",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("17_h7tdf")
+}, {
+"duration": 1.0,
+"texture": ExtResource("18_rlhlr")
+}],
+"loop": false,
+"name": &"jetpack_landing",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("18_rlhlr")
+}, {
+"duration": 1.0,
+"texture": ExtResource("17_h7tdf")
+}],
+"loop": false,
+"name": &"jetpack_takeoff",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("19_gu3bu")
+}, {
+"duration": 1.0,
+"texture": ExtResource("20_dulbg")
+}, {
+"duration": 1.0,
+"texture": ExtResource("21_xixgb")
+}, {
+"duration": 1.0,
+"texture": ExtResource("22_ce23x")
+}, {
+"duration": 1.0,
+"texture": ExtResource("23_u8dph")
+}, {
+"duration": 1.0,
+"texture": ExtResource("24_tb6u3")
+}, {
+"duration": 1.0,
+"texture": ExtResource("25_tjt51")
+}, {
+"duration": 1.0,
+"texture": ExtResource("26_up473")
+}, {
+"duration": 1.0,
+"texture": ExtResource("27_0w2fn")
+}, {
+"duration": 1.0,
+"texture": ExtResource("28_s560u")
+}, {
+"duration": 1.0,
+"texture": ExtResource("29_8o1tx")
+}],
+"loop": false,
+"name": &"throw",
+"speed": 11.0
+}]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_i7hp2"]
+radius = 21.0
+height = 68.0
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_dku1w"]
+radius = 15.0
+height = 66.0
+
+[node name="Joker" type="CharacterBody2D" unique_id=561748664 groups=["enemies"]]
+collision_layer = 4
+script = ExtResource("1_44kjc")
+
+[node name="JokerAnimatedSprite" type="AnimatedSprite2D" parent="." unique_id=1891984076]
+texture_filter = 1
+sprite_frames = SubResource("SpriteFrames_8nbbs")
+animation = &"jetpack_charge"
+
+[node name="ThrowSpawn" type="Marker2D" parent="." unique_id=1793267716]
+position = Vector2(-26, -32)
+
+[node name="JetpackHitbox" type="Area2D" parent="." unique_id=602490966]
+collision_layer = 4
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="JetpackHitbox" unique_id=458313367]
+shape = SubResource("CapsuleShape2D_i7hp2")
+debug_color = Color(0.9881373, 0.01807146, 0, 0.41960785)
+
+[node name="JokerCollision" type="CollisionShape2D" parent="." unique_id=996097458]
+shape = SubResource("CapsuleShape2D_dku1w")
+
+[connection signal="body_entered" from="JetpackHitbox" to="." method="_on_jetpack_hitbox_body_entered"]

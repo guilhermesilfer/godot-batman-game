@@ -1,0 +1,87 @@
+[gd_scene format=3 uid="uid://bboggs63p2er8"]
+
+[ext_resource type="Texture2D" uid="uid://dyscjowoberk8" path="res://media/sprites/joker/cabum 1.png" id="1_1frlm"]
+[ext_resource type="Script" uid="uid://ci3njhqftgdno" path="res://media/scripts/parachute_bomb.gd" id="1_dadqx"]
+[ext_resource type="Texture2D" uid="uid://dyecpxkumauoo" path="res://media/sprites/joker/cabum 2.png" id="2_dadqx"]
+[ext_resource type="Texture2D" uid="uid://b7qqyta68ei33" path="res://media/sprites/joker/cabum 3.png" id="3_ltiu4"]
+[ext_resource type="Texture2D" uid="uid://xd26qyq5jm8r" path="res://media/sprites/joker/cabum 4.png" id="4_iy0il"]
+[ext_resource type="Texture2D" uid="uid://7wd6g8b48kmc" path="res://media/sprites/joker/cabum 5.png" id="5_1geox"]
+[ext_resource type="Texture2D" uid="uid://cfhxrwwjfm6lp" path="res://media/sprites/joker/cabum 6.png" id="6_7ooau"]
+[ext_resource type="Texture2D" uid="uid://de366ujo0f2xv" path="res://media/sprites/joker/cabum 7.png" id="7_m5558"]
+[ext_resource type="Texture2D" uid="uid://cvcuk5lx8stgh" path="res://media/sprites/joker/cabum 8.png" id="8_sjrit"]
+[ext_resource type="Texture2D" uid="uid://byphswy8pe3vd" path="res://media/sprites/joker/cabum 9.png" id="9_kek1r"]
+[ext_resource type="Texture2D" uid="uid://cytx5gtt8v1j7" path="res://media/sprites/joker/bomba 1.png" id="10_tm0j8"]
+[ext_resource type="Texture2D" uid="uid://bq58ph15f16vr" path="res://media/sprites/joker/bomba 2.png" id="11_v77xj"]
+[ext_resource type="Texture2D" uid="uid://cqernbjl641jy" path="res://media/sprites/joker/bomba 3.png" id="12_1jq7w"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_h38kn"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_1frlm")
+}, {
+"duration": 1.0,
+"texture": ExtResource("2_dadqx")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_ltiu4")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_iy0il")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_1geox")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_7ooau")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_m5558")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_sjrit")
+}, {
+"duration": 1.0,
+"texture": ExtResource("9_kek1r")
+}],
+"loop": false,
+"name": &"explosion",
+"speed": 12.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("10_tm0j8")
+}, {
+"duration": 1.0,
+"texture": ExtResource("11_v77xj")
+}, {
+"duration": 1.0,
+"texture": ExtResource("12_1jq7w")
+}],
+"loop": false,
+"name": &"falling",
+"speed": 4.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_dadqx"]
+radius = 8.002139
+
+[node name="ParachuteBomb" type="Area2D" unique_id=998233188]
+script = ExtResource("1_dadqx")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=2105290758]
+texture_filter = 1
+sprite_frames = SubResource("SpriteFrames_h38kn")
+animation = &"falling"
+frame = 2
+frame_progress = 1.0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1637409756]
+position = Vector2(0, 5.42)
+shape = SubResource("CircleShape2D_dadqx")
+
+[node name="VisibleOnScreenEnabler2D" type="VisibleOnScreenEnabler2D" parent="." unique_id=2142638368]
+position = Vector2(0, 2)
+rect = Rect2(-12, -15, 24, 27)
+
+[connection signal="screen_exited" from="VisibleOnScreenEnabler2D" to="." method="_on_visible_on_screen_enabler_2d_screen_exited"]

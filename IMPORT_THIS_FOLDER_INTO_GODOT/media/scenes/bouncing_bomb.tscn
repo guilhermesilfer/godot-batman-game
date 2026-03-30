@@ -1,0 +1,84 @@
+[gd_scene format=3 uid="uid://df16vxp1djujg"]
+
+[ext_resource type="Script" uid="uid://cyvhwyh2p57eb" path="res://media/scripts/bouncing_bomb.gd" id="1_jawc4"]
+[ext_resource type="Texture2D" uid="uid://cytx5gtt8v1j7" path="res://media/sprites/joker/bomba 1.png" id="1_qvf4r"]
+[ext_resource type="Texture2D" uid="uid://dyscjowoberk8" path="res://media/sprites/joker/cabum 1.png" id="3_n68wv"]
+[ext_resource type="Texture2D" uid="uid://dyecpxkumauoo" path="res://media/sprites/joker/cabum 2.png" id="4_ffp4w"]
+[ext_resource type="Texture2D" uid="uid://b7qqyta68ei33" path="res://media/sprites/joker/cabum 3.png" id="5_bnjbc"]
+[ext_resource type="Texture2D" uid="uid://xd26qyq5jm8r" path="res://media/sprites/joker/cabum 4.png" id="6_m3pgg"]
+[ext_resource type="Texture2D" uid="uid://7wd6g8b48kmc" path="res://media/sprites/joker/cabum 5.png" id="7_qkx0n"]
+[ext_resource type="Texture2D" uid="uid://cfhxrwwjfm6lp" path="res://media/sprites/joker/cabum 6.png" id="8_rtnsc"]
+[ext_resource type="Texture2D" uid="uid://de366ujo0f2xv" path="res://media/sprites/joker/cabum 7.png" id="9_acdk1"]
+[ext_resource type="Texture2D" uid="uid://cvcuk5lx8stgh" path="res://media/sprites/joker/cabum 8.png" id="10_4stuv"]
+[ext_resource type="Texture2D" uid="uid://byphswy8pe3vd" path="res://media/sprites/joker/cabum 9.png" id="11_7w6tb"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_ypwl1"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_qvf4r")
+}],
+"loop": false,
+"name": &"default",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("3_n68wv")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_ffp4w")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_bnjbc")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_m3pgg")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_qkx0n")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_rtnsc")
+}, {
+"duration": 1.0,
+"texture": ExtResource("9_acdk1")
+}, {
+"duration": 1.0,
+"texture": ExtResource("10_4stuv")
+}, {
+"duration": 1.0,
+"texture": ExtResource("11_7w6tb")
+}],
+"loop": false,
+"name": &"explosion",
+"speed": 12.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_jwk8k"]
+radius = 7.071068
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_qlrxj"]
+radius = 4.0
+
+[node name="BouncingBomb" type="CharacterBody2D" unique_id=308402840]
+collision_layer = 0
+collision_mask = 3
+script = ExtResource("1_jawc4")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=966245371]
+texture_filter = 1
+sprite_frames = SubResource("SpriteFrames_ypwl1")
+
+[node name="ExplosionArea" type="Area2D" parent="." unique_id=2133461169]
+collision_layer = 0
+collision_mask = 3
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ExplosionArea" unique_id=172302893]
+shape = SubResource("CircleShape2D_jwk8k")
+debug_color = Color(0.9338936, 0.23903552, 0.2574311, 0.41960785)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1981236567]
+shape = SubResource("CircleShape2D_qlrxj")
+
+[connection signal="body_entered" from="ExplosionArea" to="." method="_on_explosion_area_body_entered"]

@@ -5,9 +5,10 @@ var Player = preload("res://media/scenes/player.tscn")
 @onready var _enemy_spawn = %EnemySpawn
 
 var bosses = [
+	preload("res://media/scenes/joker.tscn"),
+	preload("res://media/scenes/twoface.tscn"),
 	preload("res://media/scenes/bane.tscn"),
-	preload("res://media/scenes/ivy.tscn"),
-	preload("res://media/scenes/twoface.tscn")
+	preload("res://media/scenes/ivy.tscn")
 ]
 
 var current_boss_index := 0

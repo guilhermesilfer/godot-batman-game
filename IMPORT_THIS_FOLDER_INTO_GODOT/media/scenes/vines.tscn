@@ -103,6 +103,7 @@ _data = {
 }
 
 [node name="Vines" type="Area2D" unique_id=226132275]
+collision_layer = 0
 collision_mask = 2
 script = ExtResource("1_bkpjo")
 
