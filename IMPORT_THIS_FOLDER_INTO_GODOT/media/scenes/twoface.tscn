@@ -118,6 +118,7 @@ position = Vector2(19.85, -8.5)
 
 [node name="TFFireRate" type="Timer" parent="." unique_id=1080136132]
 wait_time = 1.1
+wait_time = 1.1
 autostart = true
 
 [connection signal="body_entered" from="TFChargeCollision" to="." method="_on_tf_charge_collision_body_entered"]

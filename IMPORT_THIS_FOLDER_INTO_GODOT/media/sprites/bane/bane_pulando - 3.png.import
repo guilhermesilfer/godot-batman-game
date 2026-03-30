@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://crnn7xwso6diu"
-path="res://.godot/imported/bane_rodando - 3.png-ec5e9d372530d0ae8108d4e5667939ba.ctex"
+uid="uid://do5hyxchl2vm5"
+path="res://.godot/imported/bane_pulando - 3.png-070bd2a0022c3f5b3a1336211aafa291.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://media/sprites/bane/bane_rodando - 3.png"
-dest_files=["res://.godot/imported/bane_rodando - 3.png-ec5e9d372530d0ae8108d4e5667939ba.ctex"]
+source_file="res://media/sprites/bane/bane_pulando - 3.png"
+dest_files=["res://.godot/imported/bane_pulando - 3.png-070bd2a0022c3f5b3a1336211aafa291.ctex"]
 
 [params]
 

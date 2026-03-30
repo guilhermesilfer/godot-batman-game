@@ -245,9 +245,8 @@ script = ExtResource("1_jqkwr")
 [node name="BatmanAnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=748966652]
 texture_filter = 1
 sprite_frames = SubResource("SpriteFrames_h1cvd")
-animation = &"right punch"
-frame = 1
-frame_progress = 0.99883854
+animation = &"crouch"
+frame = 4
 offset = Vector2(0, -7)
 
 [node name="CollisionStanding" type="CollisionShape2D" parent="." unique_id=850553504]
@@ -269,7 +268,7 @@ debug_color = Color(5.246252e-06, 0.6370109, 0.4016348, 0.41960785)
 
 [node name="CollisionPunch" type="Area2D" parent="." unique_id=182073348]
 collision_layer = 7
-collision_mask = 7
+collision_mask = 39
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="CollisionPunch" unique_id=2025805209]
 position = Vector2(20, -15)
