@@ -16,11 +16,9 @@
 [ext_resource type="Texture2D" uid="uid://b0bajuqkripi3" path="res://media/sprites/bane/bane_correndo - 5.png" id="14_2jqwi"]
 [ext_resource type="Texture2D" uid="uid://bme215ff6rcv4" path="res://media/sprites/bane/bane_correndo - 6.png" id="15_84gwn"]
 [ext_resource type="Texture2D" uid="uid://cbmptmvh0qv05" path="res://media/sprites/bane/bane_correndo - 7.png" id="16_pitvm"]
-[ext_resource type="Texture2D" uid="uid://8ptbfvjae6jk" path="res://media/sprites/bane/bane_rodando - 1.png" id="17_t32j1"]
 [ext_resource type="Texture2D" uid="uid://ds8x7hf0ondk6" path="res://media/sprites/bane/bane_rodando - 2.png" id="18_fx6ec"]
 [ext_resource type="Texture2D" uid="uid://crnn7xwso6diu" path="res://media/sprites/bane/bane_rodando - 3.png" id="19_6eedc"]
-[ext_resource type="Texture2D" uid="uid://0kowi8e60oou" path="res://media/sprites/bane/bane_rodando - 4.png" id="20_ap3um"]
-[ext_resource type="Texture2D" uid="uid://cfunbrmhfiooh" path="res://media/sprites/bane/bane_rodando - 5.png" id="21_jq76g"]
+[ext_resource type="Texture2D" uid="uid://0kowi8e60oou" path="res://media/sprites/bane/bane_rodando - 5.png" id="21_jq76g"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_rbb81"]
 animations = [{
@@ -91,7 +89,7 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("17_t32j1")
+"texture": ExtResource("18_fx6ec")
 }, {
 "duration": 1.0,
 "texture": ExtResource("18_fx6ec")
@@ -100,7 +98,7 @@ animations = [{
 "texture": ExtResource("19_6eedc")
 }, {
 "duration": 1.0,
-"texture": ExtResource("20_ap3um")
+"texture": ExtResource("21_jq76g")
 }, {
 "duration": 1.0,
 "texture": ExtResource("21_jq76g")

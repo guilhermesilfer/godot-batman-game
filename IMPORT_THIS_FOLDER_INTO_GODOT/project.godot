@@ -18,7 +18,6 @@ config/features=PackedStringArray("4.6", "Forward Plus")
 
 window/size/viewport_width=320
 window/size/viewport_height=180
-window/size/mode=2
 window/size/initial_position_type=3
 window/stretch/mode="canvas_items"
 window/main_scene="uid://ca2l5jke2kn2w"

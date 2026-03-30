@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://cbw7gmvw50i84"]
 
-[ext_resource type="Script" uid="uid://cak2pydpftbrj" path="res://media/scripts/main.gd" id="1_mqy18"]
+[ext_resource type="Script" uid="uid://cak2pydpftbrj" path="res://media/scripts/arena.gd" id="1_mqy18"]
 [ext_resource type="Texture2D" uid="uid://b2we87sx8adts" path="res://media/sprites/cenario.jpg" id="2_jdyes"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_uu8kp"]
