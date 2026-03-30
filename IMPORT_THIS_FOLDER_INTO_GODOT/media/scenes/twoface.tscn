@@ -12,6 +12,7 @@
 [ext_resource type="Texture2D" uid="uid://36atet64f7fy" path="res://media/sprites/twoface/harvey_correndo_5.png" id="6_vw15v"]
 [ext_resource type="Texture2D" uid="uid://cvk047rqicyia" path="res://media/sprites/twoface/harvey_correndo_6.png" id="7_d6t87"]
 [ext_resource type="Texture2D" uid="uid://biwnske7ujv8e" path="res://media/sprites/twoface/harvey_correndo_7.png" id="8_0q8eo"]
+[ext_resource type="AudioStream" uid="uid://cimendbogo0vx" path="res://media/audios/shot sound.MP3" id="13_vw15v"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_mqv4u"]
 animations = [{
@@ -118,8 +119,10 @@ position = Vector2(19.85, -8.5)
 
 [node name="TFFireRate" type="Timer" parent="." unique_id=1080136132]
 wait_time = 1.1
-wait_time = 1.1
 autostart = true
+
+[node name="ShotSound" type="AudioStreamPlayer2D" parent="." unique_id=1043680420]
+stream = ExtResource("13_vw15v")
 
 [connection signal="body_entered" from="TFChargeCollision" to="." method="_on_tf_charge_collision_body_entered"]
 [connection signal="timeout" from="TFFireRate" to="." method="_on_tf_fire_rate_timeout"]

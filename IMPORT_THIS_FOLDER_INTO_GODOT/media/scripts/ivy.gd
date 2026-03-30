@@ -16,7 +16,7 @@ const MIN_X = 16
 const MAX_X = 304
 const ESCAPE_DELAY = 0.5
 
-var Bullet = preload("res://media/scenes/projectile.tscn")
+var Bullet = preload("res://media/scenes/ivy_projectile.tscn")
 var Vine = preload("res://media/scenes/vines.tscn")
 
 var _escape_timer := 0.0
@@ -31,6 +31,8 @@ var _player: Node2D
 @onready var _animated_sprite = $IvyAnimatedSprite2D
 @onready var _bullet_spawn = $IvyBulletSpawn
 @onready var _collision = $IvyCollision
+@onready var _laugh_sound = $LaughSound
+@onready var _shot_sound = $ShotSound
 
 var _spawn_base_x := 0.0
 
@@ -45,6 +47,8 @@ func _ready():
 	health = MAX_HEALTH
 	await get_tree().process_frame
 	_player = get_tree().get_first_node_in_group("player")
+	if _player:
+		_player.health_changed.connect(_on_player_health_changed)
 	_spawn_base_x = _bullet_spawn.position.x
 	start_shoot_cycle()
 
@@ -101,6 +105,7 @@ func fire():
 	if state != State.SHOOT or _player == null: return
 	
 	var bullet = Bullet.instantiate()
+	_shot_sound.play()
 	bullet.global_position = _bullet_spawn.global_position
 	var dir = sign(_player.global_position.x - global_position.x)
 	bullet.scale.x = dir
@@ -214,3 +219,7 @@ func die():
 	await get_tree().create_timer(1.5).timeout
 	emit_signal("died")
 	queue_free()
+
+func _on_player_health_changed(new_health):
+	if state != State.DEAD and not _laugh_sound.playing:
+		_laugh_sound.play()

@@ -39,6 +39,10 @@
 [ext_resource type="Texture2D" uid="uid://bhmxwsj5nr3fu" path="res://media/sprites/batman/running - 7.png" id="26_he7t8"]
 [ext_resource type="Texture2D" uid="uid://be748m4mxxrsk" path="res://media/sprites/batman/running - 8.png" id="27_lei58"]
 [ext_resource type="Texture2D" uid="uid://cnf8hlpraspf5" path="res://media/sprites/batman/dead - 1.png" id="34_e7k4x"]
+[ext_resource type="AudioStream" uid="uid://lutqhasr3xkg" path="res://media/audios/punch sound 1.MP3" id="40_hv4fi"]
+[ext_resource type="AudioStream" uid="uid://d3qmntuhhcg4p" path="res://media/audios/punch sound 2.MP3" id="41_rtr0x"]
+[ext_resource type="AudioStream" uid="uid://da2qfhwcac61a" path="res://media/audios/batman damage 1.MP3" id="42_8ny4c"]
+[ext_resource type="AudioStream" uid="uid://bihy0idxj7lg4" path="res://media/audios/batman damage 2.MP3" id="43_5ukyu"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_h1cvd"]
 animations = [{
@@ -277,5 +281,17 @@ debug_color = Color(0.993777, 0.07577468, 0, 0.41960785)
 
 [node name="pivot" type="Marker2D" parent="." unique_id=1608809611]
 visible = false
+
+[node name="RightPunchSound" type="AudioStreamPlayer2D" parent="." unique_id=2100932300]
+stream = ExtResource("40_hv4fi")
+
+[node name="LeftPunchSound" type="AudioStreamPlayer2D" parent="." unique_id=437537547]
+stream = ExtResource("41_rtr0x")
+
+[node name="DamageSound1" type="AudioStreamPlayer2D" parent="." unique_id=1476702838]
+stream = ExtResource("42_8ny4c")
+
+[node name="DamageSound2" type="AudioStreamPlayer2D" parent="." unique_id=790909393]
+stream = ExtResource("43_5ukyu")
 
 [connection signal="body_entered" from="CollisionPunch" to="." method="_on_collision_punch_body_entered"]

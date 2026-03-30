@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" uid="uid://egytjxc30bpj" path="res://media/scripts/vines.gd" id="1_bkpjo"]
 [ext_resource type="Texture2D" uid="uid://c14vd5dwptdsd" path="res://media/sprites/vines.png" id="2_flt13"]
+[ext_resource type="AudioStream" uid="uid://dm5t7gdpvk3mt" path="res://media/audios/vine sound.MP3" id="3_flt13"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_8vosk"]
 radius = 12.0
@@ -117,8 +118,16 @@ scale = Vector2(0.044622675, 0.044622675)
 sprite_frames = SubResource("SpriteFrames_8vosk")
 animation = &"shrink"
 
+[node name="AnimatedSprite2D2" type="AnimatedSprite2D" parent="AnimatedSprite2D" unique_id=736738514]
+position = Vector2(-22.410126, 112.05069)
+sprite_frames = SubResource("SpriteFrames_8vosk")
+animation = &"shrink"
+
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=758566677]
 libraries/ = SubResource("AnimationLibrary_2pew7")
+
+[node name="VinesSound" type="AudioStreamPlayer2D" parent="." unique_id=1066667895]
+stream = ExtResource("3_flt13")
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]
 [connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_animation_player_animation_finished"]

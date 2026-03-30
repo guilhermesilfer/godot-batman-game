@@ -33,6 +33,7 @@ var _player: Node2D
 @onready var _collision_charge_area = $TFChargeCollision
 @onready var _collision_charge = $TFChargeCollision/CollisionShape2D
 @onready var _fire_timer = $TFFireRate
+@onready var _shot_sound = $ShotSound
 
 func _ready():
 	_fire_timer.wait_time = NORMAL_FIRE_RATE
@@ -96,6 +97,7 @@ func fire():
 		return
 	
 	var bullet = Bullet.instantiate()
+	_shot_sound.play()
 	bullet.global_position = _bullet_spawn.global_position
 	bullet.speed = abs(bullet.speed) * facing
 	
@@ -200,29 +202,24 @@ func die():
 	set_physics_process(false)
 	set_process(false)
 	
-	_collision_charge.disabled = true
-	_collision_charge_area.monitoring = false
+	# Usar set_deferred desliga a física com segurança sem causar erros na engine
+	_collision_charge.set_deferred("disabled", true)
+	_collision_charge_area.set_deferred("monitoring", false)
 	
 	for child in get_children():
 		if child is CollisionShape2D:
-			child.disabled = true
+			child.set_deferred("disabled", true)
 	
 	_animated_sprite.play("death")
 	
 	await get_tree().create_timer(1.5).timeout
 	
 	emit_signal("died")
-	
-	#Engine.time_scale = 0.2
-	#await get_tree().create_timer(1.0).timeout
-	#Engine.time_scale = 1.0
-	
 	queue_free()
 
 func _on_tf_fire_rate_timeout():
 	if state != State.SHOOT:
 		return
-	
 	fire()
 
 func _on_limit_body_entered(body):
@@ -234,6 +231,10 @@ func _on_limit_body_entered(body):
 		end_charge()
 
 func _on_tf_charge_collision_body_entered(body: Node2D) -> void:
+	# TRAVA DE SEGURANÇA: Se ele estiver morto, não causa mais dano nenhum!
+	if health <= 0:
+		return
+		
 	if body.is_invulnerable:
 		return
 	elif body.is_in_group("player"):

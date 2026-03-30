@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://bg3s467q2y8hh"
+path="res://.godot/imported/bane grunt1.MP3-1b85a96646c43abef465a915369f90c6.mp3str"
+
+[deps]
+
+source_file="res://media/audios/bane grunt1.MP3"
+dest_files=["res://.godot/imported/bane grunt1.MP3-1b85a96646c43abef465a915369f90c6.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

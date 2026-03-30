@@ -20,6 +20,8 @@
 [ext_resource type="Texture2D" uid="uid://ds8x7hf0ondk6" path="res://media/sprites/bane/bane_rodando - 2.png" id="18_fx6ec"]
 [ext_resource type="Texture2D" uid="uid://crnn7xwso6diu" path="res://media/sprites/bane/bane_rodando - 3.png" id="19_6eedc"]
 [ext_resource type="Texture2D" uid="uid://0kowi8e60oou" path="res://media/sprites/bane/bane_rodando - 5.png" id="21_jq76g"]
+[ext_resource type="AudioStream" uid="uid://bg3s467q2y8hh" path="res://media/audios/bane grunt1.MP3" id="21_we7va"]
+[ext_resource type="AudioStream" uid="uid://qk7vq0c6uvs8" path="res://media/audios/bane grunt 2.MP3" id="22_pmad3"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_rbb81"]
 animations = [{
@@ -173,6 +175,12 @@ position = Vector2(4.000001, 13.000005)
 rotation = 1.2217305
 shape = SubResource("CapsuleShape2D_iwdtn")
 debug_color = Color(9.1448425e-07, 0.6471498, 0.23482141, 0.41960785)
+
+[node name="BaneGrunt1" type="AudioStreamPlayer2D" parent="." unique_id=1871417276]
+stream = ExtResource("21_we7va")
+
+[node name="BaneGrunt2" type="AudioStreamPlayer2D" parent="." unique_id=1094829793]
+stream = ExtResource("22_pmad3")
 
 [connection signal="body_entered" from="SpinArea" to="." method="_on_damage_area_body_entered"]
 [connection signal="body_entered" from="ChargeArea" to="." method="_on_damage_area_body_entered"]

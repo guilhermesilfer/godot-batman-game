@@ -2,6 +2,7 @@ extends Area2D
 
 @onready var _anim_player = $AnimationPlayer
 @onready var _collision = $CollisionShape2D # Certifique-se do nome do nó
+@onready var _vine_sound = $VinesSound
 
 var _is_dying = false
 
@@ -22,6 +23,7 @@ func attack():
 	modulate.a = 1.0 # Fica sólida
 	_collision.disabled = false
 	_anim_player.play("grow")
+	_vine_sound.play()
 
 func start_death():
 	if _is_dying: return

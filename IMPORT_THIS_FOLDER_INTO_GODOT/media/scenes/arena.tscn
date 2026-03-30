@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" uid="uid://cak2pydpftbrj" path="res://media/scripts/arena.gd" id="1_mqy18"]
 [ext_resource type="Texture2D" uid="uid://b2we87sx8adts" path="res://media/sprites/cenario.jpg" id="2_jdyes"]
+[ext_resource type="AudioStream" uid="uid://b4nou3ukt4d6e" path="res://media/audios/ingame song.MP3" id="3_jdyes"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_uu8kp"]
 size = Vector2(320, 61)
@@ -81,3 +82,6 @@ metadata/_edit_group_ = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="LimitRight" unique_id=828472364]
 shape = SubResource("RectangleShape2D_01sd2")
+
+[node name="IngameSong" type="AudioStreamPlayer2D" parent="." unique_id=360355533]
+stream = ExtResource("3_jdyes")

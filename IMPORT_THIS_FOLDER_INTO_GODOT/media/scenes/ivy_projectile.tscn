@@ -1,0 +1,44 @@
+[gd_scene format=3 uid="uid://crfyf7bidbiyy"]
+
+[ext_resource type="Texture2D" uid="uid://7ohcyuy3wdym" path="res://media/sprites/spritesheets/ivy bullets.png" id="2_hhgiq"]
+[ext_resource type="Texture2D" uid="uid://x8tma75gcmms" path="res://media/sprites/spritesheets/ivy bullets2.png" id="3_5fccm"]
+[ext_resource type="Script" uid="uid://b34qe604iex4x" path="res://media/scripts/ivy_projectile.gd" id="3_hhgiq"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_sxmqc"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_hhgiq")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_5fccm")
+}],
+"loop": true,
+"name": &"default",
+"speed": 6.0
+}]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_q0owk"]
+radius = 4.0
+height = 20.0
+
+[node name="IvyProjectile" type="Area2D" unique_id=1941071635]
+collision_layer = 0
+collision_mask = 2
+script = ExtResource("3_hhgiq")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=2065428542]
+texture_filter = 1
+position = Vector2(1, 1)
+scale = Vector2(0.6416667, 0.65833336)
+sprite_frames = SubResource("SpriteFrames_sxmqc")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=212682799]
+position = Vector2(0, -1)
+rotation = 1.5707964
+shape = SubResource("CapsuleShape2D_q0owk")
+
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="." unique_id=1690731074]
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="screen_exited" from="VisibleOnScreenNotifier2D" to="." method="_on_visible_on_screen_notifier_2d_screen_exited"]

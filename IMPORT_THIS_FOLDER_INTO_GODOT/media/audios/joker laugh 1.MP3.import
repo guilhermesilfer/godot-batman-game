@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://c8uhayes0s334"
+path="res://.godot/imported/joker laugh 1.MP3-68153449c03beba53b066901a6df2c63.mp3str"
+
+[deps]
+
+source_file="res://media/audios/joker laugh 1.MP3"
+dest_files=["res://.godot/imported/joker laugh 1.MP3-68153449c03beba53b066901a6df2c63.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

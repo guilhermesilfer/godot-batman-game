@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://bihy0idxj7lg4"
+path="res://.godot/imported/batman damage 2.MP3-43dcaba1962d33c047ba943d1836b457.mp3str"
+
+[deps]
+
+source_file="res://media/audios/batman damage 2.MP3"
+dest_files=["res://.godot/imported/batman damage 2.MP3-43dcaba1962d33c047ba943d1836b457.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

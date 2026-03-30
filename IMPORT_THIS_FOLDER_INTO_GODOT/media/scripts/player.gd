@@ -9,6 +9,10 @@ var Bullet = preload("res://media/scenes/projectile.tscn")
 @onready var _collision_crouching2 = $CollisionCrouch2
 @onready var _area_punch = $CollisionPunch
 @onready var _collision_punching = $CollisionPunch/CollisionShape2D
+@onready var _right_puch_sound = $RightPunchSound
+@onready var _left_puch_sound = $LeftPunchSound
+@onready var _damage_sound1 = $DamageSound1
+@onready var _damage_sound2 = $DamageSound2
 
 const SPEED = 180.0
 const JUMP_VELOCITY = -370.0
@@ -105,9 +109,11 @@ func punch():
 	if right_punch:
 		_animated_sprite.position.x = 10 * facing
 		_animated_sprite.play("right punch")
+		_left_puch_sound.play()
 	else:
 		_animated_sprite.position.x = 10 * facing
 		_animated_sprite.play("left punch")
+		_right_puch_sound.play()
 	
 	right_punch = !right_punch
 	
@@ -173,6 +179,10 @@ func take_damage(damage = 1):
 	health = max(health, 0)
 	
 	emit_signal("health_changed", health)
+	if randi() % 2 == 0:
+		_damage_sound1.play()
+	else:
+		_damage_sound2.play()
 
 func stun():
 	if is_invulnerable:

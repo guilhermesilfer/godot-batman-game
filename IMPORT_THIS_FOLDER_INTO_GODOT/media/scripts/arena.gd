@@ -3,12 +3,13 @@ extends Node2D
 var Player = preload("res://media/scenes/player.tscn")
 @onready var _player_spawn = %PlayerSpawn
 @onready var _enemy_spawn = %EnemySpawn
+@onready var _ingame_song = $IngameSong
 
 var bosses = [
-	preload("res://media/scenes/joker.tscn"),
 	preload("res://media/scenes/twoface.tscn"),
+	preload("res://media/scenes/ivy.tscn"),
 	preload("res://media/scenes/bane.tscn"),
-	preload("res://media/scenes/ivy.tscn")
+	preload("res://media/scenes/joker.tscn")
 ]
 
 var current_boss_index := 0
@@ -18,6 +19,7 @@ var current_boss = null
 @onready var _enemy_health_bar = $EnemyHealthBar
 
 func _ready() -> void:
+	_ingame_song.play()
 	spawn_boss()
 	inst(Player, _player_spawn.position)
 	

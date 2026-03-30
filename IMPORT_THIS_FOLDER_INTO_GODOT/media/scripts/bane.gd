@@ -28,6 +28,9 @@ var _is_dying := false
 @onready var _charge_col = $ChargeArea/CollisionShape2D
 @onready var _jump_col = $JumpArea/CollisionShape2D 
 
+@onready var _grunt_sound1 = $BaneGrunt1
+@onready var _grunt_sound2 = $BaneGrunt2
+
 signal health_changed(new_health)
 signal died
 
@@ -134,6 +137,10 @@ func execute_load():
 	disable_all_hitboxes()
 	velocity.x = move_toward(velocity.x, 0, RUN_SPEED) 
 	play_anim("load")
+	if randi() % 2 == 0:
+		_grunt_sound1.play()
+	else:
+		_grunt_sound2.play()
 	await get_tree().create_timer(1.5).timeout
 	
 	if state == State.DEAD or _is_dying: return
