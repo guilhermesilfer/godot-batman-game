@@ -10,6 +10,7 @@
 [ext_resource type="Texture2D" uid="uid://ctjf8pbon855h" path="res://media/sprites/bane/bane_pulando - 1.png" id="8_lihk0"]
 [ext_resource type="Texture2D" uid="uid://c6mtryvm56wdi" path="res://media/sprites/bane/bane_pulando - 2.png" id="9_o32gh"]
 [ext_resource type="Texture2D" uid="uid://do5hyxchl2vm5" path="res://media/sprites/bane/bane_pulando - 3.png" id="10_cujh3"]
+[ext_resource type="Texture2D" uid="uid://cckvd5evtg78m" path="res://media/sprites/bane/bane_carregando - 1.png" id="11_7ul1i"]
 [ext_resource type="Texture2D" uid="uid://bbio7x0hni18u" path="res://media/sprites/bane/bane_correndo - 2.png" id="11_hshdi"]
 [ext_resource type="Texture2D" uid="uid://chrmmuuh3nglo" path="res://media/sprites/bane/bane_correndo - 3.png" id="12_0x1nb"]
 [ext_resource type="Texture2D" uid="uid://cnrxk7ippsxmd" path="res://media/sprites/bane/bane_correndo - 4.png" id="13_xfprw"]
@@ -23,21 +24,21 @@
 [sub_resource type="SpriteFrames" id="SpriteFrames_rbb81"]
 animations = [{
 "frames": [{
-"duration": 2.0,
+"duration": 1.0,
 "texture": ExtResource("2_we7va")
 }, {
-"duration": 2.0,
+"duration": 1.0,
 "texture": ExtResource("3_pmad3")
 }, {
-"duration": 2.0,
+"duration": 1.0,
 "texture": ExtResource("4_vitvr")
 }, {
-"duration": 2.0,
+"duration": 1.0,
 "texture": ExtResource("5_ymqaj")
 }],
-"loop": true,
+"loop": false,
 "name": &"death",
-"speed": 8.0
+"speed": 4.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -63,6 +64,14 @@ animations = [{
 "loop": false,
 "name": &"jump",
 "speed": 7.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("11_7ul1i")
+}],
+"loop": true,
+"name": &"load",
+"speed": 5.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -129,7 +138,7 @@ script = ExtResource("1_6o27m")
 position = Vector2(4.000004, -4)
 scale = Vector2(0.7541665, 0.7541665)
 sprite_frames = SubResource("SpriteFrames_rbb81")
-animation = &"jump"
+animation = &"death"
 
 [node name="BaneCollision" type="CollisionShape2D" parent="." unique_id=637187812]
 position = Vector2(1, -3)

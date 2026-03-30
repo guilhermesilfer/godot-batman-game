@@ -1,10 +1,10 @@
 extends CharacterBody2D
 
-enum State { HALT, RUN, PRE_JUMP, JUMP, REST, SPIN, DEAD }
+enum State { HALT, LOAD, RUN, JUMP, REST, SPIN, DEAD }
 
 const RUN_SPEED = 200.0
 const JUMP_SPEED = 250.0
-const MAX_HEALTH = 100
+const MAX_HEALTH = 1
 const LEFT_WALL = 45.0
 const RIGHT_WALL = 275.0
 const JUMP_VELOCITY = -400.0 
@@ -16,6 +16,8 @@ var run_count = 0
 var target_runs = 0
 var jump_count = 0
 var target_jumps = 0
+
+var _is_dying := false 
 
 @onready var _animated_sprite = $AnimatedSprite2D
 @onready var _spin_area = $SpinArea
@@ -43,13 +45,12 @@ func _ready():
 	if not _jump_area.body_entered.is_connected(_on_jump_damage_area_body_entered):
 		_jump_area.body_entered.connect(_on_jump_damage_area_body_entered)
 	
-	# Força o radar principal ligado; o dano será guiado pelos CollisionShapes
 	if _spin_area: _spin_area.monitoring = true
 	if _charge_area: _charge_area.monitoring = true
 	if _jump_area: _jump_area.monitoring = true
 	
 	disable_all_hitboxes()
-	set_direction(facing) # Aplica a direção inicial logo ao nascer
+	set_direction(facing) 
 	start_cycle()
 
 func disable_all_hitboxes():
@@ -58,7 +59,10 @@ func disable_all_hitboxes():
 	if _jump_col: _jump_col.set_deferred("disabled", true)
 
 func _physics_process(delta):
-	if state == State.DEAD: return
+	if state == State.DEAD or _is_dying: 
+		velocity.x = 0 
+		move_and_slide()
+		return
 	
 	if not is_on_floor():
 		velocity += get_gravity() * delta
@@ -78,7 +82,7 @@ func _physics_process(delta):
 				_animated_sprite.play("jump")
 				_animated_sprite.frame = 1
 				
-		State.HALT, State.PRE_JUMP, State.REST, State.SPIN:
+		State.HALT, State.LOAD, State.REST, State.SPIN:
 			velocity.x = move_toward(velocity.x, 0, RUN_SPEED)
 
 	move_and_slide()
@@ -93,11 +97,13 @@ func check_walls():
 		bounce()
 
 func bounce():
+	if state == State.DEAD or _is_dying: return
+	
 	if state == State.RUN:
 		run_count += 1
 		set_direction(facing * -1)
 		if run_count >= target_runs:
-			start_pre_jump()
+			start_jump() 
 	elif state == State.JUMP:
 		landing()
 
@@ -111,7 +117,7 @@ func landing():
 	
 	await get_tree().create_timer(0.3).timeout 
 	
-	if state == State.DEAD: return
+	if state == State.DEAD or _is_dying: return
 	
 	jump_count += 1
 	set_direction(facing * -1)
@@ -121,95 +127,118 @@ func landing():
 	else:
 		start_jump()
 
+func execute_load():
+	if state == State.DEAD or _is_dying: return 
+	
+	state = State.LOAD
+	disable_all_hitboxes()
+	velocity.x = move_toward(velocity.x, 0, RUN_SPEED) 
+	play_anim("load")
+	await get_tree().create_timer(1.5).timeout
+	
+	if state == State.DEAD or _is_dying: return
+
 func start_cycle():
-	if state == State.DEAD: return
+	if state == State.DEAD or _is_dying: return
+	
 	state = State.HALT
 	disable_all_hitboxes()
 	play_anim("halt")
-	await get_tree().create_timer(1.5).timeout
-	if state != State.DEAD: start_run()
+	await get_tree().create_timer(1.0).timeout
+	
+	if state == State.DEAD or _is_dying: return
+	start_run()
 
 func start_run():
-	if state == State.DEAD: return
+	if state == State.DEAD or _is_dying: return
+	
+	await execute_load()
+	if state == State.DEAD or _is_dying: return
+	
 	state = State.RUN
 	run_count = 0
 	target_runs = randi_range(2, 4)
 	
 	if _charge_col: _charge_col.set_deferred("disabled", false)
-	if _spin_col: _spin_col.set_deferred("disabled", true)
-	if _jump_col: _jump_col.set_deferred("disabled", true)
-	
 	play_anim("run")
 
-func start_pre_jump():
-	if state == State.DEAD: return
-	state = State.PRE_JUMP
-	disable_all_hitboxes()
-	play_anim("halt")
-	await get_tree().create_timer(1.5).timeout 
-	if state != State.DEAD: start_jump()
-
 func start_jump():
-	if state == State.DEAD: return
+	if state == State.DEAD or _is_dying: return
+	
+	await execute_load()
+	if state == State.DEAD or _is_dying: return
+	
 	state = State.JUMP
 	jump_count = 0
 	target_jumps = randi_range(1, 2)
 	
 	velocity.y = JUMP_VELOCITY
 	
-	if _charge_col: _charge_col.set_deferred("disabled", true)
-	if _spin_col: _spin_col.set_deferred("disabled", true)
 	if _jump_col: _jump_col.set_deferred("disabled", false) 
-	
 	_animated_sprite.play("jump")
 
 func start_rest():
-	if state == State.DEAD: return
+	if state == State.DEAD or _is_dying: return
+	
 	state = State.REST
 	disable_all_hitboxes()
 	play_anim("halt")
 	await get_tree().create_timer(4.0).timeout 
-	if state != State.DEAD: start_spin()
+	
+	if state == State.DEAD or _is_dying: return
+	start_spin()
 
 func start_spin():
-	if state == State.DEAD: return
+	if state == State.DEAD or _is_dying: return
+	
+	await execute_load()
+	if state == State.DEAD or _is_dying: return
+	
 	state = State.SPIN
 	
-	if _charge_col: _charge_col.set_deferred("disabled", true)
-	if _jump_col: _jump_col.set_deferred("disabled", true)
 	if _spin_col: _spin_col.set_deferred("disabled", false) 
 	
 	play_anim("spin")
 	await get_tree().create_timer(1.5).timeout
-	if state != State.DEAD: start_cycle()
+	
+	if state == State.DEAD or _is_dying: return
+	start_cycle()
 
 func set_direction(dir):
+	if state == State.DEAD or _is_dying: return
+	
 	facing = dir
 	_animated_sprite.flip_h = (facing == -1)
 	
-	# Espelha diretamente as Formas de Colisão ao invés das Áreas
 	if _spin_col: _spin_col.position.x = abs(_spin_col.position.x) * dir
 	if _charge_col: _charge_col.position.x = abs(_charge_col.position.x) * dir
 	
 	if _jump_col: 
 		_jump_col.position.x = abs(_jump_col.position.x) * dir 
-		# Inverte a rotação para espelhar perfeitamente a inclinação
 		_jump_col.rotation_degrees = abs(_jump_col.rotation_degrees) * -dir
 
 func play_anim(anim_name: String):
+	# PROTEÇÃO VISUAL MÁXIMA: Impede novas animações se estiver morto
+	if _is_dying and anim_name != "death": return
+	
 	if _animated_sprite.animation != anim_name:
 		_animated_sprite.play(anim_name)
 
 func take_damage(damage = 1):
-	if state == State.DEAD: return
+	if state == State.DEAD or _is_dying: return
+	
 	health -= damage
 	health = max(health, 0)
 	emit_signal("health_changed", health)
 	if health <= 0: die()
 
 func die():
+	if _is_dying: return
+	_is_dying = true 
+	
 	state = State.DEAD
-	velocity = Vector2.ZERO
+	velocity = Vector2.ZERO 
+	
 	set_physics_process(false)
 	disable_all_hitboxes()
 	
@@ -217,21 +246,24 @@ func die():
 		if child is CollisionShape2D:
 			child.set_deferred("disabled", true)
 			
+	# Para a animação atual imediatamente antes de tocar a morte
+	_animated_sprite.stop()
 	play_anim("death")
+	
 	await get_tree().create_timer(2.0).timeout
+	
 	emit_signal("died")
 	queue_free()
 
 func _on_damage_area_body_entered(body: Node2D) -> void:
-	if state == State.DEAD: return
+	if state == State.DEAD or _is_dying: return
 	if body.is_in_group("player"):
 		_apply_damage_to_batman(body, 20)
 
 func _on_jump_damage_area_body_entered(body: Node2D) -> void:
-	if state == State.DEAD: return
+	if state == State.DEAD or _is_dying: return
 	if body.is_in_group("player"):
 		if body.get("is_crouching") == true:
-			print("Batman desviou agachado do pulo do Bane!")
 			return 
 		_apply_damage_to_batman(body, 25) 
 

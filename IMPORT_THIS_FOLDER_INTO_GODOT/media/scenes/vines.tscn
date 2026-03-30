@@ -50,7 +50,7 @@ tracks/0/path = NodePath("AnimatedSprite2D:position")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.26666665),
+"times": PackedFloat32Array(-0.1, 0.26666665),
 "transitions": PackedFloat32Array(0.3298773, 0.3298773),
 "update": 0,
 "values": [Vector2(0, 86.035), Vector2(0, 0)]
@@ -62,7 +62,7 @@ tracks/1/path = NodePath("CollisionShape2D:position")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
-"times": PackedFloat32Array(0, 0.26666665),
+"times": PackedFloat32Array(-0.1, 0.26666665),
 "transitions": PackedFloat32Array(0.3298773, 0.3298773),
 "update": 0,
 "values": [Vector2(0, 86.035), Vector2(0, 0)]
@@ -107,7 +107,7 @@ collision_mask = 2
 script = ExtResource("1_bkpjo")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=31748239]
-position = Vector2(0, 86.035)
+position = Vector2(0, 32.765755)
 shape = SubResource("CapsuleShape2D_8vosk")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1066912500]
