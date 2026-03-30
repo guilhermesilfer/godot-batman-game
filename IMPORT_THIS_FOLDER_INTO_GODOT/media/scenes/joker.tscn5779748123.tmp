@@ -179,7 +179,7 @@ script = ExtResource("1_44kjc")
 [node name="JokerAnimatedSprite" type="AnimatedSprite2D" parent="." unique_id=1891984076]
 texture_filter = 1
 sprite_frames = SubResource("SpriteFrames_8nbbs")
-animation = &"throw"
+animation = &"jetpack_charge"
 
 [node name="ThrowSpawn" type="Marker2D" parent="." unique_id=1793267716]
 position = Vector2(-26, -32)
