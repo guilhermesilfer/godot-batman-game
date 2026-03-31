@@ -1,6 +1,7 @@
 extends CharacterBody2D
 
-enum State { IDLE, THROW, DROP_BOMB, JETPACK_TAKEOFF, JETPACK_CHARGE, JETPACK_LANDING, DAMAGE, DEAD }
+# 1. Adicionamos o estado LAUGH aqui
+enum State { IDLE, THROW, DROP_BOMB, JETPACK_TAKEOFF, JETPACK_CHARGE, JETPACK_LANDING, DAMAGE, DEAD, LAUGH }
 
 const SPEED = 0.0 
 const JETPACK_SPEED = 150.0 
@@ -30,6 +31,10 @@ var _player: Node2D
 @onready var _jetpack_hitbox = $JetpackHitbox
 @onready var _jetpack_col = $JetpackHitbox/CollisionShape2D
 
+# Referências para os áudios que vi na sua print
+@onready var _laugh_sound1 = $JokerLaugh1
+@onready var _laugh_sound2 = $JokerLaugh2
+
 signal health_changed(new_health)
 signal died
 
@@ -39,6 +44,10 @@ func _ready():
 	_jetpack_hitbox.monitoring = false
 	start_y = global_position.y
 	_player = get_tree().get_first_node_in_group("player")
+	
+	# Garante que a risada toque inteira uma vez e pare
+	if _animated_sprite.sprite_frames.has_animation("laugh"):
+		_animated_sprite.sprite_frames.set_animation_loop("laugh", false)
 	
 	_animated_sprite.frame_changed.connect(_on_frame_changed)
 	
@@ -65,7 +74,8 @@ func _physics_process(delta):
 		velocity.y = 0
 	
 	match state:
-		State.IDLE, State.THROW, State.JETPACK_LANDING:
+		# 2. Adicionamos o State.LAUGH para ele ficar paradinho e virado para o player enquanto ri
+		State.IDLE, State.THROW, State.JETPACK_LANDING, State.LAUGH:
 			velocity.x = 0
 			update_facing()
 		
@@ -123,7 +133,28 @@ func start_throw_series():
 			await get_tree().create_timer(0.4).timeout
 	
 	if state != State.DEAD and state != State.JETPACK_TAKEOFF:
-		state = State.IDLE
+		# 3. A mágica acontece aqui: ao invés de voltar pro ciclo, ele começa a rir!
+		start_laugh()
+
+# 4. Nova função de Risada Invulnerável
+func start_laugh():
+	if state == State.DEAD or state == State.JETPACK_TAKEOFF: return
+	
+	state = State.LAUGH
+	_animated_sprite.play("laugh")
+	
+	# Sorteia um dos dois áudios de risada
+	if _laugh_sound1 and _laugh_sound2:
+		if randi() % 2 == 0:
+			_laugh_sound1.play()
+		else:
+			_laugh_sound2.play()
+	
+	# Fica nesse estado invulnerável até a animação acabar
+	await _animated_sprite.animation_finished
+	
+	# Só então ele volta pro ciclo normal de combate
+	if state != State.DEAD and state != State.JETPACK_TAKEOFF:
 		start_cycle()
 
 func _on_frame_changed():
@@ -212,7 +243,8 @@ func start_landing():
 # -------------------------
 
 func take_damage(damage = 1):
-	if state == State.DEAD: return
+	# 5. O Escudo! Se ele estiver morto ou Rindo (State.LAUGH), ignora o soco do Batman!
+	if state == State.DEAD or state == State.LAUGH: return
 	
 	health = max(health - damage, 0)
 	damage_accumulated += damage 

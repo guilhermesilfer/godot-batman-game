@@ -1,4 +1,5 @@
 extends Node2D
+
 @onready var _menu_song = $MenuSong
 
 func _ready():
@@ -9,3 +10,19 @@ func _on_start_button_pressed() -> void:
 
 func _on_quit_button_pressed() -> void:
 	get_tree().quit()
+
+func _on_start_button_mouse_entered() -> void:
+	$ButtonManager/StartButton.scale = Vector2(1.1, 1.1)
+	$ButtonManager/StartButton.modulate = Color(1.5, 1.5, 1.5)
+
+func _on_start_button_mouse_exited() -> void:
+	$ButtonManager/StartButton.scale = Vector2(1, 1)
+	$ButtonManager/StartButton.modulate = Color(1, 1, 1)
+
+func _on_quit_button_mouse_entered() -> void:
+	$ButtonManager/QuitButton.scale = Vector2(1.1, 1.1)
+	$ButtonManager/QuitButton.modulate = Color(1.5, 1.5, 1.5)
+
+func _on_quit_button_mouse_exited() -> void:
+	$ButtonManager/QuitButton.scale = Vector2(1, 1)
+	$ButtonManager/QuitButton.modulate = Color(1, 1, 1)

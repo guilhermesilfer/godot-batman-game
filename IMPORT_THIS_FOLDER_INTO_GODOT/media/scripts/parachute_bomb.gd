@@ -23,6 +23,7 @@ func _on_body_entered(body):
 func explode():
 	is_exploding = true
 	$AnimatedSprite2D.play("explosion")
+	$ShotSound.play()
 	await $AnimatedSprite2D.animation_finished
 	queue_free()
 

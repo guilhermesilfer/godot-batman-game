@@ -18,17 +18,31 @@
 [ext_resource type="Texture2D" uid="uid://bmcsk516ddnog" path="res://media/sprites/joker/voando 2.png" id="16_eronp"]
 [ext_resource type="Texture2D" uid="uid://fgi46s4p607i" path="res://media/sprites/joker/decolando 3.png" id="17_h7tdf"]
 [ext_resource type="Texture2D" uid="uid://dp53ex4ly6luo" path="res://media/sprites/joker/decolando 1.png" id="18_rlhlr"]
+[ext_resource type="Texture2D" uid="uid://rlubqfvbo6k" path="res://media/sprites/joker/rindo 1.png" id="19_5nkl2"]
 [ext_resource type="Texture2D" uid="uid://cg74ot6tdvtuf" path="res://media/sprites/joker/jogando 1.png" id="19_gu3bu"]
 [ext_resource type="Texture2D" uid="uid://dvyax7m3td1v6" path="res://media/sprites/joker/jogando 2.png" id="20_dulbg"]
+[ext_resource type="Texture2D" uid="uid://dqtsvykl4e3u8" path="res://media/sprites/joker/rindo 2.png" id="20_pmf30"]
 [ext_resource type="Texture2D" uid="uid://0rqv5hyv4hhf" path="res://media/sprites/joker/jogando 3.png" id="21_xixgb"]
+[ext_resource type="Texture2D" uid="uid://b6drhsyuvt07j" path="res://media/sprites/joker/rindo 3.png" id="21_y586e"]
+[ext_resource type="Texture2D" uid="uid://njo8uwxyuaqd" path="res://media/sprites/joker/rindo 4.png" id="22_0md3i"]
 [ext_resource type="Texture2D" uid="uid://bkkkvpxflnpru" path="res://media/sprites/joker/jogando 4.png" id="22_ce23x"]
+[ext_resource type="Texture2D" uid="uid://setm7nrevxce" path="res://media/sprites/joker/rindo 5.png" id="23_3sqfj"]
 [ext_resource type="Texture2D" uid="uid://dgxydbclyp4p4" path="res://media/sprites/joker/jogando 5.png" id="23_u8dph"]
+[ext_resource type="Texture2D" uid="uid://ja8yh5c3lliy" path="res://media/sprites/joker/rindo 6.png" id="24_2psw4"]
 [ext_resource type="Texture2D" uid="uid://3lydd6htiq8x" path="res://media/sprites/joker/jogando 6.png" id="24_tb6u3"]
 [ext_resource type="Texture2D" uid="uid://ctessa7i0c4bq" path="res://media/sprites/joker/jogando 7.png" id="25_tjt51"]
+[ext_resource type="Texture2D" uid="uid://dn5gvuohxmcbe" path="res://media/sprites/joker/rindo 7.png" id="25_x8u2w"]
+[ext_resource type="Texture2D" uid="uid://bwpvw806hqakj" path="res://media/sprites/joker/rindo 8.png" id="26_33emr"]
 [ext_resource type="Texture2D" uid="uid://gmejya1bs07u" path="res://media/sprites/joker/jogando 8.png" id="26_up473"]
 [ext_resource type="Texture2D" uid="uid://b2txknpwywyae" path="res://media/sprites/joker/jogando 9.png" id="27_0w2fn"]
+[ext_resource type="Texture2D" uid="uid://cpw0u30enuhb3" path="res://media/sprites/joker/rindo 9.png" id="27_d543g"]
+[ext_resource type="Texture2D" uid="uid://ddj3ci73j0k7u" path="res://media/sprites/joker/rindo 10.png" id="28_0owlb"]
 [ext_resource type="Texture2D" uid="uid://dc8jar4h3sahm" path="res://media/sprites/joker/jogando 10.png" id="28_s560u"]
 [ext_resource type="Texture2D" uid="uid://3nh7ar6c3ycy" path="res://media/sprites/joker/jogando 11.png" id="29_8o1tx"]
+[ext_resource type="Texture2D" uid="uid://caai32y7bwbvh" path="res://media/sprites/joker/rindo 11.png" id="29_a5w56"]
+[ext_resource type="Texture2D" uid="uid://boo05atqchlpq" path="res://media/sprites/joker/rindo 12.png" id="30_h013l"]
+[ext_resource type="AudioStream" uid="uid://c8uhayes0s334" path="res://media/audios/joker laugh 1.MP3" id="42_f4ifq"]
+[ext_resource type="AudioStream" uid="uid://3aay46sppaag" path="res://media/audios/joker laugh 2.MP3" id="43_x32h2"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_8nbbs"]
 animations = [{
@@ -39,7 +53,7 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("3_i7hp2")
 }],
-"loop": false,
+"loop": true,
 "name": &"damage",
 "speed": 4.0
 }, {
@@ -139,6 +153,71 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
+"texture": ExtResource("19_5nkl2")
+}, {
+"duration": 1.0,
+"texture": ExtResource("20_pmf30")
+}, {
+"duration": 1.0,
+"texture": ExtResource("21_y586e")
+}, {
+"duration": 1.0,
+"texture": ExtResource("22_0md3i")
+}, {
+"duration": 1.0,
+"texture": ExtResource("23_3sqfj")
+}, {
+"duration": 1.0,
+"texture": ExtResource("24_2psw4")
+}, {
+"duration": 1.0,
+"texture": ExtResource("25_x8u2w")
+}, {
+"duration": 1.0,
+"texture": ExtResource("26_33emr")
+}, {
+"duration": 1.0,
+"texture": ExtResource("27_d543g")
+}, {
+"duration": 1.0,
+"texture": ExtResource("26_33emr")
+}, {
+"duration": 1.0,
+"texture": ExtResource("25_x8u2w")
+}, {
+"duration": 1.0,
+"texture": ExtResource("24_2psw4")
+}, {
+"duration": 1.0,
+"texture": ExtResource("23_3sqfj")
+}, {
+"duration": 1.0,
+"texture": ExtResource("26_33emr")
+}, {
+"duration": 1.0,
+"texture": ExtResource("25_x8u2w")
+}, {
+"duration": 1.0,
+"texture": ExtResource("26_33emr")
+}, {
+"duration": 1.0,
+"texture": ExtResource("27_d543g")
+}, {
+"duration": 1.0,
+"texture": ExtResource("28_0owlb")
+}, {
+"duration": 1.0,
+"texture": ExtResource("29_a5w56")
+}, {
+"duration": 1.0,
+"texture": ExtResource("30_h013l")
+}],
+"loop": true,
+"name": &"laugh",
+"speed": 10.0
+}, {
+"frames": [{
+"duration": 1.0,
 "texture": ExtResource("19_gu3bu")
 }, {
 "duration": 1.0,
@@ -182,7 +261,7 @@ height = 68.0
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_dku1w"]
 radius = 15.0
-height = 66.0
+height = 58.0
 
 [node name="Joker" type="CharacterBody2D" unique_id=561748664 groups=["enemies"]]
 collision_layer = 4
@@ -208,5 +287,13 @@ debug_color = Color(0.9881373, 0.01807146, 0, 0.41960785)
 
 [node name="JokerCollision" type="CollisionShape2D" parent="." unique_id=996097458]
 shape = SubResource("CapsuleShape2D_dku1w")
+
+[node name="JokerLaugh1" type="AudioStreamPlayer2D" parent="." unique_id=1378702637]
+stream = ExtResource("42_f4ifq")
+volume_db = 5.0
+
+[node name="JokerLaugh2" type="AudioStreamPlayer2D" parent="." unique_id=1221583879]
+stream = ExtResource("43_x32h2")
+volume_db = 5.0
 
 [connection signal="body_entered" from="JetpackHitbox" to="." method="_on_jetpack_hitbox_body_entered"]

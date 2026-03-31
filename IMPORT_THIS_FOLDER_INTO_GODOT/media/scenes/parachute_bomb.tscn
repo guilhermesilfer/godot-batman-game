@@ -13,6 +13,7 @@
 [ext_resource type="Texture2D" uid="uid://cytx5gtt8v1j7" path="res://media/sprites/joker/bomba 1.png" id="10_tm0j8"]
 [ext_resource type="Texture2D" uid="uid://bq58ph15f16vr" path="res://media/sprites/joker/bomba 2.png" id="11_v77xj"]
 [ext_resource type="Texture2D" uid="uid://cqernbjl641jy" path="res://media/sprites/joker/bomba 3.png" id="12_1jq7w"]
+[ext_resource type="AudioStream" uid="uid://cimendbogo0vx" path="res://media/audios/shot sound.MP3" id="14_ltiu4"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_h38kn"]
 animations = [{
@@ -83,5 +84,8 @@ shape = SubResource("CircleShape2D_dadqx")
 [node name="VisibleOnScreenEnabler2D" type="VisibleOnScreenEnabler2D" parent="." unique_id=2142638368]
 position = Vector2(0, 2)
 rect = Rect2(-12, -15, 24, 27)
+
+[node name="ShotSound" type="AudioStreamPlayer2D" parent="." unique_id=271048845]
+stream = ExtResource("14_ltiu4")
 
 [connection signal="screen_exited" from="VisibleOnScreenEnabler2D" to="." method="_on_visible_on_screen_enabler_2d_screen_exited"]

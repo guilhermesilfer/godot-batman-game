@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://ca2l5jke2kn2w"]
 
-[ext_resource type="Script" path="res://media/scripts/menu.gd" id="1_kyby6"]
+[ext_resource type="Script" uid="uid://csgqc12tkdbam" path="res://media/scripts/menu.gd" id="1_kyby6"]
 [ext_resource type="Texture2D" uid="uid://jxr66oyogijx" path="res://media/sprites/tela inicial.jpg" id="2_dovcj"]
 [ext_resource type="Texture2D" uid="uid://20tyk47by4yj" path="res://media/sprites/startbutton.png" id="3_i3t1r"]
 [ext_resource type="Texture2D" uid="uid://bj6txyo4h0yaq" path="res://media/sprites/quitbutton.png" id="4_28ufo"]
@@ -47,6 +47,11 @@ stretch_mode = 6
 
 [node name="MenuSong" type="AudioStreamPlayer2D" parent="." unique_id=504697861]
 stream = ExtResource("5_dovcj")
+parameters/looping = true
 
+[connection signal="mouse_entered" from="ButtonManager/StartButton" to="." method="_on_start_button_mouse_entered"]
+[connection signal="mouse_exited" from="ButtonManager/StartButton" to="." method="_on_start_button_mouse_exited"]
 [connection signal="pressed" from="ButtonManager/StartButton" to="." method="_on_start_button_pressed"]
+[connection signal="mouse_entered" from="ButtonManager/QuitButton" to="." method="_on_quit_button_mouse_entered"]
+[connection signal="mouse_exited" from="ButtonManager/QuitButton" to="." method="_on_quit_button_mouse_exited"]
 [connection signal="pressed" from="ButtonManager/QuitButton" to="." method="_on_quit_button_pressed"]

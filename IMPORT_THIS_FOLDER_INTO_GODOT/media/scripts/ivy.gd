@@ -9,7 +9,7 @@ enum State {
 	DEAD
 }
 
-const MAX_HEALTH = 100
+const MAX_HEALTH = 60
 const ESCAPE_DISTANCE = 80.0 
 
 const MIN_X = 16
@@ -200,7 +200,7 @@ func _on_ivy_animated_sprite_2d_animation_finished():
 		start_descend()
 		return
 	var chance = randf()
-	if chance < 0.3:
+	if chance <= 0.4:
 		attack_vines_player()
 	else:
 		start_shoot_cycle()
