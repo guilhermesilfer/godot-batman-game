@@ -30,6 +30,7 @@ func _ready() -> void:
 
 func spawn_boss():
 	if current_boss_index >= bosses.size():
+		get_tree().change_scene_to_file("res://media/scenes/win.tscn")
 		return
 	
 	var boss_scene = bosses[current_boss_index]
