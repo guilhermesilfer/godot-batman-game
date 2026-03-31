@@ -60,21 +60,21 @@ animations = [{
 }],
 "loop": false,
 "name": &"falling",
-"speed": 4.0
+"speed": 10.0
 }]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_dadqx"]
 radius = 8.002139
 
 [node name="ParachuteBomb" type="Area2D" unique_id=998233188]
+collision_layer = 0
+collision_mask = 2
 script = ExtResource("1_dadqx")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=2105290758]
 texture_filter = 1
 sprite_frames = SubResource("SpriteFrames_h38kn")
-animation = &"falling"
-frame = 2
-frame_progress = 1.0
+animation = &"explosion"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1637409756]
 position = Vector2(0, 5.42)

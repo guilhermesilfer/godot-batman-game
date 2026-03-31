@@ -6,10 +6,10 @@ var Player = preload("res://media/scenes/player.tscn")
 @onready var _ingame_song = $IngameSong
 
 var bosses = [
-	preload("res://media/scenes/twoface.tscn"),
+	preload("res://media/scenes/joker.tscn"),
 	preload("res://media/scenes/ivy.tscn"),
 	preload("res://media/scenes/bane.tscn"),
-	preload("res://media/scenes/joker.tscn")
+	preload("res://media/scenes/twoface.tscn")
 ]
 
 var current_boss_index := 0
@@ -60,6 +60,10 @@ func show_next_menu():
 	menu.next_pressed.connect(start_next_boss)
 
 func start_next_boss():
+	var player = get_tree().get_first_node_in_group("player")
+	if player:
+		player.health = 100
+		update_health(player.health)
 	spawn_boss()
 
 func inst(node, pos):
@@ -69,6 +73,6 @@ func inst(node, pos):
 
 func update_health(value):
 	_health_bar.value = value
-	
+
 func enemy_update_health(value):
 	_enemy_health_bar.value = value

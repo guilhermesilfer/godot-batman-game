@@ -18,6 +18,7 @@ const SPEED = 180.0
 const JUMP_VELOCITY = -370.0
 const MAX_HEALTH = 100
 
+var is_dead := false
 var is_stunned := false
 var health = MAX_HEALTH
 var is_crouching: bool
@@ -35,6 +36,8 @@ func _ready() -> void:
 	_animated_sprite.animation_finished.connect(_on_animation_finished)
 
 func _physics_process(delta: float) -> void:
+	if is_dead: return
+	
 	if not is_on_floor():
 		velocity += get_gravity() * delta
 	
@@ -82,7 +85,9 @@ func _physics_process(delta: float) -> void:
 	move_and_slide()
 
 func _process(_delta):
-	if is_stunned:
+	if is_dead:
+		return
+	elif is_stunned:
 		return
 	elif is_rolling:
 		return
@@ -172,7 +177,7 @@ func fire():
 signal health_changed(new_health)
 
 func take_damage(damage = 1):
-	if is_invulnerable:
+	if is_invulnerable or is_dead:
 		return
 	
 	health -= damage
@@ -183,9 +188,26 @@ func take_damage(damage = 1):
 		_damage_sound1.play()
 	else:
 		_damage_sound2.play()
+	
+	if health <= 0:
+		die()
+
+func die():
+	if is_dead: return
+	is_dead = true
+	is_invulnerable = true
+	
+	is_stunned = true
+	velocity = Vector2.ZERO
+	
+	_animated_sprite.stop()
+	_animated_sprite.play("death")
+	
+	await get_tree().create_timer(3.0).timeout
+	get_tree().reload_current_scene()
 
 func stun():
-	if is_invulnerable:
+	if is_invulnerable or is_dead:
 		return
 	
 	is_stunned = true
@@ -201,7 +223,7 @@ func stun():
 	is_stunned = false
 
 func heavy_stun():
-	if is_invulnerable:
+	if is_invulnerable or is_dead:
 		return
 	
 	is_stunned = true

@@ -4,7 +4,7 @@ enum State { HALT, LOAD, RUN, JUMP, REST, SPIN, DEAD }
 
 const RUN_SPEED = 200.0
 const JUMP_SPEED = 250.0
-const MAX_HEALTH = 1
+const MAX_HEALTH = 100
 const LEFT_WALL = 45.0
 const RIGHT_WALL = 275.0
 const JUMP_VELOCITY = -400.0 
@@ -265,14 +265,14 @@ func die():
 func _on_damage_area_body_entered(body: Node2D) -> void:
 	if state == State.DEAD or _is_dying: return
 	if body.is_in_group("player"):
-		_apply_damage_to_batman(body, 20)
+		_apply_damage_to_batman(body, 10)
 
 func _on_jump_damage_area_body_entered(body: Node2D) -> void:
 	if state == State.DEAD or _is_dying: return
 	if body.is_in_group("player"):
 		if body.get("is_crouching") == true:
 			return 
-		_apply_damage_to_batman(body, 25) 
+		_apply_damage_to_batman(body, 15) 
 
 func _apply_damage_to_batman(player_body, damage_amount):
 	if player_body.has_method("take_damage") and not player_body.is_invulnerable:

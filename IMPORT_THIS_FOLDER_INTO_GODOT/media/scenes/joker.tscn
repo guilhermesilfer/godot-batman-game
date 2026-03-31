@@ -1,16 +1,16 @@
 [gd_scene format=3 uid="uid://dxer52qts15tb"]
 
 [ext_resource type="Script" uid="uid://d0edueqwvaend" path="res://media/scripts/joker.gd" id="1_44kjc"]
-[ext_resource type="Texture2D" uid="uid://dnk62ihfhpqxu" path="res://media/sprites/joker/morte 1.png" id="2_dku1w"]
-[ext_resource type="Texture2D" uid="uid://mrxr75wk0h5o" path="res://media/sprites/joker/morte 2.png" id="3_i7hp2"]
-[ext_resource type="Texture2D" uid="uid://npoia12pdiik" path="res://media/sprites/joker/morte 3.png" id="4_2p0cq"]
-[ext_resource type="Texture2D" uid="uid://cixpuaquqy3lk" path="res://media/sprites/joker/morte 4.png" id="5_rrmh7"]
-[ext_resource type="Texture2D" uid="uid://dsdjbaq6nc16j" path="res://media/sprites/joker/morte 5.png" id="6_ufnry"]
-[ext_resource type="Texture2D" uid="uid://cbhr52fd6dfoy" path="res://media/sprites/joker/morte 6.png" id="7_gccs4"]
-[ext_resource type="Texture2D" uid="uid://bor5cenn164v2" path="res://media/sprites/joker/morte 7.png" id="8_lvxnd"]
-[ext_resource type="Texture2D" uid="uid://dety70tug48mg" path="res://media/sprites/joker/morte 8.png" id="9_o0ulb"]
-[ext_resource type="Texture2D" uid="uid://bewthexaaa64b" path="res://media/sprites/joker/morte 9.png" id="10_gw8wb"]
-[ext_resource type="Texture2D" uid="uid://b64a1aua6l1u5" path="res://media/sprites/joker/morte 10.png" id="11_6ar1v"]
+[ext_resource type="Texture2D" uid="uid://dp38tl281mgtn" path="res://media/sprites/joker/morte 1.png" id="2_dku1w"]
+[ext_resource type="Texture2D" uid="uid://s675tob2f534" path="res://media/sprites/joker/morte 2.png" id="3_i7hp2"]
+[ext_resource type="Texture2D" uid="uid://xx0hgp5rrgjf" path="res://media/sprites/joker/morte 3.png" id="4_2p0cq"]
+[ext_resource type="Texture2D" uid="uid://dsg0bs7lwy783" path="res://media/sprites/joker/morte 4.png" id="5_rrmh7"]
+[ext_resource type="Texture2D" uid="uid://cmgkrfgetu3k5" path="res://media/sprites/joker/morte 5.png" id="6_ufnry"]
+[ext_resource type="Texture2D" uid="uid://cycqau6qt0f4k" path="res://media/sprites/joker/morte 6.png" id="7_gccs4"]
+[ext_resource type="Texture2D" uid="uid://don6dumhqmnhx" path="res://media/sprites/joker/morte 7.png" id="8_lvxnd"]
+[ext_resource type="Texture2D" uid="uid://bfdcpl11o8vi8" path="res://media/sprites/joker/morte 8.png" id="9_o0ulb"]
+[ext_resource type="Texture2D" uid="uid://b4dothifmlrl1" path="res://media/sprites/joker/morte 9.png" id="10_gw8wb"]
+[ext_resource type="Texture2D" uid="uid://oge8amknnrkk" path="res://media/sprites/joker/morte 10.png" id="11_6ar1v"]
 [ext_resource type="Texture2D" uid="uid://clmix2id20rut" path="res://media/sprites/joker/morte 11.png" id="12_nil4q"]
 [ext_resource type="Texture2D" uid="uid://dqc5wil5hwsxt" path="res://media/sprites/joker/parado 1.png" id="13_k26et"]
 [ext_resource type="Texture2D" uid="uid://cnmax30rci7xp" path="res://media/sprites/joker/parado 2.png" id="14_mjfoc"]
@@ -68,16 +68,28 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("9_o0ulb")
 }, {
-"duration": 1.0,
+"duration": 1.5,
 "texture": ExtResource("10_gw8wb")
 }, {
+"duration": 3.0,
+"texture": ExtResource("11_6ar1v")
+}, {
 "duration": 1.0,
+"texture": ExtResource("12_nil4q")
+}, {
+"duration": 3.0,
+"texture": ExtResource("11_6ar1v")
+}, {
+"duration": 1.0,
+"texture": ExtResource("12_nil4q")
+}, {
+"duration": 3.0,
 "texture": ExtResource("11_6ar1v")
 }, {
 "duration": 1.0,
 "texture": ExtResource("12_nil4q")
 }],
-"loop": true,
+"loop": false,
 "name": &"death",
 "speed": 9.0
 }, {
@@ -179,7 +191,9 @@ script = ExtResource("1_44kjc")
 [node name="JokerAnimatedSprite" type="AnimatedSprite2D" parent="." unique_id=1891984076]
 texture_filter = 1
 sprite_frames = SubResource("SpriteFrames_8nbbs")
-animation = &"throw"
+animation = &"death"
+frame = 14
+frame_progress = 1.0
 
 [node name="ThrowSpawn" type="Marker2D" parent="." unique_id=1793267716]
 position = Vector2(-26, -32)

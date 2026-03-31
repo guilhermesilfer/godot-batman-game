@@ -67,6 +67,23 @@ animations = [{
 "speed": 12.0
 }, {
 "frames": [{
+"duration": 1.9,
+"texture": ExtResource("10_viutp")
+}, {
+"duration": 1.6,
+"texture": ExtResource("11_nxmgs")
+}, {
+"duration": 1.2,
+"texture": ExtResource("13_rtr0x")
+}, {
+"duration": 1.0,
+"texture": ExtResource("14_8ny4c")
+}],
+"loop": false,
+"name": &"death",
+"speed": 3.0
+}, {
+"frames": [{
 "duration": 1.0,
 "texture": ExtResource("7_ffxfa")
 }, {
@@ -248,8 +265,7 @@ script = ExtResource("1_jqkwr")
 [node name="BatmanAnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=748966652]
 texture_filter = 1
 sprite_frames = SubResource("SpriteFrames_h1cvd")
-animation = &"crouch"
-frame = 4
+animation = &"death"
 offset = Vector2(0, -7)
 
 [node name="CollisionStanding" type="CollisionShape2D" parent="." unique_id=850553504]

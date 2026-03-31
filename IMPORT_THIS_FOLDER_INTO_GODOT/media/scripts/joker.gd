@@ -9,7 +9,6 @@ const JETPACK_HEIGHT = 0.0
 const DAMAGE_THRESHOLD_FOR_JETPACK = 15 
 const SCREEN_WIDTH_HALF = 160
 
-# Configuração do Burst de Bombas
 var bombs_per_series = 3
 
 var health = MAX_HEALTH
@@ -52,13 +51,13 @@ func _ready():
 	if not _jetpack_hitbox.body_entered.is_connected(_on_jetpack_hitbox_body_entered):
 		_jetpack_hitbox.body_entered.connect(_on_jetpack_hitbox_body_entered)
 	
+	start_parachute_timer()
 	start_cycle()
 
 func _physics_process(delta):
 	if state == State.DEAD: return
 	if _player == null: _player = get_tree().get_first_node_in_group("player")
 	
-	# Só aplica gravidade se não estiver decolando ou no charge
 	if state != State.JETPACK_TAKEOFF and state != State.JETPACK_CHARGE:
 		if not is_on_floor():
 			velocity += get_gravity() * delta
@@ -69,38 +68,40 @@ func _physics_process(delta):
 		State.IDLE, State.THROW, State.JETPACK_LANDING:
 			velocity.x = 0
 			update_facing()
-			
+		
 		State.JETPACK_TAKEOFF:
 			global_position.y = move_toward(global_position.y, start_y + JETPACK_HEIGHT, 4.0)
-				
+		
 		State.JETPACK_CHARGE:
 			velocity.x = charge_direction * JETPACK_SPEED
-			bomb_spawn_timer += delta
-			if bomb_spawn_timer >= 0.4:
-				spawn_auto_parachute_bomb()
-				bomb_spawn_timer = 0.0
+	
 	move_and_slide()
 
 # -------------------------
 # IA E COMBATE
 # -------------------------
 
+func start_parachute_timer():
+	while true:
+		await get_tree().create_timer(2.0).timeout
+		if state == State.DEAD: break
+		
+		if randf() < 0.5:
+			spawn_auto_parachute_bomb()
+
 func start_cycle():
 	if state == State.DEAD: return
 	state = State.IDLE
 	_animated_sprite.play("idle")
 	
-	# REDUZIDO: De 2.0 para 0.5 segundos. Agora ele decide rápido o que fazer.
 	await get_tree().create_timer(0.5).timeout 
 	if state != State.IDLE: return
 	
 	var chance = randf()
-	if chance < 0.15: 
+	
+	if chance < 0.20: 
 		start_jetpack_init()
-	elif chance < 0.30: # Chance de bomba de paraquedas
-		start_drop_bomb()
 	else: 
-		# Agora ele tem 70% de chance de começar a metralhar bombas
 		start_throw_series()
 
 func start_throw_series():
@@ -116,14 +117,11 @@ func start_throw_series():
 		
 		if state == State.DEAD or state == State.JETPACK_TAKEOFF: break
 		
-		# REDUZIDO: De 1.0 para 0.4 segundos entre as bombas da mesma série
-		# Isso faz com que ele jogue as 3 bombas muito mais rápido
 		if i < bombs_per_series - 1:
 			state = State.IDLE
 			_animated_sprite.play("idle")
 			await get_tree().create_timer(0.4).timeout
 	
-	# Ao terminar a série, ele não espera quase nada para começar o próximo ciclo
 	if state != State.DEAD and state != State.JETPACK_TAKEOFF:
 		state = State.IDLE
 		start_cycle()
@@ -140,9 +138,9 @@ func spawn_bouncing_bomb():
 	get_tree().current_scene.add_child(bomb)
 
 func spawn_auto_parachute_bomb():
-	if _player == null: return
+	if _player == null or state == State.DEAD: return
 	var bomb = ParachuteBomb.instantiate()
-	var spawn_y = global_position.y - 350
+	var spawn_y = global_position.y - 150
 	bomb.global_position = Vector2(_player.global_position.x, spawn_y)
 	get_tree().current_scene.add_child(bomb)
 
@@ -224,7 +222,6 @@ func take_damage(damage = 1):
 		die()
 		return
 
-	# Inicia a fuga se atingir o threshold, sem interromper animações via State.DAMAGE
 	if damage_accumulated >= DAMAGE_THRESHOLD_FOR_JETPACK and state != State.JETPACK_CHARGE and state != State.JETPACK_TAKEOFF:
 		start_jetpack_init()
 

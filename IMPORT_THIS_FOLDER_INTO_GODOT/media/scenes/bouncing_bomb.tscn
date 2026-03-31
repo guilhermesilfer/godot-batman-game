@@ -63,7 +63,6 @@ radius = 4.0
 
 [node name="BouncingBomb" type="CharacterBody2D" unique_id=308402840]
 collision_layer = 0
-collision_mask = 3
 script = ExtResource("1_jawc4")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=966245371]
