@@ -6,17 +6,16 @@ var Player = preload("res://media/scenes/player.tscn")
 @onready var _ingame_song = $IngameSong
 
 var bosses = [
-	preload("res://media/scenes/joker.tscn"),
+	preload("res://media/scenes/twoface.tscn"),
 	preload("res://media/scenes/ivy.tscn"),
 	preload("res://media/scenes/bane.tscn"),
-	preload("res://media/scenes/twoface.tscn")
+	preload("res://media/scenes/joker.tscn")
 ]
 
 var current_boss_index := 0
 var current_boss = null
 
 @onready var _health_bar = $HealthBar
-@onready var _enemy_health_bar = $EnemyHealthBar
 
 func _ready() -> void:
 	_ingame_song.play()
@@ -30,7 +29,7 @@ func _ready() -> void:
 
 func spawn_boss():
 	if current_boss_index >= bosses.size():
-		get_tree().change_scene_to_file("res://media/scenes/win.tscn")
+		get_tree().change_scene_to_file("res://media/scenes/win_screen.tscn")
 		return
 	
 	var boss_scene = bosses[current_boss_index]
@@ -39,10 +38,7 @@ func spawn_boss():
 	
 	add_child(current_boss)
 	
-	current_boss.health_changed.connect(enemy_update_health)
 	current_boss.died.connect(_on_boss_died)
-	
-	enemy_update_health(current_boss.health)
 
 func _on_boss_died():
 	print("Boss morreu")
@@ -74,6 +70,3 @@ func inst(node, pos):
 
 func update_health(value):
 	_health_bar.value = value
-
-func enemy_update_health(value):
-	_enemy_health_bar.value = value

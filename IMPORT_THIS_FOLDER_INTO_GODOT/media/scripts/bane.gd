@@ -137,11 +137,20 @@ func execute_load():
 	disable_all_hitboxes()
 	velocity.x = move_toward(velocity.x, 0, RUN_SPEED) 
 	play_anim("load")
+	
+	# Efeito Visual: Ficar vermelho parado antes da investida
+	var tween = create_tween()
+	tween.tween_property(_animated_sprite, "modulate", Color.RED, 0.7)
+	
 	if randi() % 2 == 0:
 		_grunt_sound1.play()
 	else:
 		_grunt_sound2.play()
+		
 	await get_tree().create_timer(1.5).timeout
+	
+	# Resetar cor antes de começar a correr
+	_animated_sprite.modulate = Color.WHITE
 	
 	if state == State.DEAD or _is_dying: return
 

@@ -57,14 +57,6 @@ offset_right = 132.0
 offset_bottom = 34.0
 step = 1.0
 
-[node name="EnemyHealthBar" type="ProgressBar" parent="." unique_id=1451695179]
-offset_left = 187.0
-offset_top = 7.0
-offset_right = 313.0
-offset_bottom = 34.0
-step = 1.0
-value = 100.0
-
 [node name="LimitLeft" type="Area2D" parent="." unique_id=2016148525 groups=["arena_limit"]]
 position = Vector2(37, 136)
 collision_layer = 4
