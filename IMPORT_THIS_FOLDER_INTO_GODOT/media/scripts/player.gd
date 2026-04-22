@@ -114,11 +114,9 @@ func punch():
 	if right_punch:
 		_animated_sprite.position.x = 10 * facing
 		_animated_sprite.play("right punch")
-		_left_puch_sound.play()
 	else:
 		_animated_sprite.position.x = 10 * facing
 		_animated_sprite.play("left punch")
-		_right_puch_sound.play()
 	
 	right_punch = !right_punch
 	
@@ -242,4 +240,8 @@ func heavy_stun():
 func _on_collision_punch_body_entered(body: Node2D) -> void:
 	if body.is_in_group("enemies"):
 		if body.has_method("take_damage"):
+			if right_punch:
+				_right_puch_sound.play()
+			else:
+				_left_puch_sound.play()
 			body.take_damage(5)

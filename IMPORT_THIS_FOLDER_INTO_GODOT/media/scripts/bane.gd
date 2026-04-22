@@ -243,6 +243,10 @@ func play_anim(anim_name: String):
 func take_damage(damage = 1):
 	if state == State.DEAD or _is_dying: return
 	
+	var tween = create_tween()
+	_animated_sprite.modulate = Color(10, 10, 10)
+	tween.tween_property(_animated_sprite, "modulate", Color.WHITE, 0.15)
+	
 	health -= damage
 	health = max(health, 0)
 	emit_signal("health_changed", health)

@@ -171,6 +171,11 @@ func set_direction(dir):
 
 func take_damage(damage = 1):
 	if state == State.DEAD: return
+	
+	var tween = create_tween()
+	_animated_sprite.modulate = Color(10, 10, 10)
+	tween.tween_property(_animated_sprite, "modulate", Color.WHITE, 0.15)
+	
 	health = max(health - damage, 0)
 	emit_signal("health_changed", health)
 	

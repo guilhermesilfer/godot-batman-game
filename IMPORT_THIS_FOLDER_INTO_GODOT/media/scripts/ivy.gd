@@ -207,6 +207,11 @@ func _on_ivy_animated_sprite_2d_animation_finished():
 
 func take_damage(damage = 1):
 	if state == State.MOVE or state == State.DESCEND: return
+	
+	var tween = create_tween()
+	_animated_sprite.modulate = Color(10, 10, 10)
+	tween.tween_property(_animated_sprite, "modulate", Color.WHITE, 0.15)
+	
 	health = max(health - damage, 0)
 	emit_signal("health_changed", health)
 	if health <= 0: die()

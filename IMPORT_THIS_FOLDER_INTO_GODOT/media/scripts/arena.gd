@@ -12,10 +12,22 @@ var bosses = [
 	preload("res://media/scenes/joker.tscn")
 ]
 
+# Nova lista com os ícones na MESMA ORDEM dos chefões acima!
+var boss_icons = [
+	preload("res://media/sprites/twoface/twoface_icon.png"), # Ajuste o caminho do PNG do Two-Face
+	preload("res://media/sprites/ivy/ivy_icon.png"),     # Ajuste o caminho do PNG da Ivy
+	preload("res://media/sprites/bane/bane_icon.png"),    # Ajuste o caminho do PNG do Bane
+	preload("res://media/sprites/joker/joker_icon.png")    # Ajuste o caminho do PNG do Joker
+]
+
 var current_boss_index := 0
 var current_boss = null
 
 @onready var _health_bar = $HealthBar
+
+# Puxando a nova barra e o ícone
+@onready var _enemy_health_bar = $EnemyHealthBar
+@onready var _enemy_icon = $EnemyHealthBar/EnemyIcon
 
 func _ready() -> void:
 	_ingame_song.play()
@@ -38,7 +50,15 @@ func spawn_boss():
 	
 	add_child(current_boss)
 	
+	# Troca a imagem do ícone para o chefão atual
+	_enemy_icon.texture = boss_icons[current_boss_index]
+	
+	# Conecta os sinais de dano e morte
+	current_boss.health_changed.connect(enemy_update_health)
 	current_boss.died.connect(_on_boss_died)
+	
+	# Restaura a barra de vida para 100% no início da luta
+	enemy_update_health(current_boss.health)
 
 func _on_boss_died():
 	print("Boss morreu")
@@ -70,3 +90,7 @@ func inst(node, pos):
 
 func update_health(value):
 	_health_bar.value = value
+
+# Função que faltava para atualizar a barra do inimigo
+func enemy_update_health(value):
+	_enemy_health_bar.value = value

@@ -246,6 +246,10 @@ func take_damage(damage = 1):
 	# 5. O Escudo! Se ele estiver morto ou Rindo (State.LAUGH), ignora o soco do Batman!
 	if state == State.DEAD or state == State.LAUGH: return
 	
+	var tween = create_tween()
+	_animated_sprite.modulate = Color(10, 10, 10)
+	tween.tween_property(_animated_sprite, "modulate", Color.WHITE, 0.15)
+	
 	health = max(health - damage, 0)
 	damage_accumulated += damage 
 	emit_signal("health_changed", health)

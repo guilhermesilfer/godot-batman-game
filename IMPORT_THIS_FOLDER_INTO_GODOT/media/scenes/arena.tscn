@@ -2,10 +2,30 @@
 
 [ext_resource type="Script" uid="uid://cak2pydpftbrj" path="res://media/scripts/arena.gd" id="1_mqy18"]
 [ext_resource type="Texture2D" uid="uid://b2we87sx8adts" path="res://media/sprites/cenario.jpg" id="2_jdyes"]
+[ext_resource type="Texture2D" uid="uid://c3ifuq2b6gsn5" path="res://media/sprites/batman/batman_icon.png" id="3_516t8"]
 [ext_resource type="AudioStream" uid="uid://b4nou3ukt4d6e" path="res://media/audios/ingame song.MP3" id="3_jdyes"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_uu8kp"]
 size = Vector2(320, 61)
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_516t8"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_cvd3s"]
+bg_color = Color(0.8, 0.8, 0.8, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.8961425, 0.8104043, 0, 1)
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_2ennb"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_1bjxq"]
+bg_color = Color(0.7060012, 0, 0.0051667397, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_01sd2"]
 size = Vector2(20, 78)
@@ -51,11 +71,39 @@ unique_name_in_owner = true
 position = Vector2(249, 129)
 
 [node name="HealthBar" type="ProgressBar" parent="." unique_id=1598501290]
-offset_left = 6.0
-offset_top = 7.0
-offset_right = 132.0
-offset_bottom = 34.0
+offset_left = 33.0
+offset_top = 17.0
+offset_right = 119.0
+offset_bottom = 28.0
+theme_override_styles/background = SubResource("StyleBoxEmpty_516t8")
+theme_override_styles/fill = SubResource("StyleBoxFlat_cvd3s")
 step = 1.0
+value = 100.0
+show_percentage = false
+
+[node name="Batman Icon" type="Sprite2D" parent="HealthBar" unique_id=584169039]
+texture_filter = 1
+position = Vector2(-14, 5)
+scale = Vector2(0.6, 0.6)
+texture = ExtResource("3_516t8")
+
+[node name="EnemyHealthBar" type="ProgressBar" parent="." unique_id=1633696882]
+offset_left = 200.0
+offset_top = 17.0
+offset_right = 286.0
+offset_bottom = 28.0
+theme_override_styles/background = SubResource("StyleBoxEmpty_2ennb")
+theme_override_styles/fill = SubResource("StyleBoxFlat_1bjxq")
+step = 1.0
+value = 100.0
+fill_mode = 1
+show_percentage = false
+
+[node name="EnemyIcon" type="Sprite2D" parent="EnemyHealthBar" unique_id=1439511677]
+texture_filter = 1
+position = Vector2(101, 5)
+scale = Vector2(0.6, 0.6)
+texture = ExtResource("3_516t8")
 
 [node name="LimitLeft" type="Area2D" parent="." unique_id=2016148525 groups=["arena_limit"]]
 position = Vector2(37, 136)
