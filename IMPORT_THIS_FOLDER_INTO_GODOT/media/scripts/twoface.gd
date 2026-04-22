@@ -169,7 +169,7 @@ func set_direction(dir):
 	_bullet_spawn.position.x = abs(_bullet_spawn.position.x) * dir
 	_animated_sprite.flip_h = (dir == -1)
 
-func take_damage(damage = 1):
+func take_damage(damage = 6):
 	if state == State.DEAD: return
 	
 	var tween = create_tween()

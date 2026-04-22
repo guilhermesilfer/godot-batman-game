@@ -240,7 +240,7 @@ func play_anim(anim_name: String):
 	if _animated_sprite.animation != anim_name:
 		_animated_sprite.play(anim_name)
 
-func take_damage(damage = 1):
+func take_damage(damage = 5):
 	if state == State.DEAD or _is_dying: return
 	
 	var tween = create_tween()
@@ -278,14 +278,14 @@ func die():
 func _on_damage_area_body_entered(body: Node2D) -> void:
 	if state == State.DEAD or _is_dying: return
 	if body.is_in_group("player"):
-		_apply_damage_to_batman(body, 10)
+		_apply_damage_to_batman(body, 20)
 
 func _on_jump_damage_area_body_entered(body: Node2D) -> void:
 	if state == State.DEAD or _is_dying: return
 	if body.is_in_group("player"):
 		if body.get("is_crouching") == true:
 			return 
-		_apply_damage_to_batman(body, 15) 
+		_apply_damage_to_batman(body, 20) 
 
 func _apply_damage_to_batman(player_body, damage_amount):
 	if player_body.has_method("take_damage") and not player_body.is_invulnerable:

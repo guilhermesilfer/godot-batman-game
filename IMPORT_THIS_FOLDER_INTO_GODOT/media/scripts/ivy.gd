@@ -9,7 +9,7 @@ enum State {
 	DEAD
 }
 
-const MAX_HEALTH = 60
+const MAX_HEALTH = 100
 const ESCAPE_DISTANCE = 80.0 
 
 const MIN_X = 16
@@ -205,7 +205,7 @@ func _on_ivy_animated_sprite_2d_animation_finished():
 	else:
 		start_shoot_cycle()
 
-func take_damage(damage = 1):
+func take_damage(damage = 10):
 	if state == State.MOVE or state == State.DESCEND: return
 	
 	var tween = create_tween()

@@ -242,7 +242,7 @@ func start_landing():
 # DANOS E MORTE
 # -------------------------
 
-func take_damage(damage = 1):
+func take_damage(damage = 5):
 	# 5. O Escudo! Se ele estiver morto ou Rindo (State.LAUGH), ignora o soco do Batman!
 	if state == State.DEAD or state == State.LAUGH: return
 	

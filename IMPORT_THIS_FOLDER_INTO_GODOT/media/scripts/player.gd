@@ -244,4 +244,4 @@ func _on_collision_punch_body_entered(body: Node2D) -> void:
 				_right_puch_sound.play()
 			else:
 				_left_puch_sound.play()
-			body.take_damage(5)
+			body.take_damage()

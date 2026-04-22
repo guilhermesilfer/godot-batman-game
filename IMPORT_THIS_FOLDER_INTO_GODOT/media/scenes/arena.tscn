@@ -8,24 +8,35 @@
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_uu8kp"]
 size = Vector2(320, 61)
 
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_516t8"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_516t8"]
+draw_center = false
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.892443, 0.7602558, 0, 1)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_cvd3s"]
 bg_color = Color(0.8, 0.8, 0.8, 1)
-border_width_left = 2
-border_width_top = 2
-border_width_right = 2
-border_width_bottom = 2
-border_color = Color(0.8961425, 0.8104043, 0, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.89411765, 0.7607843, 0, 1)
 
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_2ennb"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_2ennb"]
+draw_center = false
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_1bjxq"]
-bg_color = Color(0.7060012, 0, 0.0051667397, 1)
-border_width_left = 2
-border_width_top = 2
-border_width_right = 2
-border_width_bottom = 2
+bg_color = Color(0.57937765, 0.2710187, 0, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_01sd2"]
 size = Vector2(20, 78)
@@ -75,7 +86,7 @@ offset_left = 33.0
 offset_top = 17.0
 offset_right = 119.0
 offset_bottom = 28.0
-theme_override_styles/background = SubResource("StyleBoxEmpty_516t8")
+theme_override_styles/background = SubResource("StyleBoxFlat_516t8")
 theme_override_styles/fill = SubResource("StyleBoxFlat_cvd3s")
 step = 1.0
 value = 100.0
@@ -92,7 +103,7 @@ offset_left = 200.0
 offset_top = 17.0
 offset_right = 286.0
 offset_bottom = 28.0
-theme_override_styles/background = SubResource("StyleBoxEmpty_2ennb")
+theme_override_styles/background = SubResource("StyleBoxFlat_2ennb")
 theme_override_styles/fill = SubResource("StyleBoxFlat_1bjxq")
 step = 1.0
 value = 100.0
