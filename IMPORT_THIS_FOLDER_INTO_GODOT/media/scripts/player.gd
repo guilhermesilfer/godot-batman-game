@@ -52,9 +52,11 @@ func _physics_process(delta: float) -> void:
 		return
 
 	var direction := 0.0
-	if not is_punching and not is_rolling:
+	if not is_rolling:
 		direction = Input.get_axis("left", "right")
-		is_crouching = Input.is_action_pressed("crouch") and is_on_floor()
+		
+		if not is_punching:
+			is_crouching = Input.is_action_pressed("crouch") and is_on_floor()
 
 		if direction != 0:
 			set_direction(direction)
@@ -150,6 +152,8 @@ func set_direction(dir):
 		_area_punch.position.x = abs(_area_punch.position.x) * dir
 	if _collision_punching:
 		_collision_punching.position.x = abs(_collision_punching.position.x) * dir
+	
+	_animated_sprite.position.x *= -1
 	
 	_animated_sprite.flip_h = (dir == -1)
 
