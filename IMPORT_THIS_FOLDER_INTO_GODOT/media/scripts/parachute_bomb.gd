@@ -16,7 +16,7 @@ func _on_body_entered(body):
 	if body.is_in_group("player") and not is_exploding and not body.is_invulnerable:
 		explode()
 		if body.has_method("take_damage"):
-			body.take_damage(15)
+			body.take_damage(10)
 		if body.has_method("stun"):
 			body.stun()
 

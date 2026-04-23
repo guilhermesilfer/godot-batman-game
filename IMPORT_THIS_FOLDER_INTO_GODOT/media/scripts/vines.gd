@@ -36,7 +36,7 @@ func start_death():
 func _on_body_entered(body):
 	if body.is_in_group("player") and not _is_dying:
 		if body.has_method("heavy_stun"): body.heavy_stun()
-		if body.has_method("take_damage"): body.take_damage(25)
+		if body.has_method("take_damage"): body.take_damage(20)
 		start_death()
 
 func _on_animation_player_animation_finished(anim_name):

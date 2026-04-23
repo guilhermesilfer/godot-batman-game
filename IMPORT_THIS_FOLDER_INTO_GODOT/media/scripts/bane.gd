@@ -278,14 +278,14 @@ func die():
 func _on_damage_area_body_entered(body: Node2D) -> void:
 	if state == State.DEAD or _is_dying: return
 	if body.is_in_group("player"):
-		_apply_damage_to_batman(body, 20)
+		_apply_damage_to_batman(body, 15)
 
 func _on_jump_damage_area_body_entered(body: Node2D) -> void:
 	if state == State.DEAD or _is_dying: return
 	if body.is_in_group("player"):
 		if body.get("is_crouching") == true:
 			return 
-		_apply_damage_to_batman(body, 20) 
+		_apply_damage_to_batman(body, 15)
 
 func _apply_damage_to_batman(player_body, damage_amount):
 	if player_body.has_method("take_damage") and not player_body.is_invulnerable:

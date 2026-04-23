@@ -228,7 +228,7 @@ func _on_tf_charge_collision_body_entered(body: Node2D) -> void:
 			return
 			
 		if body.has_method("take_damage"):
-			body.take_damage(20)
+			body.take_damage(15)
 			_twoface_laugh_sound.play()
 			
 		if body.has_method("heavy_stun"):
