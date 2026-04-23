@@ -38,6 +38,7 @@ var _player: Node2D
 @onready var _collision_charge = $TFChargeCollision/CollisionShape2D
 @onready var _fire_timer = $TFFireRate
 @onready var _shot_sound = $ShotSound
+@onready var _twoface_laugh_sound = $TwofaceLaugh
 
 signal health_changed(new_health)
 signal died
@@ -221,6 +222,14 @@ func _on_tf_fire_rate_timeout():
 
 func _on_tf_charge_collision_body_entered(body: Node2D) -> void:
 	if state == State.DEAD: return
+	
 	if body.is_in_group("player"):
-		if body.has_method("take_damage"): body.take_damage(20)
-		if body.has_method("heavy_stun"): body.heavy_stun()
+		if body.is_invulnerable or body.is_dead:
+			return
+			
+		if body.has_method("take_damage"):
+			body.take_damage(20)
+			_twoface_laugh_sound.play()
+			
+		if body.has_method("heavy_stun"):
+			body.heavy_stun()
