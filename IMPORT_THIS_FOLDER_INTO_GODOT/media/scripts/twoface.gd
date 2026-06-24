@@ -30,6 +30,7 @@ var shots_target = 0
 var health = MAX_HEALTH
 var damage_taken_in_shoot := 0
 var last_voice_index := -1
+var _audio_sequence_active := false
 
 var _player: Node2D
 
@@ -231,14 +232,27 @@ func _on_tf_charge_collision_body_entered(body: Node2D) -> void:
 			
 		if body.has_method("take_damage"):
 			body.take_damage(15)
-			_twoface_laugh_sound.play()
 			
-			var random_index = randi() % _voice_lines.size()
-			while random_index == last_voice_index:
-				random_index = randi() % _voice_lines.size()
-				
-			_voice_lines[random_index].play()
-			last_voice_index = random_index
+			if not _audio_sequence_active:
+				_play_audio_sequence()
 			
 		if body.has_method("heavy_stun"):
 			body.heavy_stun()
+
+func _play_audio_sequence():
+	_audio_sequence_active = true
+	_twoface_laugh_sound.play()
+	await _twoface_laugh_sound.finished
+	
+	if state == State.DEAD:
+		_audio_sequence_active = false
+		return
+		
+	var random_index = randi() % _voice_lines.size()
+	while random_index == last_voice_index:
+		random_index = randi() % _voice_lines.size()
+		
+	_voice_lines[random_index].play()
+	last_voice_index = random_index
+	await _voice_lines[random_index].finished
+	_audio_sequence_active = false

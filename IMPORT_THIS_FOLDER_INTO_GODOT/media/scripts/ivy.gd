@@ -26,6 +26,7 @@ var health = MAX_HEALTH
 var shots_fired = 0
 var shots_target = 0
 var last_voice_index := -1
+var _audio_sequence_active := false
 
 var _player: Node2D
 
@@ -229,10 +230,23 @@ func die():
 
 func _on_player_health_changed(new_health):
 	if state != State.DEAD:
-		if not _laugh_sound.playing:
-			_laugh_sound.play()
-		var random_index = randi() % _voice_lines.size()
-		while random_index == last_voice_index:
-			random_index = randi() % _voice_lines.size()
-		_voice_lines[random_index].play()
-		last_voice_index = random_index
+		if not _audio_sequence_active:
+			_play_audio_sequence()
+
+func _play_audio_sequence():
+	_audio_sequence_active = true
+	_laugh_sound.play()
+	await _laugh_sound.finished
+	
+	if state == State.DEAD:
+		_audio_sequence_active = false
+		return
+		
+	var random_index = randi() % _voice_lines.size()
+	while random_index == last_voice_index:
+		random_index = randi() % _voice_lines.size()
+		
+	_voice_lines[random_index].play()
+	last_voice_index = random_index
+	await _voice_lines[random_index].finished
+	_audio_sequence_active = false

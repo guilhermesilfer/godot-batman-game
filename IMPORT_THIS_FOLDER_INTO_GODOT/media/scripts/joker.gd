@@ -21,6 +21,7 @@ var bomb_spawn_timer = 0.0
 var damage_accumulated = 0 
 var last_voice_index := -1
 var current_laugh_toggle := 0
+var _audio_sequence_active := false
 
 var BouncingBomb = preload("res://media/scenes/bouncing_bomb.tscn")
 var ParachuteBomb = preload("res://media/scenes/parachute_bomb.tscn")
@@ -145,23 +146,9 @@ func start_laugh():
 	state = State.LAUGH
 	_animated_sprite.play("laugh")
 	
-	# Executa a alternância mecânica e linear entre as risadas 1 e 2
-	if _laugh_sounds.size() >= 2:
-		var current_laugh_node = _laugh_sounds[current_laugh_toggle]
-		if current_laugh_node:
-			current_laugh_node.play()
-		current_laugh_toggle = 1 - current_laugh_toggle
-	
-	# Sorteia uma das 4 falas aleatórias, garantindo que não repita a última anterior
-	if _voice_lines.size() > 0:
-		var random_index = randi() % _voice_lines.size()
-		while random_index == last_voice_index and _voice_lines.size() > 1:
-			random_index = randi() % _voice_lines.size()
-			
-		var selected_voice_node = _voice_lines[random_index]
-		if selected_voice_node:
-			selected_voice_node.play()
-		last_voice_index = random_index
+	# Chama o sistema de áudio protegido contra sobreposição
+	if not _audio_sequence_active:
+		_play_audio_sequence()
 	
 	# Fica nesse estado invulnerável até a animação acabar
 	await _animated_sprite.animation_finished
@@ -284,5 +271,43 @@ func die():
 
 func _on_jetpack_hitbox_body_entered(body):
 	if body.is_in_group("player"):
-		if body.has_method("take_damage"): body.take_damage(15)
-		if body.has_method("heavy_stun"): body.heavy_stun()
+		if body.has_method("take_damage"): 
+			body.take_damage(15)
+			if not _audio_sequence_active:
+				_play_audio_sequence()
+		if body.has_method("heavy_stun"): 
+			body.heavy_stun()
+
+# -------------------------
+# SISTEMA DE ÁUDIO
+# -------------------------
+
+func _play_audio_sequence():
+	_audio_sequence_active = true
+	
+	# Passo 1: Toca uma das duas risadas alternadamente
+	if _laugh_sounds.size() >= 2:
+		var current_laugh_node = _laugh_sounds[current_laugh_toggle]
+		if current_laugh_node:
+			current_laugh_node.play()
+			await current_laugh_node.finished
+		current_laugh_toggle = 1 - current_laugh_toggle
+	
+	# Aborta caso o Coringa tenha morrido durante a risada
+	if state == State.DEAD:
+		_audio_sequence_active = false
+		return
+	
+	# Passo 2: Toca uma das falas aleatórias (sem repetir a última)
+	if _voice_lines.size() > 0:
+		var random_index = randi() % _voice_lines.size()
+		while random_index == last_voice_index and _voice_lines.size() > 1:
+			random_index = randi() % _voice_lines.size()
+			
+		var selected_voice_node = _voice_lines[random_index]
+		if selected_voice_node:
+			selected_voice_node.play()
+			await selected_voice_node.finished
+		last_voice_index = random_index
+	
+	_audio_sequence_active = false
