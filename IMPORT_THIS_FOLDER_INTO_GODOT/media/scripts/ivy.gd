@@ -39,6 +39,11 @@ var _player: Node2D
 
 var _spawn_base_x := 0.0
 
+# --- NOVAS VARIÁVEIS DO SISTEMA DE ÁUDIO ---
+var _voice_bag : Array[int] = []
+var _audio_queue : Array[String] = []
+var _passive_voice_timer := 0.0
+
 signal health_changed(new_health)
 signal died
 
@@ -48,18 +53,24 @@ signal died
 
 func _ready():
 	health = MAX_HEALTH
+	
+	# Inicializa o áudio antes do await para não bugar no frame 1
+	_refill_voice_bag()
+	_passive_voice_timer = randf_range(10.0, 12.0)
+	
 	await get_tree().process_frame
 	_player = get_tree().get_first_node_in_group("player")
 	if _player:
 		_player.health_changed.connect(_on_player_health_changed)
 	_spawn_base_x = _bullet_spawn.position.x
+	
 	start_shoot_cycle()
 
 func _physics_process(delta):
 	if state == State.DEAD: return
 	
 	if state == State.SHOOT or state == State.VINES:
-		await get_tree().create_timer(2.0)
+		# Removido await perigoso do physics_process, mantendo apenas a verificação
 		if player_is_close():
 			start_descend()
 	
@@ -68,7 +79,7 @@ func _physics_process(delta):
 	
 	update_facing()
 	
-	if state == State.MOVE:
+	if state == State.MOVE or state == State.DESCEND or state == State.EMERGE:
 		velocity = Vector2.ZERO
 		return
 	
@@ -76,6 +87,12 @@ func _physics_process(delta):
 		velocity += get_gravity() * delta
 	
 	move_and_slide()
+	
+	# Cronômetro passivo para as falas
+	_passive_voice_timer -= delta
+	if _passive_voice_timer <= 0:
+		_queue_audio("voice")
+		_passive_voice_timer = randf_range(8.0, 10.0)
 
 # -------------------------
 # COMBATE
@@ -125,7 +142,6 @@ func attack_vines_player():
 	state = State.VINES
 	
 	var spawn_pos = Vector2(_player.global_position.x, global_position.y)
-	print(spawn_pos)
 	
 	spawn_vine_at_position(spawn_pos)
 	
@@ -135,7 +151,6 @@ func attack_vines_player():
 func spawn_vine_front():
 	var offset = 40 * -facing
 	var spawn_pos = Vector2(global_position.x + offset, global_position.y)
-	print(spawn_pos)
 	spawn_vine_at_position(spawn_pos)
 
 # -------------------------
@@ -228,25 +243,42 @@ func die():
 	emit_signal("died")
 	queue_free()
 
-func _on_player_health_changed(new_health):
+func _on_player_health_changed(_new_health):
 	if state != State.DEAD:
-		if not _audio_sequence_active:
-			_play_audio_sequence()
+		_queue_audio("laugh")
 
-func _play_audio_sequence():
-	_audio_sequence_active = true
-	_laugh_sound.play()
-	await _laugh_sound.finished
-	
-	if state == State.DEAD:
+# -------------------------
+# SISTEMA DE FILA DE ÁUDIO E SHUFFLE BAG
+# -------------------------
+
+func _refill_voice_bag():
+	_voice_bag.clear()
+	for i in range(_voice_lines.size()):
+		_voice_bag.append(i)
+	_voice_bag.shuffle()
+
+func _queue_audio(audio_type: String):
+	_audio_queue.append(audio_type)
+	if not _audio_sequence_active:
+		_process_audio_queue()
+
+func _process_audio_queue():
+	if _audio_queue.is_empty() or state == State.DEAD:
 		_audio_sequence_active = false
 		return
 		
-	var random_index = randi() % _voice_lines.size()
-	while random_index == last_voice_index:
-		random_index = randi() % _voice_lines.size()
+	_audio_sequence_active = true
+	var next_audio = _audio_queue.pop_front()
+	
+	if next_audio == "laugh":
+		_laugh_sound.play()
+		await _laugh_sound.finished
+	elif next_audio == "voice":
+		if _voice_bag.is_empty():
+			_refill_voice_bag()
+		var idx = _voice_bag.pop_back()
+		var voice_node = _voice_lines[idx]
+		voice_node.play()
+		await voice_node.finished
 		
-	_voice_lines[random_index].play()
-	last_voice_index = random_index
-	await _voice_lines[random_index].finished
-	_audio_sequence_active = false
+	_process_audio_queue()

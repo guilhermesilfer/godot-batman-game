@@ -10,7 +10,7 @@ enum State {
 }
 
 const SPEED = 220.0
-const MAX_HEALTH = 100
+const MAX_HEALTH = 1
 const NORMAL_FIRE_RATE = 1.0
 const FAST_FIRE_RATE = 0.4
 const LEFT_WALL = 45.0   # Limites de arena baseados no Bane
@@ -29,8 +29,6 @@ var shots_fired = 0
 var shots_target = 0
 var health = MAX_HEALTH
 var damage_taken_in_shoot := 0
-var last_voice_index := -1
-var _audio_sequence_active := false
 
 var _player: Node2D
 
@@ -42,6 +40,12 @@ var _player: Node2D
 @onready var _shot_sound = $ShotSound
 @onready var _twoface_laugh_sound = $TwofaceLaugh
 @onready var _voice_lines = [$TwofaceVa1, $TwofaceVa2, $TwofaceVa3, $TwofaceVa4]
+
+# --- NOVAS VARIÁVEIS DO SISTEMA DE ÁUDIO ---
+var _voice_bag : Array[int] = []
+var _audio_queue : Array[String] = []
+var _audio_sequence_active := false
+var _passive_voice_timer := 0.0
 
 signal health_changed(new_health)
 signal died
@@ -55,6 +59,9 @@ func _ready():
 	_collision_charge.disabled = true
 	
 	_player = get_tree().get_first_node_in_group("player")
+	
+	_refill_voice_bag()
+	_passive_voice_timer = randf_range(8.0, 10.0)
 	
 	start_shoot_cycle()
 
@@ -72,6 +79,12 @@ func _physics_process(delta):
 			velocity.x = move_toward(velocity.x, 0, SPEED)
 
 	move_and_slide()
+	
+	# Cronômetro passivo para as falas
+	_passive_voice_timer -= delta
+	if _passive_voice_timer <= 0:
+		_queue_audio("voice")
+		_passive_voice_timer = randf_range(10.0, 12.0)
 
 func _process(_delta):
 	if state == State.DEAD: return
@@ -131,13 +144,11 @@ func fire():
 func prepare_charge():
 	state = State.LOAD
 	
-	# Efeito visual: Fica vermelho para indicar perigo
 	var tween = create_tween()
 	tween.tween_property(_animated_sprite, "modulate", Color.RED, 0.5)
 	
 	await get_tree().create_timer(1.0).timeout
 	
-	# Volta ao normal e inicia a investida
 	_animated_sprite.modulate = Color.WHITE
 	if state == State.DEAD: return
 	
@@ -146,7 +157,6 @@ func prepare_charge():
 func start_charge():
 	state = State.CHARGE
 	charge_count = 0
-	# Define direção inicial baseada na posição para cruzar a tela
 	charge_direction = 1 if global_position.x < 160 else -1
 	set_direction(charge_direction)
 	
@@ -187,16 +197,14 @@ func take_damage(damage = 6):
 		die()
 		return
 	
-	# Mudanças de fase baseadas na vida
 	if health <= 40 and not is_phase_two:
 		is_phase_two = true
 		_fire_timer.wait_time = FAST_FIRE_RATE
 	
 	if health <= 15 and not is_berserk:
 		is_berserk = true
-		max_charges = 3 # Aumenta zigue-zague no berserk
+		max_charges = 3
 	
-	# Se levar muito dano parado, ele tenta fugir com charge
 	if state == State.SHOOT:
 		damage_taken_in_shoot += damage
 		if damage_taken_in_shoot >= 15:
@@ -205,11 +213,10 @@ func take_damage(damage = 6):
 func die():
 	state = State.DEAD
 	velocity = Vector2.ZERO
-	_animated_sprite.modulate = Color.WHITE # Garante que não morra vermelho
+	_animated_sprite.modulate = Color.WHITE
 	_collision_charge.set_deferred("disabled", true)
 	_collision_charge_area.set_deferred("monitoring", false)
 	
-	# Desativa todas as colisões
 	for child in get_children():
 		if child is CollisionShape2D:
 			child.set_deferred("disabled", true)
@@ -232,27 +239,40 @@ func _on_tf_charge_collision_body_entered(body: Node2D) -> void:
 			
 		if body.has_method("take_damage"):
 			body.take_damage(15)
-			
-			if not _audio_sequence_active:
-				_play_audio_sequence()
+			_queue_audio("laugh")
 			
 		if body.has_method("heavy_stun"):
 			body.heavy_stun()
 
-func _play_audio_sequence():
-	_audio_sequence_active = true
-	_twoface_laugh_sound.play()
-	await _twoface_laugh_sound.finished
-	
-	if state == State.DEAD:
+# --- SISTEMA DE FILA DE ÁUDIO E SHUFFLE BAG ---
+func _refill_voice_bag():
+	_voice_bag.clear()
+	for i in range(_voice_lines.size()):
+		_voice_bag.append(i)
+	_voice_bag.shuffle()
+
+func _queue_audio(audio_type: String):
+	_audio_queue.append(audio_type)
+	if not _audio_sequence_active:
+		_process_audio_queue()
+
+func _process_audio_queue():
+	if _audio_queue.is_empty() or state == State.DEAD:
 		_audio_sequence_active = false
 		return
 		
-	var random_index = randi() % _voice_lines.size()
-	while random_index == last_voice_index:
-		random_index = randi() % _voice_lines.size()
+	_audio_sequence_active = true
+	var next_audio = _audio_queue.pop_front()
+	
+	if next_audio == "laugh":
+		_twoface_laugh_sound.play()
+		await _twoface_laugh_sound.finished
+	elif next_audio == "voice":
+		if _voice_bag.is_empty():
+			_refill_voice_bag()
+		var idx = _voice_bag.pop_back()
+		var voice_node = _voice_lines[idx]
+		voice_node.play()
+		await voice_node.finished
 		
-	_voice_lines[random_index].play()
-	last_voice_index = random_index
-	await _voice_lines[random_index].finished
-	_audio_sequence_active = false
+	_process_audio_queue()

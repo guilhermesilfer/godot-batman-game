@@ -132,10 +132,10 @@ func _on_animation_finished():
 	if is_punching and (_animated_sprite.animation == "right punch" or _animated_sprite.animation == "left punch"):
 		is_punching = false
 
-func play_anim(name):
-	if _animated_sprite.animation != name:
+func play_anim(anime_name):
+	if _animated_sprite.animation != anime_name:
 		_animated_sprite.position.x = 0 
-		_animated_sprite.play(name)
+		_animated_sprite.play(anime_name)
 
 func set_direction(dir):
 	if facing == dir:

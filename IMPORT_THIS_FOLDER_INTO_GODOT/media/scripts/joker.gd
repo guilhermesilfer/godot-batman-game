@@ -1,6 +1,5 @@
 extends CharacterBody2D
 
-# 1. Adicionamos o estado LAUGH aqui
 enum State { IDLE, THROW, DROP_BOMB, JETPACK_TAKEOFF, JETPACK_CHARGE, JETPACK_LANDING, DAMAGE, DEAD, LAUGH }
 
 const SPEED = 0.0 
@@ -19,9 +18,6 @@ var start_y = 0.0
 var charge_direction = -1
 var bomb_spawn_timer = 0.0
 var damage_accumulated = 0 
-var last_voice_index := -1
-var current_laugh_toggle := 0
-var _audio_sequence_active := false
 
 var BouncingBomb = preload("res://media/scenes/bouncing_bomb.tscn")
 var ParachuteBomb = preload("res://media/scenes/parachute_bomb.tscn")
@@ -30,13 +26,22 @@ var _player: Node2D
 
 @onready var _animated_sprite = $JokerAnimatedSprite
 @onready var _throw_spawn = $ThrowSpawn
-@onready var _collision = $JokerCollision
 @onready var _jetpack_hitbox = $JetpackHitbox
 @onready var _jetpack_col = $JetpackHitbox/CollisionShape2D
 
-# Referências para os áudios configurados na cena
-@onready var _laugh_sounds = [$JokerLaugh1, $JokerLaugh2]
+# Referências de áudio (Usando apenas 1 risada agora)
+@onready var _laugh_sound = $JokerLaugh1
 @onready var _voice_lines = [$JokerVa1, $JokerVa2, $JokerVa3, $JokerVa4, $JokerVa5, $JokerVa6]
+
+# Variáveis do novo sistema de áudio e combos
+var _voice_bag : Array[int] = []
+var _voice_queued := false
+var _passive_voice_timer := 0.0
+var _laugh_cooldown_timer := 0.0
+var _hit_batman_in_current_combo := false
+var _player_last_health := 100
+var _current_voice_node : AudioStreamPlayer2D = null
+var last_voice_index := -1
 
 signal health_changed(new_health)
 signal died
@@ -46,9 +51,7 @@ func _ready():
 	_jetpack_col.disabled = true
 	_jetpack_hitbox.monitoring = false
 	start_y = global_position.y
-	_player = get_tree().get_first_node_in_group("player")
 	
-	# Garante que a risada toque inteira uma vez e pare
 	if _animated_sprite.sprite_frames.has_animation("laugh"):
 		_animated_sprite.sprite_frames.set_animation_loop("laugh", false)
 	
@@ -63,12 +66,22 @@ func _ready():
 	if not _jetpack_hitbox.body_entered.is_connected(_on_jetpack_hitbox_body_entered):
 		_jetpack_hitbox.body_entered.connect(_on_jetpack_hitbox_body_entered)
 	
+	_refill_voice_bag()
+	_passive_voice_timer = randf_range(10.0, 12.0)
+	
 	start_parachute_timer()
 	start_cycle()
 
 func _physics_process(delta):
 	if state == State.DEAD: return
-	if _player == null: _player = get_tree().get_first_node_in_group("player")
+	
+	# Busca o player e conecta a vida dinamicamente
+	if _player == null or not is_instance_valid(_player):
+		_player = get_tree().get_first_node_in_group("player")
+		if _player:
+			if "health" in _player: _player_last_health = _player.health
+			if not _player.health_changed.is_connected(_on_player_health_changed):
+				_player.health_changed.connect(_on_player_health_changed)
 	
 	if state != State.JETPACK_TAKEOFF and state != State.JETPACK_CHARGE:
 		if not is_on_floor():
@@ -77,7 +90,6 @@ func _physics_process(delta):
 		velocity.y = 0
 	
 	match state:
-		# 2. Adicionamos o State.LAUGH para ele ficar paradinho e virado para o player enquanto ri
 		State.IDLE, State.THROW, State.JETPACK_LANDING, State.LAUGH:
 			velocity.x = 0
 			update_facing()
@@ -89,6 +101,24 @@ func _physics_process(delta):
 			velocity.x = charge_direction * JETPACK_SPEED
 	
 	move_and_slide()
+	
+	# Gerenciamento dos Timers
+	if _laugh_cooldown_timer > 0:
+		_laugh_cooldown_timer -= delta
+		
+	_passive_voice_timer -= delta
+	if _passive_voice_timer <= 0:
+		if state == State.LAUGH or _laugh_sound.playing:
+			_voice_queued = true
+		elif not _is_voice_playing():
+			_play_voice()
+		_passive_voice_timer = randf_range(10.0, 12.0)
+
+# Detecta se o Batman tomou dano independentemente da fonte (bomba ou jetpack)
+func _on_player_health_changed(new_health):
+	if new_health < _player_last_health:
+		_hit_batman_in_current_combo = true
+	_player_last_health = new_health
 
 # -------------------------
 # IA E COMBATE
@@ -105,13 +135,13 @@ func start_parachute_timer():
 func start_cycle():
 	if state == State.DEAD: return
 	state = State.IDLE
+	_hit_batman_in_current_combo = false # Reseta o registro de acertos no início do novo combo
 	_animated_sprite.play("idle")
 	
 	await get_tree().create_timer(0.5).timeout 
 	if state != State.IDLE: return
 	
 	var chance = randf()
-	
 	if chance < 0.20: 
 		start_jetpack_init()
 	else: 
@@ -125,7 +155,6 @@ func start_throw_series():
 		
 		state = State.THROW
 		_animated_sprite.play("throw")
-		
 		await _animated_sprite.animation_finished
 		
 		if state == State.DEAD or state == State.JETPACK_TAKEOFF: break
@@ -136,26 +165,32 @@ func start_throw_series():
 			await get_tree().create_timer(0.4).timeout
 	
 	if state != State.DEAD and state != State.JETPACK_TAKEOFF:
-		# 3. A mágica acontece aqui: ao invés de voltar pro ciclo, ele começa a rir!
-		start_laugh()
+		_check_laugh_after_combo()
 
-# 4. Nova função de Risada Invulnerável com o Sistema Duplo de Áudio Sorteado
+func _check_laugh_after_combo():
+	# Só ri se acertou, se não estiver no cooldown e se NÃO estiver falando
+	if _hit_batman_in_current_combo and _laugh_cooldown_timer <= 0.0 and not _is_voice_playing():
+		start_laugh()
+	else:
+		start_cycle()
+
 func start_laugh():
 	if state == State.DEAD or state == State.JETPACK_TAKEOFF: return
 	
 	state = State.LAUGH
+	_laugh_cooldown_timer = 10.0 # Aplica o Cooldown para não repetir tão cedo
 	_animated_sprite.play("laugh")
+	_laugh_sound.play()
 	
-	# Chama o sistema de áudio protegido contra sobreposição
-	if not _audio_sequence_active:
-		_play_audio_sequence()
-	
-	# Fica nesse estado invulnerável até a animação acabar
 	await _animated_sprite.animation_finished
 	
-	# Só então ele volta pro ciclo normal de combate
 	if state != State.DEAD and state != State.JETPACK_TAKEOFF:
 		start_cycle()
+		
+	# Toca a fala se ela foi engatilhada enquanto ele estava rindo
+	if _voice_queued:
+		_voice_queued = false
+		_play_voice()
 
 func _on_frame_changed():
 	if state == State.THROW and _animated_sprite.animation == "throw":
@@ -193,7 +228,7 @@ func start_drop_bomb():
 	spawn_auto_parachute_bomb()
 	await get_tree().create_timer(1.0).timeout
 	if state == State.DROP_BOMB:
-		start_cycle()
+		_check_laugh_after_combo()
 
 # -------------------------
 # JETPACK
@@ -233,17 +268,19 @@ func start_landing():
 	_jetpack_col.set_deferred("disabled", true)
 	_jetpack_hitbox.set_deferred("monitoring", false)
 	_animated_sprite.play("jetpack_landing")
+	
 	var tween = create_tween()
 	tween.tween_property(self, "global_position:y", start_y, 0.4)
 	await _animated_sprite.animation_finished
-	start_cycle()
+	
+	# Verifica se ri ao terminar o voo do jetpack
+	_check_laugh_after_combo()
 
 # -------------------------
 # DANOS E MORTE
 # -------------------------
 
 func take_damage(damage = 5):
-	# 5. O Escudo! Se ele estiver morto ou Rindo (State.LAUGH), ignora o soco do Batman!
 	if state == State.DEAD or state == State.LAUGH: return
 	
 	var tween = create_tween()
@@ -273,41 +310,38 @@ func _on_jetpack_hitbox_body_entered(body):
 	if body.is_in_group("player"):
 		if body.has_method("take_damage"): 
 			body.take_damage(15)
-			if not _audio_sequence_active:
-				_play_audio_sequence()
 		if body.has_method("heavy_stun"): 
 			body.heavy_stun()
 
 # -------------------------
-# SISTEMA DE ÁUDIO
+# SISTEMA DE SHUFFLE BAG (Apenas Falas)
 # -------------------------
 
-func _play_audio_sequence():
-	_audio_sequence_active = true
+func _is_voice_playing() -> bool:
+	return _current_voice_node != null and _current_voice_node.playing
+
+func _refill_voice_bag():
+	_voice_bag.clear()
+	for i in range(_voice_lines.size()):
+		_voice_bag.append(i)
+	_voice_bag.shuffle()
 	
-	# Passo 1: Toca uma das duas risadas alternadamente
-	if _laugh_sounds.size() >= 2:
-		var current_laugh_node = _laugh_sounds[current_laugh_toggle]
-		if current_laugh_node:
-			current_laugh_node.play()
-			await current_laugh_node.finished
-		current_laugh_toggle = 1 - current_laugh_toggle
+	# Previne que a primeira fala da nova lista seja igual à última da lista antiga
+	if _voice_bag.size() > 1 and last_voice_index == _voice_bag.back():
+		var temp = _voice_bag[0]
+		_voice_bag[0] = _voice_bag[_voice_bag.size()-1]
+		_voice_bag[_voice_bag.size()-1] = temp
+
+func _play_voice():
+	if state == State.DEAD: return
 	
-	# Aborta caso o Coringa tenha morrido durante a risada
-	if state == State.DEAD:
-		_audio_sequence_active = false
-		return
+	if _voice_bag.is_empty():
+		_refill_voice_bag()
+		
+	var idx = _voice_bag.pop_back()
+	_current_voice_node = _voice_lines[idx]
 	
-	# Passo 2: Toca uma das falas aleatórias (sem repetir a última)
-	if _voice_lines.size() > 0:
-		var random_index = randi() % _voice_lines.size()
-		while random_index == last_voice_index and _voice_lines.size() > 1:
-			random_index = randi() % _voice_lines.size()
-			
-		var selected_voice_node = _voice_lines[random_index]
-		if selected_voice_node:
-			selected_voice_node.play()
-			await selected_voice_node.finished
-		last_voice_index = random_index
-	
-	_audio_sequence_active = false
+	if _current_voice_node:
+		_current_voice_node.play()
+		
+	last_voice_index = idx

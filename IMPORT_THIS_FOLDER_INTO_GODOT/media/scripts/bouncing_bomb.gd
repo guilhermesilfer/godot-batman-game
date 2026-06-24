@@ -18,7 +18,7 @@ func _physics_process(delta):
 	if not is_on_floor():
 		velocity += get_gravity() * delta
 	
-	var collided = move_and_slide()
+	var _collided = move_and_slide()
 	
 	if is_on_floor():
 		bounces += 1

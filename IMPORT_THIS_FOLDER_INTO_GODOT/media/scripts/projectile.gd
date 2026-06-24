@@ -6,7 +6,7 @@ var speed = 400
 func _physics_process(delta: float) -> void:
 	position += transform.x * speed * delta
 
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	_animated_sprite.play("default")
 
 func _on_body_entered(body: Node2D) -> void:

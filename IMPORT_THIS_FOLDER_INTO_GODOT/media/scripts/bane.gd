@@ -4,7 +4,7 @@ enum State { HALT, LOAD, RUN, JUMP, REST, SPIN, DEAD }
 
 const RUN_SPEED = 200.0
 const JUMP_SPEED = 250.0
-const MAX_HEALTH = 100
+const MAX_HEALTH = 1
 const LEFT_WALL = 45.0
 const RIGHT_WALL = 275.0
 const JUMP_VELOCITY = -400.0 
