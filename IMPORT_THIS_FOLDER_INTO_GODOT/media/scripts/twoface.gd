@@ -29,6 +29,7 @@ var shots_fired = 0
 var shots_target = 0
 var health = MAX_HEALTH
 var damage_taken_in_shoot := 0
+var last_voice_index := -1
 
 var _player: Node2D
 
@@ -39,6 +40,7 @@ var _player: Node2D
 @onready var _fire_timer = $TFFireRate
 @onready var _shot_sound = $ShotSound
 @onready var _twoface_laugh_sound = $TwofaceLaugh
+@onready var _voice_lines = [$TwofaceVa1, $TwofaceVa2, $TwofaceVa3, $TwofaceVa4]
 
 signal health_changed(new_health)
 signal died
@@ -230,6 +232,13 @@ func _on_tf_charge_collision_body_entered(body: Node2D) -> void:
 		if body.has_method("take_damage"):
 			body.take_damage(15)
 			_twoface_laugh_sound.play()
+			
+			var random_index = randi() % _voice_lines.size()
+			while random_index == last_voice_index:
+				random_index = randi() % _voice_lines.size()
+				
+			_voice_lines[random_index].play()
+			last_voice_index = random_index
 			
 		if body.has_method("heavy_stun"):
 			body.heavy_stun()

@@ -17,8 +17,11 @@
 [ext_resource type="Texture2D" uid="uid://bdi3xdhh6xnv8" path="res://media/sprites/ivy/shooting - 4.png" id="15_y05et"]
 [ext_resource type="Texture2D" uid="uid://b1s4hlnhed5eu" path="res://media/sprites/ivy/shooting - 5.png" id="16_xs8cm"]
 [ext_resource type="Texture2D" uid="uid://cgp076fr4xyc7" path="res://media/sprites/ivy/shooting - 6.png" id="17_wct7e"]
-[ext_resource type="AudioStream" uid="uid://drxf8pm5j5njq" path="res://media/audios/poison ivy laugh.MP3" id="18_pb5q7"]
-[ext_resource type="AudioStream" uid="uid://dc45yorqt66uv" path="res://media/audios/ivy shot sound.MP3" id="19_ujmyr"]
+[ext_resource type="AudioStream" uid="uid://drxf8pm5j5njq" path="res://media/audios/poison-ivy/poison ivy laugh.MP3" id="18_pb5q7"]
+[ext_resource type="AudioStream" uid="uid://dc45yorqt66uv" path="res://media/audios/poison-ivy/ivy shot sound.MP3" id="19_ujmyr"]
+[ext_resource type="AudioStream" uid="uid://pvyugj0q8kq0" path="res://media/audios/poison-ivy/poison-ivy-va1.MP3" id="19_ynsss"]
+[ext_resource type="AudioStream" uid="uid://djsrim5k1q3mo" path="res://media/audios/poison-ivy/poison-ivy-va2.MP3" id="20_xewe3"]
+[ext_resource type="AudioStream" uid="uid://bw6aufhm05vpe" path="res://media/audios/poison-ivy/poison-ivy-va3.MP3" id="21_8hx76"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_ynsss"]
 animations = [{
@@ -125,6 +128,15 @@ position = Vector2(-24, -14)
 
 [node name="LaughSound" type="AudioStreamPlayer2D" parent="." unique_id=1107851254]
 stream = ExtResource("18_pb5q7")
+
+[node name="IvyVa1" type="AudioStreamPlayer2D" parent="." unique_id=995796788]
+stream = ExtResource("19_ynsss")
+
+[node name="IvyVa2" type="AudioStreamPlayer2D" parent="." unique_id=1074459073]
+stream = ExtResource("20_xewe3")
+
+[node name="IvyVa3" type="AudioStreamPlayer2D" parent="." unique_id=1326855167]
+stream = ExtResource("21_8hx76")
 
 [node name="ShotSound" type="AudioStreamPlayer2D" parent="." unique_id=1600916515]
 stream = ExtResource("19_ujmyr")

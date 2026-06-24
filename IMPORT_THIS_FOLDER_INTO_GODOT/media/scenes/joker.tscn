@@ -41,8 +41,14 @@
 [ext_resource type="Texture2D" uid="uid://3nh7ar6c3ycy" path="res://media/sprites/joker/jogando 11.png" id="29_8o1tx"]
 [ext_resource type="Texture2D" uid="uid://caai32y7bwbvh" path="res://media/sprites/joker/rindo 11.png" id="29_a5w56"]
 [ext_resource type="Texture2D" uid="uid://boo05atqchlpq" path="res://media/sprites/joker/rindo 12.png" id="30_h013l"]
-[ext_resource type="AudioStream" uid="uid://c8uhayes0s334" path="res://media/audios/joker laugh 1.MP3" id="42_f4ifq"]
-[ext_resource type="AudioStream" uid="uid://3aay46sppaag" path="res://media/audios/joker laugh 2.MP3" id="43_x32h2"]
+[ext_resource type="AudioStream" uid="uid://c8uhayes0s334" path="res://media/audios/joker/joker laugh 1.MP3" id="42_f4ifq"]
+[ext_resource type="AudioStream" uid="uid://3aay46sppaag" path="res://media/audios/joker/joker laugh 2.MP3" id="43_x32h2"]
+[ext_resource type="AudioStream" uid="uid://bwybvelgn1uax" path="res://media/audios/joker/joker-va1.MP3" id="44_x8u2w"]
+[ext_resource type="AudioStream" uid="uid://l3j1p2r3d6ii" path="res://media/audios/joker/joker-va2.MP3" id="45_33emr"]
+[ext_resource type="AudioStream" uid="uid://d2lwvgnblhleg" path="res://media/audios/joker/joker-va3.MP3" id="46_d543g"]
+[ext_resource type="AudioStream" uid="uid://bs45mankq8b2j" path="res://media/audios/joker/joker-va4.MP3" id="47_0owlb"]
+[ext_resource type="AudioStream" uid="uid://ckr7d0kq8daka" path="res://media/audios/joker/joker-va5.MP3" id="48_a5w56"]
+[ext_resource type="AudioStream" uid="uid://b2tc73yaxux3c" path="res://media/audios/joker/joker-va6.MP3" id="49_h013l"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_8nbbs"]
 animations = [{
@@ -294,6 +300,30 @@ volume_db = 5.0
 
 [node name="JokerLaugh2" type="AudioStreamPlayer2D" parent="." unique_id=1221583879]
 stream = ExtResource("43_x32h2")
+volume_db = 5.0
+
+[node name="JokerVa1" type="AudioStreamPlayer2D" parent="." unique_id=447769573]
+stream = ExtResource("44_x8u2w")
+volume_db = 5.0
+
+[node name="JokerVa2" type="AudioStreamPlayer2D" parent="." unique_id=1508010403]
+stream = ExtResource("45_33emr")
+volume_db = 5.0
+
+[node name="JokerVa3" type="AudioStreamPlayer2D" parent="." unique_id=340402515]
+stream = ExtResource("46_d543g")
+volume_db = 5.0
+
+[node name="JokerVa4" type="AudioStreamPlayer2D" parent="." unique_id=568978477]
+stream = ExtResource("47_0owlb")
+volume_db = 5.0
+
+[node name="JokerVa5" type="AudioStreamPlayer2D" parent="." unique_id=1054444063]
+stream = ExtResource("48_a5w56")
+volume_db = 5.0
+
+[node name="JokerVa6" type="AudioStreamPlayer2D" parent="." unique_id=1768951461]
+stream = ExtResource("49_h013l")
 volume_db = 5.0
 
 [connection signal="body_entered" from="JetpackHitbox" to="." method="_on_jetpack_hitbox_body_entered"]

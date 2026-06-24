@@ -25,6 +25,7 @@ var state = State.SHOOT
 var health = MAX_HEALTH
 var shots_fired = 0
 var shots_target = 0
+var last_voice_index := -1
 
 var _player: Node2D
 
@@ -33,6 +34,7 @@ var _player: Node2D
 @onready var _collision = $IvyCollision
 @onready var _laugh_sound = $LaughSound
 @onready var _shot_sound = $ShotSound
+@onready var _voice_lines = [$IvyVa1, $IvyVa2, $IvyVa3]
 
 var _spawn_base_x := 0.0
 
@@ -226,5 +228,11 @@ func die():
 	queue_free()
 
 func _on_player_health_changed(new_health):
-	if state != State.DEAD and not _laugh_sound.playing:
-		_laugh_sound.play()
+	if state != State.DEAD:
+		if not _laugh_sound.playing:
+			_laugh_sound.play()
+		var random_index = randi() % _voice_lines.size()
+		while random_index == last_voice_index:
+			random_index = randi() % _voice_lines.size()
+		_voice_lines[random_index].play()
+		last_voice_index = random_index

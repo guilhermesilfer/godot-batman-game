@@ -20,8 +20,11 @@
 [ext_resource type="Texture2D" uid="uid://ds8x7hf0ondk6" path="res://media/sprites/bane/bane_rodando - 2.png" id="18_fx6ec"]
 [ext_resource type="Texture2D" uid="uid://crnn7xwso6diu" path="res://media/sprites/bane/bane_rodando - 3.png" id="19_6eedc"]
 [ext_resource type="Texture2D" uid="uid://0kowi8e60oou" path="res://media/sprites/bane/bane_rodando - 5.png" id="21_jq76g"]
-[ext_resource type="AudioStream" uid="uid://bg3s467q2y8hh" path="res://media/audios/bane grunt1.MP3" id="21_we7va"]
-[ext_resource type="AudioStream" uid="uid://qk7vq0c6uvs8" path="res://media/audios/bane grunt 2.MP3" id="22_pmad3"]
+[ext_resource type="AudioStream" uid="uid://dga7phwa4dxn4" path="res://media/audios/bane/bane grunt 1.MP3" id="21_we7va"]
+[ext_resource type="AudioStream" uid="uid://27t4dwa5p2nr" path="res://media/audios/bane/bane grunt 2.MP3" id="22_pmad3"]
+[ext_resource type="AudioStream" uid="uid://b62kcfk7seikk" path="res://media/audios/bane/bane grunt 3.MP3" id="23_lihk0"]
+[ext_resource type="AudioStream" uid="uid://dx2x15g1bils7" path="res://media/audios/bane/bane grunt 4.MP3" id="24_o32gh"]
+[ext_resource type="AudioStream" uid="uid://xyhffirlrncp" path="res://media/audios/bane/bane grunt 5.MP3" id="25_cujh3"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_rbb81"]
 animations = [{
@@ -182,6 +185,15 @@ stream = ExtResource("21_we7va")
 
 [node name="BaneGrunt2" type="AudioStreamPlayer2D" parent="." unique_id=1094829793]
 stream = ExtResource("22_pmad3")
+
+[node name="BaneGrunt3" type="AudioStreamPlayer2D" parent="." unique_id=81493148]
+stream = ExtResource("23_lihk0")
+
+[node name="BaneGrunt4" type="AudioStreamPlayer2D" parent="." unique_id=1309716441]
+stream = ExtResource("24_o32gh")
+
+[node name="BaneGrunt5" type="AudioStreamPlayer2D" parent="." unique_id=1734589147]
+stream = ExtResource("25_cujh3")
 
 [connection signal="body_entered" from="SpinArea" to="." method="_on_damage_area_body_entered"]
 [connection signal="body_entered" from="ChargeArea" to="." method="_on_damage_area_body_entered"]

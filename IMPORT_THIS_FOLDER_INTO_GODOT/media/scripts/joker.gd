@@ -19,6 +19,8 @@ var start_y = 0.0
 var charge_direction = -1
 var bomb_spawn_timer = 0.0
 var damage_accumulated = 0 
+var last_voice_index := -1
+var current_laugh_toggle := 0
 
 var BouncingBomb = preload("res://media/scenes/bouncing_bomb.tscn")
 var ParachuteBomb = preload("res://media/scenes/parachute_bomb.tscn")
@@ -31,9 +33,9 @@ var _player: Node2D
 @onready var _jetpack_hitbox = $JetpackHitbox
 @onready var _jetpack_col = $JetpackHitbox/CollisionShape2D
 
-# Referências para os áudios que vi na sua print
-@onready var _laugh_sound1 = $JokerLaugh1
-@onready var _laugh_sound2 = $JokerLaugh2
+# Referências para os áudios configurados na cena
+@onready var _laugh_sounds = [$JokerLaugh1, $JokerLaugh2]
+@onready var _voice_lines = [$JokerVa1, $JokerVa2, $JokerVa3, $JokerVa4, $JokerVa5, $JokerVa6]
 
 signal health_changed(new_health)
 signal died
@@ -136,19 +138,30 @@ func start_throw_series():
 		# 3. A mágica acontece aqui: ao invés de voltar pro ciclo, ele começa a rir!
 		start_laugh()
 
-# 4. Nova função de Risada Invulnerável
+# 4. Nova função de Risada Invulnerável com o Sistema Duplo de Áudio Sorteado
 func start_laugh():
 	if state == State.DEAD or state == State.JETPACK_TAKEOFF: return
 	
 	state = State.LAUGH
 	_animated_sprite.play("laugh")
 	
-	# Sorteia um dos dois áudios de risada
-	if _laugh_sound1 and _laugh_sound2:
-		if randi() % 2 == 0:
-			_laugh_sound1.play()
-		else:
-			_laugh_sound2.play()
+	# Executa a alternância mecânica e linear entre as risadas 1 e 2
+	if _laugh_sounds.size() >= 2:
+		var current_laugh_node = _laugh_sounds[current_laugh_toggle]
+		if current_laugh_node:
+			current_laugh_node.play()
+		current_laugh_toggle = 1 - current_laugh_toggle
+	
+	# Sorteia uma das 4 falas aleatórias, garantindo que não repita a última anterior
+	if _voice_lines.size() > 0:
+		var random_index = randi() % _voice_lines.size()
+		while random_index == last_voice_index and _voice_lines.size() > 1:
+			random_index = randi() % _voice_lines.size()
+			
+		var selected_voice_node = _voice_lines[random_index]
+		if selected_voice_node:
+			selected_voice_node.play()
+		last_voice_index = random_index
 	
 	# Fica nesse estado invulnerável até a animação acabar
 	await _animated_sprite.animation_finished

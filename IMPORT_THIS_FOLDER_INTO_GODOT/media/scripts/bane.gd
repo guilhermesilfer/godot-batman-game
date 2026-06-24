@@ -28,8 +28,7 @@ var _is_dying := false
 @onready var _charge_col = $ChargeArea/CollisionShape2D
 @onready var _jump_col = $JumpArea/CollisionShape2D 
 
-@onready var _grunt_sound1 = $BaneGrunt1
-@onready var _grunt_sound2 = $BaneGrunt2
+@onready var _grunt_sounds = [$BaneGrunt1, $BaneGrunt2, $BaneGrunt3, $BaneGrunt4, $BaneGrunt5]
 
 signal health_changed(new_health)
 signal died
@@ -138,18 +137,13 @@ func execute_load():
 	velocity.x = move_toward(velocity.x, 0, RUN_SPEED) 
 	play_anim("load")
 	
-	# Efeito Visual: Ficar vermelho parado antes da investida
 	var tween = create_tween()
 	tween.tween_property(_animated_sprite, "modulate", Color.RED, 0.7)
 	
-	if randi() % 2 == 0:
-		_grunt_sound1.play()
-	else:
-		_grunt_sound2.play()
+	_grunt_sounds.pick_random().play()
 		
 	await get_tree().create_timer(1.5).timeout
 	
-	# Resetar cor antes de começar a correr
 	_animated_sprite.modulate = Color.WHITE
 	
 	if state == State.DEAD or _is_dying: return
@@ -234,7 +228,6 @@ func set_direction(dir):
 		_jump_col.rotation_degrees = abs(_jump_col.rotation_degrees) * -dir
 
 func play_anim(anim_name: String):
-	# PROTEÇÃO VISUAL MÁXIMA: Impede novas animações se estiver morto
 	if _is_dying and anim_name != "death": return
 	
 	if _animated_sprite.animation != anim_name:
@@ -266,7 +259,6 @@ func die():
 		if child is CollisionShape2D:
 			child.set_deferred("disabled", true)
 			
-	# Para a animação atual imediatamente antes de tocar a morte
 	_animated_sprite.stop()
 	play_anim("death")
 	
