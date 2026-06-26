@@ -115,7 +115,7 @@ shape = SubResource("CapsuleShape2D_8vosk")
 rotation = 1.5707964
 scale = Vector2(0.044622675, 0.044622675)
 sprite_frames = SubResource("SpriteFrames_8vosk")
-animation = &"grow"
+animation = &"shrink"
 
 [node name="AnimatedSprite2D2" type="AnimatedSprite2D" parent="AnimatedSprite2D" unique_id=736738514]
 position = Vector2(-22.410126, 112.05069)

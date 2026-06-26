@@ -7,12 +7,11 @@ extends Area2D
 var _is_dying = false
 
 func _ready():
-	# Começa pelo aviso visual
+	# Começa pelo aviso visual usando apenas transparência
 	_collision.disabled = true
 	modulate.a = 0.3 # Fica transparente
-	_anim_player.play("warn") 
 	
-	# Espera o tempo do "aviso" (ex: 0.5 segundos)
+	# Espera o tempo do "aviso" (ex: 0.6 segundos)
 	await get_tree().create_timer(0.6).timeout
 	
 	# Agora ataca de verdade

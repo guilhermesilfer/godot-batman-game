@@ -9,7 +9,7 @@ enum State {
 	DEAD
 }
 
-const MAX_HEALTH = 100
+const MAX_HEALTH = 1
 const ESCAPE_DISTANCE = 80.0 
 
 const MIN_X = 16
@@ -69,6 +69,12 @@ func _ready():
 func _physics_process(delta):
 	if state == State.DEAD: return
 	
+	# Cronômetro passivo para as falas agora roda no topo, imune aos "returns" de esquiva
+	_passive_voice_timer -= delta
+	if _passive_voice_timer <= 0:
+		_queue_audio("voice")
+		_passive_voice_timer = randf_range(8.0, 10.0)
+	
 	if state == State.SHOOT or state == State.VINES:
 		# Removido await perigoso do physics_process, mantendo apenas a verificação
 		if player_is_close():
@@ -87,12 +93,6 @@ func _physics_process(delta):
 		velocity += get_gravity() * delta
 	
 	move_and_slide()
-	
-	# Cronômetro passivo para as falas
-	_passive_voice_timer -= delta
-	if _passive_voice_timer <= 0:
-		_queue_audio("voice")
-		_passive_voice_timer = randf_range(8.0, 10.0)
 
 # -------------------------
 # COMBATE

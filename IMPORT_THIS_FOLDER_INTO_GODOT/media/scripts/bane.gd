@@ -30,6 +30,9 @@ var _is_dying := false
 
 @onready var _grunt_sounds = [$BaneGrunt1, $BaneGrunt2, $BaneGrunt3, $BaneGrunt4, $BaneGrunt5]
 
+# Variável do sistema de embaralhamento
+var _grunt_bag : Array[int] = []
+
 signal health_changed(new_health)
 signal died
 
@@ -50,6 +53,8 @@ func _ready():
 	if _spin_area: _spin_area.monitoring = true
 	if _charge_area: _charge_area.monitoring = true
 	if _jump_area: _jump_area.monitoring = true
+	
+	_refill_grunt_bag()
 	
 	disable_all_hitboxes()
 	set_direction(facing) 
@@ -140,7 +145,10 @@ func execute_load():
 	var tween = create_tween()
 	tween.tween_property(_animated_sprite, "modulate", Color.RED, 0.7)
 	
-	_grunt_sounds.pick_random().play()
+	if _grunt_bag.is_empty():
+		_refill_grunt_bag()
+	var idx = _grunt_bag.pop_back()
+	_grunt_sounds[idx].play()
 		
 	await get_tree().create_timer(1.5).timeout
 	
@@ -284,3 +292,10 @@ func _apply_damage_to_batman(player_body, damage_amount):
 		player_body.take_damage(damage_amount) 
 	if player_body.has_method("heavy_stun") and not player_body.is_invulnerable:
 		player_body.heavy_stun()
+
+# --- SISTEMA DE SHUFFLE BAG (Apenas Grunhidos) ---
+func _refill_grunt_bag():
+	_grunt_bag.clear()
+	for i in range(_grunt_sounds.size()):
+		_grunt_bag.append(i)
+	_grunt_bag.shuffle()

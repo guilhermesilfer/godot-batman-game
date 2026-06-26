@@ -1,8 +1,5 @@
 extends CharacterBody2D
 
-var Bullet = preload("res://media/scenes/projectile.tscn")
-
-@onready var _bullet_spawn = $BulletSpawn
 @onready var _animated_sprite = $BatmanAnimatedSprite2D
 @onready var _collision_standing = $CollisionStanding
 @onready var _collision_crouching1 = $CollisionCrouch1
@@ -100,7 +97,7 @@ func _process(_delta):
 	elif Input.is_action_just_pressed("roll") and is_on_floor() and not is_punching:
 		play_anim("roll")
 	elif not is_on_floor():
-		play_anim("jump")
+		play_anim("halt")
 	elif velocity.x != 0:
 		_animated_sprite.position.x = -10 * facing 
 		play_anim("run")
@@ -132,10 +129,10 @@ func _on_animation_finished():
 	if is_punching and (_animated_sprite.animation == "right punch" or _animated_sprite.animation == "left punch"):
 		is_punching = false
 
-func play_anim(anime_name):
-	if _animated_sprite.animation != anime_name:
+func play_anim(anim_name):
+	if _animated_sprite.animation != anim_name:
 		_animated_sprite.position.x = 0 
-		_animated_sprite.play(anime_name)
+		_animated_sprite.play(anim_name)
 
 func set_direction(dir):
 	if facing == dir:
@@ -146,8 +143,6 @@ func set_direction(dir):
 	_collision_crouching1.position.x *= -1
 	_collision_crouching2.position.x *= -1
 	_collision_standing.position.x *= -1
-	if _bullet_spawn: 
-		_bullet_spawn.position.x *= -1
 	if _area_punch:
 		_area_punch.position.x = abs(_area_punch.position.x) * dir
 	if _collision_punching:
@@ -167,14 +162,6 @@ func start_roll():
 	
 	is_rolling = false
 	is_invulnerable = false
-
-func fire():
-	var bullet = Bullet.instantiate()
-	
-	bullet.global_position = _bullet_spawn.global_position
-	bullet.speed = abs(bullet.speed) * facing
-	
-	get_tree().current_scene.add_child(bullet)
 
 signal health_changed(new_health)
 
@@ -239,7 +226,6 @@ func heavy_stun():
 	await get_tree().create_timer(2).timeout
 	
 	is_stunned = false
-
 
 func _on_collision_punch_body_entered(body: Node2D) -> void:
 	if body.is_in_group("enemies"):
