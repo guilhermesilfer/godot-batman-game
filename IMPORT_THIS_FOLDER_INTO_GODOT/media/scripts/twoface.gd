@@ -39,6 +39,7 @@ var _player: Node2D
 @onready var _fire_timer = $TFFireRate
 @onready var _shot_sound = $ShotSound
 @onready var _twoface_laugh_sound = $TwofaceLaugh
+@onready var _twoface_death_sound = $TwofaceDeath
 @onready var _voice_lines = [$TwofaceVa1, $TwofaceVa2, $TwofaceVa3, $TwofaceVa4]
 
 # --- NOVAS VARIÁVEIS DO SISTEMA DE ÁUDIO ---
@@ -220,6 +221,17 @@ func die():
 	for child in get_children():
 		if child is CollisionShape2D:
 			child.set_deferred("disabled", true)
+			
+	# --- SILENCIA TUDO E TOCA O SOM DE MORTE ---
+	_shot_sound.stop()
+	_twoface_laugh_sound.stop()
+	for voice in _voice_lines:
+		if voice.playing:
+			voice.stop()
+	_audio_queue.clear()
+	_audio_sequence_active = false
+	if _twoface_death_sound:
+		_twoface_death_sound.play()
 	
 	_animated_sprite.play("death")
 	await get_tree().create_timer(1.5).timeout

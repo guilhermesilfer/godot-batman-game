@@ -136,4 +136,5 @@ shape = SubResource("RectangleShape2D_01sd2")
 
 [node name="IngameSong" type="AudioStreamPlayer2D" parent="." unique_id=360355533]
 stream = ExtResource("3_jdyes")
+volume_db = -8.0
 parameters/looping = true

@@ -29,6 +29,7 @@ var _is_dying := false
 @onready var _jump_col = $JumpArea/CollisionShape2D 
 
 @onready var _grunt_sounds = [$BaneGrunt1, $BaneGrunt2, $BaneGrunt3, $BaneGrunt4, $BaneGrunt5]
+@onready var _death_sound = $BaneDeath
 
 # Variável do sistema de embaralhamento
 var _grunt_bag : Array[int] = []
@@ -267,10 +268,19 @@ func die():
 		if child is CollisionShape2D:
 			child.set_deferred("disabled", true)
 			
+	# --- SILENCIA TUDO E TOCA O SOM DE MORTE ---
+	for grunt in _grunt_sounds:
+		if grunt.playing:
+			grunt.stop()
+			
 	_animated_sprite.stop()
 	play_anim("death")
 	
-	await get_tree().create_timer(2.0).timeout
+	if _death_sound:
+		_death_sound.play()
+		await _death_sound.finished
+	else:
+		await get_tree().create_timer(2.0).timeout
 	
 	emit_signal("died")
 	queue_free()

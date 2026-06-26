@@ -25,6 +25,7 @@
 [ext_resource type="AudioStream" uid="uid://b62kcfk7seikk" path="res://media/audios/bane/bane grunt 3.MP3" id="23_lihk0"]
 [ext_resource type="AudioStream" uid="uid://dx2x15g1bils7" path="res://media/audios/bane/bane grunt 4.MP3" id="24_o32gh"]
 [ext_resource type="AudioStream" uid="uid://xyhffirlrncp" path="res://media/audios/bane/bane grunt 5.MP3" id="25_cujh3"]
+[ext_resource type="AudioStream" uid="uid://dlm4bu77s7u70" path="res://media/audios/bane/bane_death.MP3" id="26_o32gh"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_rbb81"]
 animations = [{
@@ -41,9 +42,9 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("5_ymqaj")
 }],
-"loop": false,
+"loop": 0,
 "name": &"death",
-"speed": 4.0
+"speed": 2.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -52,7 +53,7 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("3_2wjmf")
 }],
-"loop": true,
+"loop": 1,
 "name": &"halt",
 "speed": 2.0
 }, {
@@ -66,7 +67,7 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("10_cujh3")
 }],
-"loop": false,
+"loop": 0,
 "name": &"jump",
 "speed": 7.0
 }, {
@@ -74,7 +75,7 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("11_7ul1i")
 }],
-"loop": true,
+"loop": 1,
 "name": &"load",
 "speed": 5.0
 }, {
@@ -97,7 +98,7 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("16_pitvm")
 }],
-"loop": true,
+"loop": 1,
 "name": &"run",
 "speed": 10.0
 }, {
@@ -117,7 +118,7 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("21_jq76g")
 }],
-"loop": true,
+"loop": 1,
 "name": &"spin",
 "speed": 10.0
 }]
@@ -194,6 +195,10 @@ stream = ExtResource("24_o32gh")
 
 [node name="BaneGrunt5" type="AudioStreamPlayer2D" parent="." unique_id=1734589147]
 stream = ExtResource("25_cujh3")
+
+[node name="BaneDeath" type="AudioStreamPlayer2D" parent="." unique_id=1333898180]
+stream = ExtResource("26_o32gh")
+volume_db = 5.0
 
 [connection signal="body_entered" from="SpinArea" to="." method="_on_damage_area_body_entered"]
 [connection signal="body_entered" from="ChargeArea" to="." method="_on_damage_area_body_entered"]

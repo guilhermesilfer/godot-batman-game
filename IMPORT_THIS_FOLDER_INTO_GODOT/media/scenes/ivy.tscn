@@ -19,9 +19,10 @@
 [ext_resource type="Texture2D" uid="uid://cgp076fr4xyc7" path="res://media/sprites/ivy/shooting - 6.png" id="17_wct7e"]
 [ext_resource type="AudioStream" uid="uid://drxf8pm5j5njq" path="res://media/audios/poison-ivy/poison ivy laugh.MP3" id="18_pb5q7"]
 [ext_resource type="AudioStream" uid="uid://dc45yorqt66uv" path="res://media/audios/poison-ivy/ivy shot sound.MP3" id="19_ujmyr"]
-[ext_resource type="AudioStream" uid="uid://pvyugj0q8kq0" path="res://media/audios/poison-ivy/poison-ivy-va1.MP3" id="19_ynsss"]
-[ext_resource type="AudioStream" uid="uid://djsrim5k1q3mo" path="res://media/audios/poison-ivy/poison-ivy-va2.MP3" id="20_xewe3"]
-[ext_resource type="AudioStream" uid="uid://bw6aufhm05vpe" path="res://media/audios/poison-ivy/poison-ivy-va3.MP3" id="21_8hx76"]
+[ext_resource type="AudioStream" uid="uid://raqeeqkc6w3m" path="res://media/audios/poison-ivy/ivy_death.MP3" id="19_xewe3"]
+[ext_resource type="AudioStream" uid="uid://hqqdtdo811yq" path="res://media/audios/poison-ivy/poison-ivy-va1.MP3" id="19_ynsss"]
+[ext_resource type="AudioStream" uid="uid://b85j8htdsuj5b" path="res://media/audios/poison-ivy/poison-ivy-va2.MP3" id="20_xewe3"]
+[ext_resource type="AudioStream" uid="uid://jjnm0jx10ery" path="res://media/audios/poison-ivy/poison-ivy-va3.MP3" id="21_8hx76"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_ynsss"]
 animations = [{
@@ -38,7 +39,7 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("5_hu2ed")
 }],
-"loop": false,
+"loop": 0,
 "name": &"ascend",
 "speed": 6.0
 }, {
@@ -61,7 +62,7 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("11_twhh1")
 }],
-"loop": true,
+"loop": 1,
 "name": &"death",
 "speed": 3.0
 }, {
@@ -78,7 +79,7 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("11_twhh1")
 }],
-"loop": false,
+"loop": 0,
 "name": &"descend",
 "speed": 5.0
 }, {
@@ -101,7 +102,7 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("17_wct7e")
 }],
-"loop": false,
+"loop": 0,
 "name": &"shoot",
 "speed": 2.0
 }]
@@ -128,6 +129,9 @@ position = Vector2(-24, -14)
 
 [node name="LaughSound" type="AudioStreamPlayer2D" parent="." unique_id=1107851254]
 stream = ExtResource("18_pb5q7")
+
+[node name="DeathSound" type="AudioStreamPlayer2D" parent="." unique_id=589420881]
+stream = ExtResource("19_xewe3")
 
 [node name="IvyVa1" type="AudioStreamPlayer2D" parent="." unique_id=995796788]
 stream = ExtResource("19_ynsss")

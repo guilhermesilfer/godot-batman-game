@@ -4,7 +4,7 @@ enum State { IDLE, THROW, DROP_BOMB, JETPACK_TAKEOFF, JETPACK_CHARGE, JETPACK_LA
 
 const SPEED = 0.0 
 const JETPACK_SPEED = 150.0 
-const MAX_HEALTH = 100
+const MAX_HEALTH = 1
 const JETPACK_HEIGHT = 0.0 
 const DAMAGE_THRESHOLD_FOR_JETPACK = 15 
 const SCREEN_WIDTH_HALF = 160
@@ -30,7 +30,8 @@ var _player: Node2D
 @onready var _jetpack_col = $JetpackHitbox/CollisionShape2D
 
 # Referências de áudio (Usando apenas 1 risada agora)
-@onready var _laugh_sound = $JokerLaugh1
+@onready var _laugh_sound = $JokerLaugh
+@onready var _death_sound = $JokerDeath
 @onready var _voice_lines = [$JokerVa1, $JokerVa2, $JokerVa3, $JokerVa4, $JokerVa5, $JokerVa6]
 
 # Variáveis do novo sistema de áudio e combos
@@ -301,8 +302,22 @@ func take_damage(damage = 5):
 func die():
 	state = State.DEAD
 	_jetpack_col.set_deferred("disabled", true)
+	
+	# --- SILENCIA TUDO E TOCA O SOM DE MORTE ---
+	if _is_voice_playing():
+		_current_voice_node.stop()
+	if _laugh_sound.playing:
+		_laugh_sound.stop()
+	_voice_queued = false
+	
 	_animated_sprite.play("death")
-	await get_tree().create_timer(2.0).timeout
+	
+	if _death_sound:
+		_death_sound.play()
+		await _death_sound.finished
+	else:
+		await get_tree().create_timer(2.0).timeout
+		
 	emit_signal("died")
 	queue_free()
 

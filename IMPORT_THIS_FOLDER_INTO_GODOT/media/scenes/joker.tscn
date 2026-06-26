@@ -42,13 +42,13 @@
 [ext_resource type="Texture2D" uid="uid://caai32y7bwbvh" path="res://media/sprites/joker/rindo 11.png" id="29_a5w56"]
 [ext_resource type="Texture2D" uid="uid://boo05atqchlpq" path="res://media/sprites/joker/rindo 12.png" id="30_h013l"]
 [ext_resource type="AudioStream" uid="uid://c8uhayes0s334" path="res://media/audios/joker/joker laugh 1.MP3" id="42_f4ifq"]
-[ext_resource type="AudioStream" uid="uid://3aay46sppaag" path="res://media/audios/joker/joker laugh 2.MP3" id="43_x32h2"]
 [ext_resource type="AudioStream" uid="uid://bwybvelgn1uax" path="res://media/audios/joker/joker-va1.MP3" id="44_x8u2w"]
 [ext_resource type="AudioStream" uid="uid://l3j1p2r3d6ii" path="res://media/audios/joker/joker-va2.MP3" id="45_33emr"]
 [ext_resource type="AudioStream" uid="uid://d2lwvgnblhleg" path="res://media/audios/joker/joker-va3.MP3" id="46_d543g"]
 [ext_resource type="AudioStream" uid="uid://bs45mankq8b2j" path="res://media/audios/joker/joker-va4.MP3" id="47_0owlb"]
 [ext_resource type="AudioStream" uid="uid://ckr7d0kq8daka" path="res://media/audios/joker/joker-va5.MP3" id="48_a5w56"]
 [ext_resource type="AudioStream" uid="uid://b2tc73yaxux3c" path="res://media/audios/joker/joker-va6.MP3" id="49_h013l"]
+[ext_resource type="AudioStream" uid="uid://dqes5veap1qr6" path="res://media/audios/joker/joker_death.MP3" id="49_x8u2w"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_8nbbs"]
 animations = [{
@@ -59,7 +59,7 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("3_i7hp2")
 }],
-"loop": true,
+"loop": 1,
 "name": &"damage",
 "speed": 4.0
 }, {
@@ -88,10 +88,22 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("9_o0ulb")
 }, {
-"duration": 1.5,
+"duration": 1.0,
 "texture": ExtResource("10_gw8wb")
 }, {
-"duration": 3.0,
+"duration": 1.0,
+"texture": ExtResource("11_6ar1v")
+}, {
+"duration": 1.0,
+"texture": ExtResource("12_nil4q")
+}, {
+"duration": 1.0,
+"texture": ExtResource("11_6ar1v")
+}, {
+"duration": 1.0,
+"texture": ExtResource("12_nil4q")
+}, {
+"duration": 1.0,
 "texture": ExtResource("11_6ar1v")
 }, {
 "duration": 1.0,
@@ -100,18 +112,54 @@ animations = [{
 "duration": 3.0,
 "texture": ExtResource("11_6ar1v")
 }, {
-"duration": 1.0,
+"duration": 3.0,
 "texture": ExtResource("12_nil4q")
 }, {
 "duration": 3.0,
 "texture": ExtResource("11_6ar1v")
 }, {
-"duration": 1.0,
+"duration": 3.0,
+"texture": ExtResource("12_nil4q")
+}, {
+"duration": 3.0,
+"texture": ExtResource("11_6ar1v")
+}, {
+"duration": 3.0,
+"texture": ExtResource("12_nil4q")
+}, {
+"duration": 3.0,
+"texture": ExtResource("11_6ar1v")
+}, {
+"duration": 3.0,
+"texture": ExtResource("12_nil4q")
+}, {
+"duration": 3.0,
+"texture": ExtResource("11_6ar1v")
+}, {
+"duration": 3.0,
+"texture": ExtResource("12_nil4q")
+}, {
+"duration": 2.0,
+"texture": ExtResource("11_6ar1v")
+}, {
+"duration": 2.0,
+"texture": ExtResource("12_nil4q")
+}, {
+"duration": 2.0,
+"texture": ExtResource("11_6ar1v")
+}, {
+"duration": 2.0,
+"texture": ExtResource("12_nil4q")
+}, {
+"duration": 2.0,
+"texture": ExtResource("11_6ar1v")
+}, {
+"duration": 2.0,
 "texture": ExtResource("12_nil4q")
 }],
-"loop": false,
+"loop": 0,
 "name": &"death",
-"speed": 9.0
+"speed": 6.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -120,7 +168,7 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("14_mjfoc")
 }],
-"loop": true,
+"loop": 1,
 "name": &"idle",
 "speed": 5.0
 }, {
@@ -131,7 +179,7 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("16_eronp")
 }],
-"loop": true,
+"loop": 1,
 "name": &"jetpack_charge",
 "speed": 5.0
 }, {
@@ -142,7 +190,7 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("18_rlhlr")
 }],
-"loop": false,
+"loop": 0,
 "name": &"jetpack_landing",
 "speed": 5.0
 }, {
@@ -153,7 +201,7 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("17_h7tdf")
 }],
-"loop": false,
+"loop": 0,
 "name": &"jetpack_takeoff",
 "speed": 5.0
 }, {
@@ -218,7 +266,7 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("30_h013l")
 }],
-"loop": true,
+"loop": 1,
 "name": &"laugh",
 "speed": 10.0
 }, {
@@ -256,7 +304,7 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("29_8o1tx")
 }],
-"loop": false,
+"loop": 0,
 "name": &"throw",
 "speed": 11.0
 }]
@@ -294,12 +342,8 @@ debug_color = Color(0.9881373, 0.01807146, 0, 0.41960785)
 [node name="JokerCollision" type="CollisionShape2D" parent="." unique_id=996097458]
 shape = SubResource("CapsuleShape2D_dku1w")
 
-[node name="JokerLaugh1" type="AudioStreamPlayer2D" parent="." unique_id=1378702637]
+[node name="JokerLaugh" type="AudioStreamPlayer2D" parent="." unique_id=1378702637]
 stream = ExtResource("42_f4ifq")
-volume_db = 5.0
-
-[node name="JokerLaugh2" type="AudioStreamPlayer2D" parent="." unique_id=1221583879]
-stream = ExtResource("43_x32h2")
 volume_db = 5.0
 
 [node name="JokerVa1" type="AudioStreamPlayer2D" parent="." unique_id=447769573]
@@ -324,6 +368,10 @@ volume_db = 5.0
 
 [node name="JokerVa6" type="AudioStreamPlayer2D" parent="." unique_id=1768951461]
 stream = ExtResource("49_h013l")
+volume_db = 5.0
+
+[node name="JokerDeath" type="AudioStreamPlayer2D" parent="." unique_id=975720680]
+stream = ExtResource("49_x8u2w")
 volume_db = 5.0
 
 [connection signal="body_entered" from="JetpackHitbox" to="." method="_on_jetpack_hitbox_body_entered"]

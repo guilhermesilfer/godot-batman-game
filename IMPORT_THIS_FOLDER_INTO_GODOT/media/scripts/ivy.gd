@@ -34,6 +34,7 @@ var _player: Node2D
 @onready var _bullet_spawn = $IvyBulletSpawn
 @onready var _collision = $IvyCollision
 @onready var _laugh_sound = $LaughSound
+@onready var _death_sound = $DeathSound
 @onready var _shot_sound = $ShotSound
 @onready var _voice_lines = [$IvyVa1, $IvyVa2, $IvyVa3]
 
@@ -238,6 +239,18 @@ func die():
 	state = State.DEAD
 	_collision.set_deferred("disabled", true)
 	velocity = Vector2.ZERO
+	
+	# --- SILENCIA TUDO E TOCA O SOM DE MORTE ---
+	_shot_sound.stop()
+	_laugh_sound.stop()
+	for voice in _voice_lines:
+		if voice.playing:
+			voice.stop()
+	_audio_queue.clear()
+	_audio_sequence_active = false
+	if _death_sound:
+		_death_sound.play()
+	
 	_animated_sprite.play("death")
 	await get_tree().create_timer(1.5).timeout
 	emit_signal("died")

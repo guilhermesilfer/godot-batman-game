@@ -14,6 +14,7 @@
 [ext_resource type="Texture2D" uid="uid://biwnske7ujv8e" path="res://media/sprites/twoface/harvey_correndo_7.png" id="8_0q8eo"]
 [ext_resource type="AudioStream" uid="uid://cimendbogo0vx" path="res://media/audios/shot sound.MP3" id="13_vw15v"]
 [ext_resource type="AudioStream" uid="uid://qyhl4mom7rgy" path="res://media/audios/two-face/twoface_laugh.MP3" id="14_d6t87"]
+[ext_resource type="AudioStream" uid="uid://dln06r3un05gc" path="res://media/audios/two-face/twoface_death.MP3" id="15_u8b2g"]
 [ext_resource type="AudioStream" uid="uid://bnwf4pogaq4pn" path="res://media/audios/two-face/twoface-va-1.MP3" id="15_w3wuc"]
 [ext_resource type="AudioStream" uid="uid://v35omadgsooc" path="res://media/audios/two-face/twoface-va-2.MP3" id="16_u8b2g"]
 [ext_resource type="AudioStream" uid="uid://bbu6dp8q2d2n3" path="res://media/audios/two-face/twoface-va-3.MP3" id="17_j6pq2"]
@@ -131,6 +132,9 @@ stream = ExtResource("13_vw15v")
 
 [node name="TwofaceLaugh" type="AudioStreamPlayer2D" parent="." unique_id=804068134]
 stream = ExtResource("14_d6t87")
+
+[node name="TwofaceDeath" type="AudioStreamPlayer2D" parent="." unique_id=915896266]
+stream = ExtResource("15_u8b2g")
 
 [node name="TwofaceVa1" type="AudioStreamPlayer2D" parent="." unique_id=218187623]
 stream = ExtResource("15_w3wuc")
