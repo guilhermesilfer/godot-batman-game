@@ -25,11 +25,16 @@
 [ext_resource type="Texture2D" uid="uid://djlus44ok1sm4" path="res://media/sprites/batman/right punch - 3.png" id="14_6uu7d"]
 [ext_resource type="Texture2D" uid="uid://dutli6xs3fahv" path="res://media/sprites/batman/dead - 6.png" id="14_8ny4c"]
 [ext_resource type="Texture2D" uid="uid://c8a1k22uwbhgd" path="res://media/sprites/batman/roll - 6.png" id="14_nxmgs"]
+[ext_resource type="Texture2D" uid="uid://dss648btc2om4" path="res://media/sprites/batman/jump - 1.png" id="15_bneac"]
 [ext_resource type="Texture2D" uid="uid://bxii3dstl43fp" path="res://media/sprites/batman/roll - 7.png" id="15_hv4fi"]
+[ext_resource type="Texture2D" uid="uid://bg6b6pg0bn5jk" path="res://media/sprites/batman/jump - 2.png" id="16_2207d"]
 [ext_resource type="Texture2D" uid="uid://bn08getnev34k" path="res://media/sprites/batman/roll - 8.png" id="16_rtr0x"]
 [ext_resource type="Texture2D" uid="uid://dpfyww46sbira" path="res://media/sprites/batman/roll - 9.png" id="17_8ny4c"]
+[ext_resource type="Texture2D" uid="uid://cnhwe0a8h1mru" path="res://media/sprites/batman/jump - 3.png" id="17_ni5xt"]
 [ext_resource type="Texture2D" uid="uid://bp26kijgh64vu" path="res://media/sprites/batman/roll - 10.png" id="18_5ukyu"]
+[ext_resource type="Texture2D" uid="uid://wwlo76lcwp2l" path="res://media/sprites/batman/jump - 4.png" id="18_7je84"]
 [ext_resource type="Texture2D" uid="uid://lgd42rwcrvv" path="res://media/sprites/batman/roll - 11.png" id="19_1qyva"]
+[ext_resource type="Texture2D" uid="uid://dvkp78wc87mtm" path="res://media/sprites/batman/jump - 5.png" id="19_he7t8"]
 [ext_resource type="Texture2D" uid="uid://de2ggx4uoglon" path="res://media/sprites/batman/running - 1.png" id="20_0sq5d"]
 [ext_resource type="Texture2D" uid="uid://c52vy7ocolrt6" path="res://media/sprites/batman/running - 2.png" id="21_tiymk"]
 [ext_resource type="Texture2D" uid="uid://b7l143f0uqhwb" path="res://media/sprites/batman/running - 3.png" id="22_bneac"]
@@ -62,7 +67,7 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("6_mubyc")
 }],
-"loop": 0,
+"loop": false,
 "name": &"crouch",
 "speed": 12.0
 }, {
@@ -79,7 +84,7 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("14_8ny4c")
 }],
-"loop": 0,
+"loop": false,
 "name": &"death",
 "speed": 3.0
 }, {
@@ -90,7 +95,7 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("8_e7k4x")
 }],
-"loop": 1,
+"loop": true,
 "name": &"halt",
 "speed": 2.0
 }, {
@@ -125,8 +130,28 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("6_mubyc")
 }],
-"loop": 0,
+"loop": false,
 "name": &"heavy stun",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("15_bneac")
+}, {
+"duration": 1.0,
+"texture": ExtResource("16_2207d")
+}, {
+"duration": 1.0,
+"texture": ExtResource("17_ni5xt")
+}, {
+"duration": 1.0,
+"texture": ExtResource("18_7je84")
+}, {
+"duration": 1.0,
+"texture": ExtResource("19_he7t8")
+}],
+"loop": true,
+"name": &"jump",
 "speed": 5.0
 }, {
 "frames": [{
@@ -139,7 +164,7 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("11_hlm2d")
 }],
-"loop": 1,
+"loop": true,
 "name": &"left punch",
 "speed": 7.0
 }, {
@@ -153,7 +178,7 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("14_6uu7d")
 }],
-"loop": 1,
+"loop": true,
 "name": &"right punch",
 "speed": 7.0
 }, {
@@ -191,7 +216,7 @@ animations = [{
 "duration": 0.7,
 "texture": ExtResource("19_1qyva")
 }],
-"loop": 0,
+"loop": false,
 "name": &"roll",
 "speed": 16.0
 }, {
@@ -220,7 +245,7 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("27_lei58")
 }],
-"loop": 1,
+"loop": true,
 "name": &"run",
 "speed": 10.0
 }, {
@@ -237,7 +262,7 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("8_e7k4x")
 }],
-"loop": 1,
+"loop": true,
 "name": &"stun",
 "speed": 7.0
 }]
@@ -265,7 +290,7 @@ script = ExtResource("1_jqkwr")
 [node name="BatmanAnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=748966652]
 texture_filter = 1
 sprite_frames = SubResource("SpriteFrames_h1cvd")
-animation = &"crouch"
+animation = &"jump"
 offset = Vector2(0, -7)
 
 [node name="CollisionStanding" type="CollisionShape2D" parent="." unique_id=850553504]

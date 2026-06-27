@@ -97,7 +97,7 @@ func _process(_delta):
 	elif Input.is_action_just_pressed("roll") and is_on_floor() and not is_punching:
 		play_anim("roll")
 	elif not is_on_floor():
-		play_anim("halt")
+		play_anim("jump")
 	elif velocity.x != 0:
 		_animated_sprite.position.x = -10 * facing 
 		play_anim("run")
