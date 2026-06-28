@@ -25,22 +25,28 @@
 [ext_resource type="Texture2D" uid="uid://djlus44ok1sm4" path="res://media/sprites/batman/right punch - 3.png" id="14_6uu7d"]
 [ext_resource type="Texture2D" uid="uid://dutli6xs3fahv" path="res://media/sprites/batman/dead - 6.png" id="14_8ny4c"]
 [ext_resource type="Texture2D" uid="uid://c8a1k22uwbhgd" path="res://media/sprites/batman/roll - 6.png" id="14_nxmgs"]
-[ext_resource type="Texture2D" uid="uid://dss648btc2om4" path="res://media/sprites/batman/jump - 1.png" id="15_bneac"]
+[ext_resource type="Texture2D" uid="uid://dlkj0etnaq0e4" path="res://media/sprites/batman/jump - 1.png" id="15_bneac"]
 [ext_resource type="Texture2D" uid="uid://bxii3dstl43fp" path="res://media/sprites/batman/roll - 7.png" id="15_hv4fi"]
-[ext_resource type="Texture2D" uid="uid://bg6b6pg0bn5jk" path="res://media/sprites/batman/jump - 2.png" id="16_2207d"]
+[ext_resource type="Texture2D" uid="uid://dj5ro7gmanw0q" path="res://media/sprites/batman/jump - 2.png" id="16_2207d"]
 [ext_resource type="Texture2D" uid="uid://bn08getnev34k" path="res://media/sprites/batman/roll - 8.png" id="16_rtr0x"]
 [ext_resource type="Texture2D" uid="uid://dpfyww46sbira" path="res://media/sprites/batman/roll - 9.png" id="17_8ny4c"]
-[ext_resource type="Texture2D" uid="uid://cnhwe0a8h1mru" path="res://media/sprites/batman/jump - 3.png" id="17_ni5xt"]
+[ext_resource type="Texture2D" uid="uid://bb7fgg24iuku6" path="res://media/sprites/batman/jump - 3.png" id="17_ni5xt"]
 [ext_resource type="Texture2D" uid="uid://bp26kijgh64vu" path="res://media/sprites/batman/roll - 10.png" id="18_5ukyu"]
-[ext_resource type="Texture2D" uid="uid://wwlo76lcwp2l" path="res://media/sprites/batman/jump - 4.png" id="18_7je84"]
+[ext_resource type="Texture2D" uid="uid://browfmaja4rdi" path="res://media/sprites/batman/jump - 4.png" id="18_7je84"]
 [ext_resource type="Texture2D" uid="uid://lgd42rwcrvv" path="res://media/sprites/batman/roll - 11.png" id="19_1qyva"]
-[ext_resource type="Texture2D" uid="uid://dvkp78wc87mtm" path="res://media/sprites/batman/jump - 5.png" id="19_he7t8"]
+[ext_resource type="Texture2D" uid="uid://02x0jao00wd5" path="res://media/sprites/batman/jump - 5.png" id="19_he7t8"]
 [ext_resource type="Texture2D" uid="uid://de2ggx4uoglon" path="res://media/sprites/batman/running - 1.png" id="20_0sq5d"]
+[ext_resource type="Texture2D" uid="uid://ds8u3facmym2i" path="res://media/sprites/batman/kick - 1.png" id="20_t3me2"]
+[ext_resource type="Texture2D" uid="uid://r1dtvvyg54s1" path="res://media/sprites/batman/kick - 2.png" id="21_brqs6"]
 [ext_resource type="Texture2D" uid="uid://c52vy7ocolrt6" path="res://media/sprites/batman/running - 2.png" id="21_tiymk"]
+[ext_resource type="Texture2D" uid="uid://ck7gy36n3rng0" path="res://media/sprites/batman/kick - 3.png" id="22_3ju4l"]
 [ext_resource type="Texture2D" uid="uid://b7l143f0uqhwb" path="res://media/sprites/batman/running - 3.png" id="22_bneac"]
 [ext_resource type="Texture2D" uid="uid://c3621ubfa7bln" path="res://media/sprites/batman/running - 4.png" id="23_2207d"]
+[ext_resource type="Texture2D" uid="uid://c25d5371u0l15" path="res://media/sprites/batman/kick - 4.png" id="23_dqml6"]
+[ext_resource type="Texture2D" uid="uid://cfgsffb3mnisk" path="res://media/sprites/batman/kick - 5.png" id="24_ivbi7"]
 [ext_resource type="Texture2D" uid="uid://csaqg10r1kb3h" path="res://media/sprites/batman/running - 5.png" id="24_ni5xt"]
 [ext_resource type="Texture2D" uid="uid://1r5fgvmntirf" path="res://media/sprites/batman/running - 6.png" id="25_7je84"]
+[ext_resource type="Texture2D" uid="uid://c2txk1s2qcjbo" path="res://media/sprites/batman/kick - 6.png" id="25_tvm0x"]
 [ext_resource type="Texture2D" uid="uid://bhmxwsj5nr3fu" path="res://media/sprites/batman/running - 7.png" id="26_he7t8"]
 [ext_resource type="Texture2D" uid="uid://be748m4mxxrsk" path="res://media/sprites/batman/running - 8.png" id="27_lei58"]
 [ext_resource type="Texture2D" uid="uid://cnf8hlpraspf5" path="res://media/sprites/batman/dead - 1.png" id="34_e7k4x"]
@@ -152,6 +158,29 @@ animations = [{
 }],
 "loop": true,
 "name": &"jump",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("20_t3me2")
+}, {
+"duration": 1.0,
+"texture": ExtResource("21_brqs6")
+}, {
+"duration": 1.0,
+"texture": ExtResource("22_3ju4l")
+}, {
+"duration": 1.0,
+"texture": ExtResource("23_dqml6")
+}, {
+"duration": 1.0,
+"texture": ExtResource("24_ivbi7")
+}, {
+"duration": 1.0,
+"texture": ExtResource("25_tvm0x")
+}],
+"loop": true,
+"name": &"kick",
 "speed": 5.0
 }, {
 "frames": [{
@@ -290,7 +319,7 @@ script = ExtResource("1_jqkwr")
 [node name="BatmanAnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=748966652]
 texture_filter = 1
 sprite_frames = SubResource("SpriteFrames_h1cvd")
-animation = &"jump"
+animation = &"kick"
 offset = Vector2(0, -7)
 
 [node name="CollisionStanding" type="CollisionShape2D" parent="." unique_id=850553504]
