@@ -4,8 +4,9 @@ extends CharacterBody2D
 @onready var _collision_standing = $CollisionStanding
 @onready var _collision_crouching1 = $CollisionCrouch1
 @onready var _collision_crouching2 = $CollisionCrouch2
-@onready var _area_punch = $CollisionPunch
-@onready var _collision_punching = $CollisionPunch/CollisionShape2D
+@onready var _area_punch = $CollisionHits
+@onready var _collision_punching = $CollisionHits/CollisionPunch
+@onready var _collision_kicking = $CollisionHits/CollisionKick
 @onready var _right_puch_sound = $RightPunchSound
 @onready var _left_puch_sound = $LeftPunchSound
 @onready var _damage_sound1 = $DamageSound1
@@ -20,6 +21,8 @@ var is_stunned := false
 var health = MAX_HEALTH
 var is_crouching: bool
 var is_punching := false
+var is_kicking := false
+var is_upping := false
 var right_punch := false
 var is_rolling := false
 var is_invulnerable := false
@@ -31,6 +34,7 @@ func _ready() -> void:
 	health = MAX_HEALTH
 	add_to_group("player") 
 	_animated_sprite.animation_finished.connect(_on_animation_finished)
+	if _collision_kicking: _collision_kicking.disabled = true
 
 func _physics_process(delta: float) -> void:
 	if is_dead: return
@@ -52,13 +56,20 @@ func _physics_process(delta: float) -> void:
 	if not is_rolling:
 		direction = Input.get_axis("left", "right")
 		
-		if not is_punching:
-			is_crouching = Input.is_action_pressed("crouch") and is_on_floor()
+		# Lógica refinada para transição de agachamento e "upping"
+		if not is_punching and not is_kicking and not is_upping:
+			var wants_to_crouch = Input.is_action_pressed("crouch") and is_on_floor()
+			
+			if is_crouching and not wants_to_crouch:
+				is_crouching = false
+				upping()
+			else:
+				is_crouching = wants_to_crouch
 
-		if direction != 0:
+		if direction != 0 and not is_upping:
 			set_direction(direction)
 
-	if is_crouching or is_punching:
+	if is_crouching or is_punching or is_kicking or is_upping:
 		velocity.x = move_toward(velocity.x, 0, SPEED)
 	else:
 		if direction:
@@ -66,20 +77,26 @@ func _physics_process(delta: float) -> void:
 		else:
 			velocity.x = move_toward(velocity.x, 0, SPEED)
 	
-	if Input.is_action_just_pressed("roll") and is_on_floor() and not is_rolling and not is_punching:
+	if Input.is_action_just_pressed("roll") and is_on_floor() and not is_rolling and not is_punching and not is_kicking and not is_upping:
 		start_roll()
 
-	if Input.is_action_just_pressed("jump") and is_on_floor() and not is_crouching and not is_punching and not is_rolling:
+	if Input.is_action_just_pressed("jump") and is_on_floor() and not is_crouching and not is_punching and not is_kicking and not is_rolling and not is_upping:
 		velocity.y = JUMP_VELOCITY
 
+	# Lógica de Hitboxes
 	_collision_standing.disabled = is_crouching
 	_collision_crouching1.disabled = not is_crouching
 	_collision_crouching2.disabled = not is_crouching
 	
 	if is_punching and (_animated_sprite.animation == "right punch" or _animated_sprite.animation == "left punch"):
 		_collision_punching.disabled = _animated_sprite.frame != 1
+		if _collision_kicking: _collision_kicking.disabled = true
+	elif is_kicking and _animated_sprite.animation == "kick":
+		if _collision_punching: _collision_punching.disabled = true
+		if _collision_kicking: _collision_kicking.disabled = _animated_sprite.frame != 2
 	else:
-		_collision_punching.disabled = true
+		if _collision_punching: _collision_punching.disabled = true
+		if _collision_kicking: _collision_kicking.disabled = true
 
 	move_and_slide()
 
@@ -90,48 +107,58 @@ func _process(_delta):
 		return
 	elif is_rolling:
 		return
-	elif is_punching:
+	elif is_punching or is_kicking or is_upping:
 		pass 
 	elif is_crouching:
 		play_anim("crouch")
-	elif Input.is_action_just_pressed("roll") and is_on_floor() and not is_punching:
+	elif Input.is_action_just_pressed("roll") and is_on_floor() and not is_punching and not is_kicking and not is_upping:
 		play_anim("roll")
 	elif not is_on_floor():
 		play_anim("jump")
 	elif velocity.x != 0:
-		_animated_sprite.position.x = -10 * facing 
 		play_anim("run")
 	else:
 		play_anim("halt")
 	
-	if Input.is_action_just_pressed("fire") and is_on_floor() and not is_crouching and not is_punching and not is_rolling:
-		punch()
+	# Ataques
+	if Input.is_action_just_pressed("fire") and is_on_floor() and not is_punching and not is_kicking and not is_rolling and not is_upping:
+		if is_crouching:
+			kick()
+		else:
+			punch()
+
+func upping():
+	is_upping = true
+	_animated_sprite.play("upping")
 
 func punch():
 	is_punching = true
-	
 	if right_punch:
-		_animated_sprite.position.x = 10 * facing
 		_animated_sprite.play("right punch")
 	else:
-		_animated_sprite.position.x = 10 * facing
 		_animated_sprite.play("left punch")
-	
 	right_punch = !right_punch
-	
-	var fallback_timer = get_tree().create_timer(0.4) 
-	fallback_timer.timeout.connect(func():
-		if is_punching:
-			is_punching = false
-	)
+
+func kick():
+	is_kicking = true
+	_animated_sprite.play("kick")
 
 func _on_animation_finished():
 	if is_punching and (_animated_sprite.animation == "right punch" or _animated_sprite.animation == "left punch"):
 		is_punching = false
+	elif is_kicking and _animated_sprite.animation == "kick":
+		is_kicking = false
+		if is_crouching:
+			_animated_sprite.play("crouch")
+			_animated_sprite.frame = 4
+	elif is_rolling and _animated_sprite.animation == "roll":
+		is_rolling = false
+		is_invulnerable = false
+	elif is_upping and _animated_sprite.animation == "upping":
+		is_upping = false
 
 func play_anim(anim_name):
 	if _animated_sprite.animation != anim_name:
-		_animated_sprite.position.x = 0 
 		_animated_sprite.play(anim_name)
 
 func set_direction(dir):
@@ -143,25 +170,20 @@ func set_direction(dir):
 	_collision_crouching1.position.x *= -1
 	_collision_crouching2.position.x *= -1
 	_collision_standing.position.x *= -1
+	
 	if _area_punch:
 		_area_punch.position.x = abs(_area_punch.position.x) * dir
 	if _collision_punching:
 		_collision_punching.position.x = abs(_collision_punching.position.x) * dir
-	
-	_animated_sprite.position.x *= -1
+	if _collision_kicking:
+		_collision_kicking.position.x = abs(_collision_kicking.position.x) * dir
 	
 	_animated_sprite.flip_h = (dir == -1)
 
 func start_roll():
 	is_rolling = true
 	is_invulnerable = true
-	
 	_animated_sprite.play("roll")
-	
-	await get_tree().create_timer(roll_time).timeout
-	
-	is_rolling = false
-	is_invulnerable = false
 
 signal health_changed(new_health)
 
@@ -201,7 +223,9 @@ func stun():
 	
 	is_stunned = true
 	is_punching = false
+	is_kicking = false
 	is_rolling = false
+	is_upping = false
 	
 	velocity = Vector2.ZERO
 	
@@ -217,7 +241,9 @@ func heavy_stun():
 	
 	is_stunned = true
 	is_punching = false
+	is_kicking = false
 	is_rolling = false
+	is_upping = false
 	
 	velocity = Vector2.ZERO
 	

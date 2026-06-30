@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://ccfo0kpvdgdoy"
-path="res://.godot/imported/kick - 4.png-ea59f7ce5747fc62f71b731837e71b15.ctex"
+uid="uid://c1grlfawtla3g"
+path="res://.godot/imported/upping - 2.png-0fe140c6e80a55385ccf340c10c2bc95.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://media/sprites/batman/kick - 4.png"
-dest_files=["res://.godot/imported/kick - 4.png-ea59f7ce5747fc62f71b731837e71b15.ctex"]
+source_file="res://media/sprites/batman/upping - 2.png"
+dest_files=["res://.godot/imported/upping - 2.png-0fe140c6e80a55385ccf340c10c2bc95.ctex"]
 
 [params]
 
