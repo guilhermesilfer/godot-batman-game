@@ -10,7 +10,7 @@ enum State {
 }
 
 const SPEED = 220.0
-const MAX_HEALTH = 100
+const MAX_HEALTH = 60
 const NORMAL_FIRE_RATE = 1.0
 const FAST_FIRE_RATE = 0.4
 const LEFT_WALL = 45.0   # Limites de arena baseados no Bane

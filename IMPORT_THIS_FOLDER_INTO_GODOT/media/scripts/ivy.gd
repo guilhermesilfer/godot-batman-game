@@ -9,7 +9,7 @@ enum State {
 	DEAD
 }
 
-const MAX_HEALTH = 100
+const MAX_HEALTH = 60
 const ESCAPE_DISTANCE = 80.0 
 
 const MIN_X = 16
