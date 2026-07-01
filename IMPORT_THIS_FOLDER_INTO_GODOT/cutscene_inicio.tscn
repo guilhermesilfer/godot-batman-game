@@ -1,0 +1,14 @@
+[gd_scene format=3 uid="uid://s6wvejidm6eg"]
+
+[ext_resource type="VideoStream" uid="uid://yqgeeodu5wj2" path="res://media/cutscenes/cutscene_inicio.ogv" id="1_smdec"]
+[ext_resource type="Script" uid="uid://dc5uafl0gsbtx" path="res://cutscene_inicio.gd" id="2_cfqpb"]
+
+[node name="VideoStreamPlayer" type="VideoStreamPlayer" unique_id=389216325]
+offset_right = 320.0
+offset_bottom = 180.0
+stream = ExtResource("1_smdec")
+autoplay = true
+expand = true
+script = ExtResource("2_cfqpb")
+
+[connection signal="finished" from="." to="." method="_on_finished"]

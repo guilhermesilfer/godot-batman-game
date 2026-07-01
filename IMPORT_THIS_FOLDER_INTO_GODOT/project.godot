@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="batman-bti"
-run/main_scene="uid://ca2l5jke2kn2w"
+run/main_scene="uid://s6wvejidm6eg"
 config/features=PackedStringArray("4.7", "Forward Plus")
 
 [display]
