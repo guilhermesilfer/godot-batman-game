@@ -1,0 +1,46 @@
+[gd_scene format=3 uid="uid://cx0n1qsn0030n"]
+
+[ext_resource type="Script" uid="uid://c6ofx56vye37a" path="res://media/scripts/pause_menu.gd" id="1_f7wrv"]
+[ext_resource type="Texture2D" uid="uid://20tyk47by4yj" path="res://media/sprites/startbutton.png" id="2_5h3iy"]
+[ext_resource type="Texture2D" uid="uid://bj6txyo4h0yaq" path="res://media/sprites/quitbutton.png" id="3_fmavr"]
+
+[node name="PauseMenu" type="CanvasLayer" unique_id=972892895]
+process_mode = 3
+script = ExtResource("1_f7wrv")
+
+[node name="ColorRect" type="ColorRect" parent="." unique_id=984406353]
+offset_right = 320.0
+offset_bottom = 180.0
+color = Color(0, 0, 0, 0.54901963)
+metadata/_edit_use_anchors_ = true
+
+[node name="ButtonManager" type="Control" parent="." unique_id=519742560]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 320.0
+offset_bottom = 180.0
+
+[node name="StartButton" type="TextureButton" parent="ButtonManager" unique_id=672197893]
+texture_filter = 1
+layout_mode = 0
+offset_left = 107.0
+offset_top = 30.0
+offset_right = 199.0
+offset_bottom = 84.0
+texture_normal = ExtResource("2_5h3iy")
+ignore_texture_size = true
+stretch_mode = 6
+
+[node name="QuitButton" type="TextureButton" parent="ButtonManager" unique_id=1073274154]
+texture_filter = 1
+layout_mode = 0
+offset_left = 108.0
+offset_top = 94.0
+offset_right = 199.0
+offset_bottom = 148.0
+texture_normal = ExtResource("3_fmavr")
+ignore_texture_size = true
+stretch_mode = 6
+
+[connection signal="pressed" from="ButtonManager/StartButton" to="." method="_on_start_button_pressed"]
+[connection signal="pressed" from="ButtonManager/QuitButton" to="." method="_on_quit_button_pressed"]

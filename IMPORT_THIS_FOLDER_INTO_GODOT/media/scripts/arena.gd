@@ -94,3 +94,9 @@ func update_health(value):
 # Função que faltava para atualizar a barra do inimigo
 func enemy_update_health(value):
 	_enemy_health_bar.value = value
+
+func _unhandled_input(event):
+	if event.is_action_pressed("pause") and not get_tree().paused:
+		var menu_pause = preload("res://media/scenes/pause_menu.tscn").instantiate()
+		add_child(menu_pause)
+		get_tree().paused = true
