@@ -10,7 +10,7 @@ enum State {
 }
 
 const SPEED = 220.0
-const MAX_HEALTH = 1
+const MAX_HEALTH = 100
 const NORMAL_FIRE_RATE = 1.0
 const FAST_FIRE_RATE = 0.4
 const LEFT_WALL = 45.0   # Limites de arena baseados no Bane
@@ -85,7 +85,7 @@ func _physics_process(delta):
 	_passive_voice_timer -= delta
 	if _passive_voice_timer <= 0:
 		_queue_audio("voice")
-		_passive_voice_timer = randf_range(10.0, 12.0)
+		_passive_voice_timer = randf_range(8.0, 10.0)
 
 func _process(_delta):
 	if state == State.DEAD: return

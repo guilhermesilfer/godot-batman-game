@@ -9,7 +9,7 @@ enum State {
 	DEAD
 }
 
-const MAX_HEALTH = 1
+const MAX_HEALTH = 100
 const ESCAPE_DISTANCE = 80.0 
 
 const MIN_X = 16
@@ -57,7 +57,7 @@ func _ready():
 	
 	# Inicializa o áudio antes do await para não bugar no frame 1
 	_refill_voice_bag()
-	_passive_voice_timer = randf_range(10.0, 12.0)
+	_passive_voice_timer = randf_range(8.0, 10.0)
 	
 	await get_tree().process_frame
 	_player = get_tree().get_first_node_in_group("player")

@@ -4,7 +4,7 @@ enum State { IDLE, THROW, DROP_BOMB, JETPACK_TAKEOFF, JETPACK_CHARGE, JETPACK_LA
 
 const SPEED = 0.0 
 const JETPACK_SPEED = 150.0 
-const MAX_HEALTH = 1
+const MAX_HEALTH = 100
 const JETPACK_HEIGHT = 0.0 
 const DAMAGE_THRESHOLD_FOR_JETPACK = 15 
 const SCREEN_WIDTH_HALF = 160
@@ -113,7 +113,7 @@ func _physics_process(delta):
 			_voice_queued = true
 		elif not _is_voice_playing():
 			_play_voice()
-		_passive_voice_timer = randf_range(10.0, 12.0)
+		_passive_voice_timer = randf_range(8.0, 10.0)
 
 # Detecta se o Batman tomou dano independentemente da fonte (bomba ou jetpack)
 func _on_player_health_changed(new_health):
